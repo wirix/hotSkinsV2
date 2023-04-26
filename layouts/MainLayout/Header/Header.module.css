@@ -1,0 +1,24 @@
+.header {
+  padding: 33px 0;
+  border-bottom: 2px solid hsl(252deg 5% 60% / 12.8%);
+  display: grid;
+  grid-template-columns:
+    [start] 50px [logoend] 70px [navstart] 200px [navend] calc(50% - 270px)
+    [middle] 300px [searchend] 70px [profilestart] 1fr [end];
+}
+
+.logo {
+  grid-column: start / logoEnd;
+}
+
+.nav {
+  grid-column: navStart / navEnd;
+}
+
+.search {
+  grid-column: middle / searchEnd;
+}
+
+.profile {
+  grid-column: profileStart / end;
+}
