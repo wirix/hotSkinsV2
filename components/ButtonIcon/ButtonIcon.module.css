@@ -1,0 +1,51 @@
+.circle {
+  border-radius: 50%;
+}
+
+.buttonIcon {
+  outline: 0;
+  border: 0;
+  width: 35px;
+  height: 35px;
+  transition: all .2s linear;
+  cursor: pointer;
+}
+
+.buttonIcon svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--white);
+}
+
+.black {
+  background-color: var(--black);
+}
+
+.black svg {
+  fill: var(--white);
+}
+
+.black:hover {
+  background-color: #101012;
+}
+
+.darkBlue {
+  background-color: var(--dark-blue);
+}
+
+.darkBlue svg {
+  fill: var(--white)
+}
+
+.darkBlue:hover {
+  background-color: #26476d;
+}
+
+.transparent {
+  background-color: transparent;
+}
+
+.transparent svg {
+  fill: var(--black);
+  background-color: transparent;
+}

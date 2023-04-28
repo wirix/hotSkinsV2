@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { withLayout } from "../layouts/MainLayout/Layout";
+import { Button } from "../components";
 
 const Home = () => {
   return (
@@ -11,7 +12,9 @@ const Home = () => {
         <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@200;300;400;500;700;900&display=swap" rel="stylesheet" />
       </Head>
       <div>
-        шкишукп
+        <Button appearance="green" arrow="down">
+          иконка
+        </Button>
       </div>
     </>
   );

@@ -2,7 +2,8 @@ html,
 body {
   margin: 0;
   padding: 0;
-  color: var(--gray);
+  color: var(--white);
+  font-size: 16px;
   font-family: var(--font-family);
   background-color: #151517;
 }
@@ -38,6 +39,8 @@ a {
   --blue: #001a9f;
   --purple: #3900a1;
   --steel-blue: #21528a;
-  --dark-gray: #273b52;
+  --dark-blue: #273b52;
+  --dark-gray: #2d2e37;
   --golden: #ffac38;
+  --black: #18181c;
 }
