@@ -1,20 +1,20 @@
 .button {
   box-sizing: border-box;
-  text-align: center;
-  font-size: 16px;
-  outline: 0;
-  border: 0;
-  border-radius: 7px;
   padding: 10px;
   color: var(--white);
+  font-size: 16px;
+  text-align: center;
+  border: 0;
+  border-radius: 7px;
+  outline: 0;
   cursor: pointer;
-  transition: all .2s linear;
+  transition: all 0.2s linear;
 }
 
 .arrow svg {
-  margin-left: 5px;
   width: 17px;
   height: 17px;
+  margin-left: 5px;
   fill: var(--white);
 }
 
@@ -28,7 +28,7 @@
 }
 
 .black:hover {
-  background-color: #101012;
+  background-color: var(--black-hover);
 }
 
 .green {
@@ -36,7 +36,7 @@
 }
 
 .green:hover {
-  background-color: #43b34d;
+  background-color: var(--green-hover);
 }
 
 .darkBlue {
@@ -44,7 +44,7 @@
 }
 
 .darkBlue:hover {
-  background-color: #26476d;
+  background-color: var(--dark-blue-hover);
 }
 
 .transparent {

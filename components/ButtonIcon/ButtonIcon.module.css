@@ -2,18 +2,22 @@
   border-radius: 50%;
 }
 
+.square {
+  border-radius: 5px;
+}
+
 .buttonIcon {
-  outline: 0;
+  width: 50px;
+  height: 50px;
   border: 0;
-  width: 35px;
-  height: 35px;
-  transition: all .2s linear;
+  outline: 0;
   cursor: pointer;
+  transition: all 0.2s linear;
 }
 
 .buttonIcon svg {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   fill: var(--white);
 }
 
@@ -26,7 +30,7 @@
 }
 
 .black:hover {
-  background-color: #101012;
+  background-color: var(--black-hover);
 }
 
 .darkBlue {
@@ -34,11 +38,11 @@
 }
 
 .darkBlue svg {
-  fill: var(--white)
+  fill: var(--white);
 }
 
 .darkBlue:hover {
-  background-color: #26476d;
+  background-color: var(--dark-blue-hover);
 }
 
 .transparent {
@@ -46,6 +50,6 @@
 }
 
 .transparent svg {
-  fill: var(--black);
   background-color: transparent;
+  fill: var(--black);
 }

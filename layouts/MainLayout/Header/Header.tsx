@@ -1,30 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Header.module.css';
 import cn from 'classnames';
 import { ButtonIcon, Search } from '../../../components';
 import Image from 'next/image';
-import logoImage from './logo.jpg';
+import logoImage from './logo.png';
+import Link from 'next/link';
+import { firstLevelRoute } from '../../../helpers/helpers';
+import MoneyIcon from './money.svg';
+import { useWindowSize } from '../../../helpers/useWindowSize';
 
 const Header = ({ className, ...props }): JSX.Element => {
+  const { width } = useWindowSize();
+  const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState<string>('');
+
   return (
-    <header className={cn(className, styles.header)} {...props}>
-      <div className={styles.logo}>
-        <Image src={logoImage} width={70} height={77} alt=''/>
+    <>
+      {isShowMenu && <div className={styles.mobileMenu}>
+        <div className={styles.mobileHeader}>
+          <ButtonIcon
+            icon='close'
+            onClick={() => setIsShowMenu(!isShowMenu)}
+          />
+        </div>
+        <div className={styles.mobileNav}>
+          {firstLevelRoute.map(f => (
+            <Link key={f.id} href={'/' + f.route}>{f.name}</Link>
+          ))}
+        </div>
       </div>
-      <nav className={styles.nav}>
-        <ButtonIcon shape='circle' icon='bell' appearance='black' />
-        <ButtonIcon shape='circle' icon='settings' appearance='black' />
-        <ButtonIcon shape='circle' icon='star' appearance='black' />
-        <ButtonIcon shape='circle' icon='filter' appearance='transparent' />
-        <ButtonIcon shape='circle' icon='filter' appearance='darkBlue' />
-      </nav>
-      <div className={styles.search}>
-        <Search />
-      </div>
-      <div className={styles.profile}>
-        balance profile
-      </div>
-    </header>
+      }
+      <header className={cn(className, styles.header)} {...props}>
+        {width <= 754 && <ButtonIcon
+          icon='menu'
+          onClick={() => setIsShowMenu(!isShowMenu)}
+        />
+        }
+        <Image className={styles.logo} src={logoImage} width={50} height={55} alt='' />
+        <nav className={styles.nav}>
+          {firstLevelRoute.map(f => (
+            f.isNavLink && <Link key={f.id} href={'/' + f.route}>{f.name}</Link>
+          ))}
+        </nav>
+        <div className={styles.search}>
+          <Search
+            setValue={setSearchValue}
+            className={styles.input}
+            value={searchValue}
+            appearance='black'
+            placeholder='Поиск ...'
+          />
+        </div>
+        <div className={styles.profile}>
+          <span className={styles.money}>
+            <MoneyIcon />
+            <span className={styles.balance}>4666565</span>
+          </span>
+          {width > 1180 && <span className={cn(styles.border)}></span>}
+          {width >= 755 && <ButtonIcon className={styles.icon} icon='settings' />}
+          <ButtonIcon className={styles.icon} icon='bell' />
+          <Link href='/profile' >
+            <Image className={styles.photoProfile} src={logoImage} width={50} height={55} alt='' />
+          </Link>
+        </div>
+      </header>
+    </>
   );
 };
 

@@ -1,25 +1,26 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 import cn from 'classnames';
 import styles from './Search.module.css';
 import SearchIcon from './search.svg';
 import { SearchProps } from './Search.props';
 import { Input } from '../Input/Input';
+import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
 
-export const Search = ({ className, ...props }: SearchProps): JSX.Element => {
-  const [searchValue, setSearchValue] = useState<string>('');
+export const Search = ({ placeholder, setValue, appearance = 'transparent', value, className, ...props }: SearchProps): JSX.Element => {
   const onSearchChange = (e: string) => {
-    setSearchValue(e);
+    setValue(e);
   };
 
   return (
     <div className={cn(styles.search, className)} {...props}>
       <Input
-        placeholder='Поиск...'
+        appearance={appearance}
+        placeholder={placeholder}
         className={styles.input}
-        value={searchValue}
+        value={value}
         onChange={(e: ChangeEvent<HTMLInputElement>) => onSearchChange(e.currentTarget.value)}
       />
-      {!searchValue ? <SearchIcon /> : <button className={styles.submit}>отпр</button>}
+      {!value ? <SearchIcon /> : <ButtonIcon icon='search' className={styles.submit} />}
     </div>
   );
 };

@@ -6,6 +6,7 @@ body {
   font-size: 16px;
   font-family: var(--font-family);
   background-color: #151517;
+  background-attachment: fixed;
 }
 
 h1,
@@ -33,14 +34,19 @@ a {
   --font-family: "Lexend", sans-serif;
   --white: #f7f7f7;
   --gray: #95939d;
+  --gray-border: hsl(252deg 5% 60% / 12.8%);
   --green: #429048;
+  --green-hover: #43b34d;
   --red: #9a1111;
   --pink: #9d14ac;
   --blue: #001a9f;
   --purple: #3900a1;
   --steel-blue: #21528a;
   --dark-blue: #273b52;
+  --dark-blue-hover: #26476d;
   --dark-gray: #2d2e37;
+  --dark-gray-hover: #25252a;
   --golden: #ffac38;
   --black: #18181c;
+  --black-hover: #101012;
 }

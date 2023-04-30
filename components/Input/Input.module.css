@@ -1,14 +1,21 @@
 .input {
+  width: 200px;
   height: 30px;
-  width: 300px;
+  padding: 18px 15px;
+  color: var(--gray);
+  border: 0;
   border-radius: 15px;
   outline: 0;
-  border: 0;
-  background-color: var(--black);
-  color: var(--gray);
-  padding: 18px 15px;
 }
 
 .input:focus {
   outline: 2px solid var(--green);
+}
+
+.transparent {
+  background-color: transparent;
+}
+
+.black {
+  background-color: var(--black);
 }

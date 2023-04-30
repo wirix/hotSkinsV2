@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { withLayout } from "../layouts/MainLayout/Layout";
-import { Button } from "../components";
+import { Button, Checkbox } from "../components";
 
 const Home = () => {
   return (
@@ -15,6 +15,8 @@ const Home = () => {
         <Button appearance="green" arrow="down">
           иконка
         </Button>
+        <Checkbox isChoose={true} />
+        <Checkbox isChoose={false} />
       </div>
     </>
   );

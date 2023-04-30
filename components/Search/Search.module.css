@@ -4,8 +4,8 @@
 
 .search svg {
   position: absolute;
-  left: 15px;
   top: 8px;
+  left: 15px;
   z-index: 1;
 }
 
@@ -15,7 +15,7 @@
 
 .submit {
   position: absolute;
-  right: 15px;
-  top: 8px;
+  top: -1px;
+  right: 0;
   z-index: 1;
 }

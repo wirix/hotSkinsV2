@@ -1,0 +1,40 @@
+.checkbox {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background-color: var(--dark-gray);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+
+.checkbox:hover {
+  background-color: var(--dark-gray-hover);
+}
+
+.checkbox svg {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  z-index: 1;
+}
+
+.isChoose svg path {
+  fill: var(--green);
+}
+
+.isChoose {
+  background-color: var(--dark-gray-hover);
+  fill: var(--green);
+}
+
+.notChoose svg {
+  top: 5px;
+  left: 5px;
+  width: 10px;
+  height: 10px;
+}
+
+.notChoose svg path {
+  fill: var(--white);
+}

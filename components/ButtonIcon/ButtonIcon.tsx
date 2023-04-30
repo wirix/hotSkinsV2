@@ -8,6 +8,7 @@ export const ButtonIcon = ({ icon, shape = 'none', appearance = 'transparent', c
   return (
     <button className={cn(styles.buttonIcon, className, {
       [styles.circle]: shape === 'circle',
+      [styles.square]: shape === 'square',
       [styles.transparent]: appearance === 'transparent',
       [styles.black]: appearance === 'black',
       [styles.darkBlue]: appearance === 'darkBlue',

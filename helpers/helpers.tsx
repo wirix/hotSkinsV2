@@ -1,0 +1,8 @@
+import { firstLevelRouteId } from "../interfaces/firstLevelRoute.interface";
+
+export const firstLevelRoute = [
+  { route: 'cases', name: 'Кейсы', id: firstLevelRouteId.cases, isNavLink: true },
+  { route: 'inventory', name: 'Инвентарь', id: firstLevelRouteId.inventory, isNavLink: true },
+  { route: 'profile', name: 'Профиль', id: firstLevelRouteId.profile, isNavLink: false },
+  { route: 'settings', name: 'Настройки', id: firstLevelRouteId.settings, isNavLink: false },
+];

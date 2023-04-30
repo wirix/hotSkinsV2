@@ -1,24 +1,155 @@
 .header {
   display: grid;
   grid-template-columns:
-    [start] 50px [logoEnd] 70px [navStart] 200px [navEnd] calc(50% - 270px)
-    [middle] 300px [searchEnd] 70px [profileStart] 1fr [end];
+    [start] 50px [logoend] 50px [navstart] auto [navend] calc(50% - 440px)
+    [middle] 200px [searchend] 10px [profilestart] 1fr [end];
   padding: 33px 0;
-  border-bottom: 2px solid hsl(252deg 5% 60% / 12.8%);
+  border-bottom: 2px solid var(--gray-border);
+}
+
+.mobileMenu {
+  background-color: #273b52;
+  display: flex;
+  flex-direction: column;
+  padding: 13px 10px;
+  position: fixed;
+  width: 200px;
+  inset: 0;
+  z-index: 1000;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  grid-column: navStart / navEnd;
+}
+
+.nav a {
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-right: 35px;
+  transition: all 0.2s linear;
+}
+
+.mobileNav a {
+  color: var(--gray);
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.nav a:last-child {
+  margin-right: 0;
+}
+
+.nav a:hover {
+  color: var(--green-hover);
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  margin-top: 60px;
+}
+
+.mobileNav a:last-child {
+  margin-bottom: 0;
+}
+
+.mobileHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+}
+
+.mobileHeader div {
+  align-items: flex-end;
 }
 
 .logo {
   grid-column: start / logoEnd;
 }
 
-.nav {
-  grid-column: navStart / navEnd;
-}
-
 .search {
+  display: flex;
+  align-items: center;
   grid-column: middle / searchEnd;
 }
 
 .profile {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   grid-column: profileStart / end;
+}
+
+.money {
+  display: flex;
+  align-items: center;
+}
+
+.balance {
+  margin-left: 3px;
+}
+
+.border {
+  font-size: 0;
+  color: transparent;
+  margin-left: 55px;
+  margin-right: 40px;
+  width: 2px;
+  height: 23px;
+  background-color: var(--gray-border);
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+}
+
+@media screen and (width <= 1180px) {
+  .header {
+    grid-template-columns: [start] 50px [logoend] 20px [navstart] auto [navend] calc(50% - 410px) [middle] 200px [searchend] 10px [profileStart] 1fr [end];
+  }
+
+  .icon {
+    margin: 0;
+  }
+}
+
+@media screen and (width <= 900px) {
+  .header {
+    grid-template-columns: [start] 30px [logoend] 20px [navstart] auto [navend] calc(50% - 390px) [middle] 200px [searchend] 10px [profileStart] 200px [end];
+    padding: 13px 0;
+  }
+
+  .logo,
+  .photoProfile {
+    width: 40px;
+    height: 44px;
+    margin: auto 0;
+  }
+
+  .nav a {
+    font-size: 13px;
+    margin-right: 15px;
+  }
+}
+
+@media screen and (width <= 754px) {
+  .header {
+    grid-template-columns: [start] 50px [middle] 200px [searchend] 1fr [profilestart] 200px [end];
+    padding: 13px 0;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .nav {
+    display: none;
+  }
 }
