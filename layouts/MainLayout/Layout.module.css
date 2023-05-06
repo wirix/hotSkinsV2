@@ -12,7 +12,7 @@
     ". sidebar body ."
     "footer footer footer footer ";
   grid-template-rows: auto 1fr auto;
-  grid-template-columns: auto 200px minmax(320px, 1500px) auto;
+  grid-template-columns: auto 200px minmax(300px, 1500px) auto;
   gap: 30px;
   min-height: 100vh;
 }
@@ -35,10 +35,17 @@
 
 @media screen and (width <= 754px) {
   .layout {
-    gap: 12px;
+    grid-template:
+      ". header ."
+      ". sidebar  ."
+      ". body ."
+      "footer footer footer";
+    grid-template-rows: 78px auto 1fr auto;
+    grid-template-columns: auto minmax(300px, 1500px) auto;
+    gap: 10px;
   }
-}
 
-@media screen and (width <= 574px) {
-  /* убрать sidebar */
+  .sidebar {
+    grid-area: sidebar;
+  }
 }

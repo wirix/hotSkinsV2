@@ -1,0 +1,50 @@
+.shopItem {
+  display: grid;
+  grid-template-rows: repeat(4, auto);
+  grid-template-columns: 180px;
+}
+
+.img {
+  position: relative;
+}
+
+.imgWithSkin {
+  margin-bottom: 8px;
+}
+
+.img button {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 10;
+}
+
+.price svg {
+  width: 20px;
+  height: 20px;
+}
+
+.img button svg {
+  width: 14px;
+  height: 14px;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 500;
+  grid-row: 2 / 3;
+}
+
+.type {
+  font-size: 13px;
+  grid-row: 3 / 4;
+  margin-bottom: 5px;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  grid-row: 4 / 5;
+}

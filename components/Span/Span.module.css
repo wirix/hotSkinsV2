@@ -1,0 +1,51 @@
+.isHover:hover {
+  color: var(--green);
+}
+
+.gray {
+  color: var(--gray);
+}
+
+.white {
+  color: var(--white);
+}
+
+.fontWeight200 {
+  font-weight: 200;
+}
+
+.fontWeight300 {
+  font-weight: 300;
+}
+
+.fontWeight400 {
+  font-weight: 400;
+}
+
+.fontWeight500 {
+  font-weight: 500;
+}
+
+.fontWeight700 {
+  font-weight: 700;
+}
+
+.fontWeight900 {
+  font-weight: 900;
+}
+
+.fontSize12 {
+  font-size: 12px;
+}
+
+.fontSize14 {
+  font-size: 14px;
+}
+
+.fontSize16 {
+  font-size: 16px;
+}
+
+.fontSize40 {
+  font-size: 40px;
+}

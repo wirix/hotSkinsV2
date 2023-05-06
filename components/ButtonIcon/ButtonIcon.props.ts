@@ -7,6 +7,7 @@ import arrow from './arrow.svg';
 import menu from './menu.svg';
 import close from './close.svg';
 import search from './search.svg';
+import money from './money.svg';
 
 export const icons = {
   filter,
@@ -16,7 +17,8 @@ export const icons = {
   arrow,
   menu,
   close,
-  search
+  search,
+  money,
 };
 
 type IconName = keyof typeof icons;

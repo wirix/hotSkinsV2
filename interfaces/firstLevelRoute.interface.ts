@@ -3,4 +3,5 @@ export enum firstLevelRouteId {
   inventory,
   profile,
   settings,
+  shop
 }

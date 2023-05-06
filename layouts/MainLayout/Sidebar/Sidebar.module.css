@@ -1,21 +1,13 @@
 .sidebar {
   display: grid;
-  grid-template-rows: 50px 60px 60px auto auto 1fr;
+  grid-template-rows: 50px 30px 60px auto auto 1fr;
   grid-template-columns: [start] 50px [middle] 1fr [end];
 }
 
 .title {
-  display: flex;
   grid-row: 1 / 2;
   grid-column: start / end;
-  align-items: center;
-  justify-content: space-between;
   font-size: 45px;
-}
-
-.title button {
-  width: 40px;
-  height: 40px;
 }
 
 .input {
@@ -29,7 +21,7 @@
 }
 
 .category,
-.savedTitle {
+.additionalTitle {
   margin-bottom: 20px;
   color: var(--gray);
   text-transform: capitalize;
@@ -38,16 +30,15 @@
 }
 
 .category:last-child,
-.savedTitle {
+.additionalTitle {
   margin-bottom: 0;
 }
 
-.savedTitle span {
+.additionalTitle span {
   margin-left: 3px;
 }
 
-.category:hover,
-.saved:hover .savedTitle span {
+.category:hover {
   color: var(--green);
 }
 
@@ -71,17 +62,61 @@
   grid-column: start / end;
 }
 
-.saved {
+.additionalItem {
   display: flex;
   align-items: center;
 }
 
-.saved button {
+.additionalItem button {
   width: 30px;
   height: 30px;
 }
 
-.savedTitle {
+.additionalTitle {
   display: flex;
   margin-left: 6px;
+}
+
+@media screen and (width <= 754px) {
+  .sidebar {
+    display: grid;
+    grid-template-rows: 50px 60px 40px 30px 40px;
+    grid-template-columns: [start] 1fr [end];
+  }
+
+  .title div {
+    font-size: 30px;
+  }
+
+  .input {
+    grid-row: 2 / 3;
+  }
+
+  .listCategory {
+    display: flex;
+    grid-row: 3 / 4;
+    width: 296px;
+    overflow: scroll;
+  }
+
+  .listCategory li {
+    margin-right: 10px;
+    margin-bottom: 0;
+    font-size: 14px;
+  }
+
+  .listCategory li:last-child {
+    margin-right: 0;
+  }
+
+  .hr {
+    grid-row: 5 / 6;
+    grid-column: start / end;
+    margin: 15px 0;
+  }
+
+  .additional {
+    grid-row: 4 / 5;
+    font-size: 14px;
+  }
 }

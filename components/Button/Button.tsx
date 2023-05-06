@@ -14,16 +14,15 @@ export const Button = ({ children, arrow = 'none', appearance = 'transparent', c
     })} {...props}>
       <span className={styles.content}>
         {children}
-         {arrow !== 'none' &&
-        <span className={cn(styles.arrow, {
-          [styles.up]: arrow === 'up',
-          [styles.down]: arrow === 'down'
-        })}>
-          <Arrow />
-        </span>
-      }
+        {arrow !== 'none' &&
+          <span className={cn(styles.arrow, {
+            [styles.up]: arrow === 'up',
+            [styles.down]: arrow === 'down'
+          })}>
+            <Arrow />
+          </span>
+        }
       </span>
-     
     </button>
   );
 };
