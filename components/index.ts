@@ -6,3 +6,6 @@ export * from './Checkbox/Checkbox';
 export * from './Span/Span';
 export * from './ShopItem/ShopItem';
 export * from './ImgWithSkin/ImgWithSkin';
+export * from './AuthForm/AuthForm';
+export * from './AuthForm/LoginForm/LoginForm';
+export * from './AuthForm/RegistrationForm/RegistrationForm';

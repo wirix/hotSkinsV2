@@ -18,12 +18,13 @@
   background-color: #273b52;
   inset: 0;
 }
-
+/* stylelint-enable */
 .nav {
   display: flex;
-  grid-column: navStart / navEnd;
+  grid-column: navstart / navend;
   align-items: center;
 }
+/* stylelint-enable */
 
 .nav a {
   margin-right: 35px;
@@ -68,24 +69,26 @@
 .mobileHeader div {
   align-items: flex-end;
 }
-
+/* stylelint-enable */
 .logo {
-  grid-column: start / logoEnd;
+  grid-column: start / logoend;
 }
-
+/* stylelint-enable */
+/* stylelint-enable */
 .search {
   display: flex;
-  grid-column: middle / searchEnd;
+  grid-column: middle / searchend;
   align-items: center;
 }
-
+/* stylelint-enable */
+/* stylelint-enable */
 .profile {
   display: flex;
-  grid-column: profileStart / end;
+  grid-column: profilestart / end;
   align-items: center;
   justify-content: flex-end;
 }
-
+/* stylelint-enable */
 .money {
   display: flex;
   align-items: center;
@@ -109,6 +112,10 @@
   width: 40px;
   height: 40px;
   margin-right: 20px;
+}
+
+.registration {
+  text-transform: uppercase;
 }
 
 @media screen and (width <= 1180px) {
@@ -156,6 +163,12 @@
 
   .nav {
     display: none;
+  }
+
+  .registration {
+    display: flex;
+    justify-content: flex-end;
+    text-transform: uppercase;
   }
 }
 

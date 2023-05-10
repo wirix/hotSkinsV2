@@ -5,21 +5,39 @@ import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
 import { firstLevelRoute } from '../helpers/helpers';
 import { ParsedUrlQuery } from 'querystring';
 import Error404 from './404';
+import axios from 'axios';
+import { IShopItem } from '../interfaces/shop.interface';
+import GetAuth from '../helpers/GetAuth';
+import { AuthForm } from '../components';
 
 const SlugType = ({ data, pageType }: ShopProps): JSX.Element => {
-  if (pageType) {
-    switch (pageType[0]) {
-      case 'shop':
-        return <ShopComponent />;
-      case 'cases':
-        return <CasesListComponent />;
-      case 'inventory':
-        return <InventoryComponent />;
-      default:
-        return <Error404 />;
+  const { user, loading, error } = GetAuth();
+
+  if (loading) {
+    return <>загрузка</>;
+  }
+
+  if (error && error instanceof Error) {
+    return <div>ошбика {error.message}</div>;
+  }
+
+  if (user) {
+    if (pageType) {
+      switch (pageType[0]) {
+        case 'shop':
+          return <ShopComponent data={data} />;
+        case 'cases':
+          return <CasesListComponent />;
+        case 'inventory':
+          return <InventoryComponent />;
+        default:
+          return <Error404 />;
+      }
+    } else {
+      return <Error404 />;
     }
   } else {
-    return <Error404 />;
+    return <AuthForm />;
   }
 };
 
@@ -44,20 +62,21 @@ export const getStaticProps: GetStaticProps<ShopProps> = async ({ params }: GetS
     };
   }
 
+  const { data } = await axios.get<IShopItem[]>(process.env.NEXT_PUBLIC_DOMAIN + 'shopItems');
+
   return {
     props: {
       pageType: params.slug,
-      data: 1111111
+      data: data
     }
   };
 };
 
 type pageType = string | string[] | undefined;
-type pageTypeString = 'shop' | 'cases' | 'inventory';
 
 interface ShopProps extends Record<string, unknown> {
-  pageType: pageType | pageTypeString;
-  data: number;
+  pageType: pageType;
+  data: IShopItem[];
 }
 
 export default withLayout(SlugType);

@@ -7,3 +7,10 @@ export const firstLevelRoute = [
   { route: 'profile', name: 'Профиль', id: firstLevelRouteId.profile, isNavLink: false },
   { route: 'settings', name: 'Настройки', id: firstLevelRouteId.settings, isNavLink: false },
 ];
+
+export const pushUrlAuthParams = (params: 'registration' | 'signup', router) => {
+  router.push({
+    pathname: '/auth',
+    query: { name: params }
+  });
+};

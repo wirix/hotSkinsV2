@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import styles from './ShopComponent.module.css';
 import { ShopItem } from '../../components';
+import { shopReducer } from './shop.reducer';
+import { IShopItem } from '../../interfaces/shop.interface';
 
-export const ShopComponent = (): JSX.Element => {
+export const ShopComponent = ({ data }: ShopComponentProps): JSX.Element => {
+  const [{ shopItems: shopItem }, dispatchShop] = useReducer(shopReducer, {
+    shopItems: data
+  });
+
   return (
     <div className={styles.shop}>
-      <ShopItem color="purple" title="Кассета" price={738} type="weapon" stared={false} urlImg={"https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG9wdWp3ZXpoanhzellJMmdTMDktM2g1T09nLVB4RExmWWtXTkYxOGx3bU83RXU5VHczZ2F5OHhCdGEyM3hKZFRHSjFROVpsLUY4MVR2a09pLWpaYTY3cGpPejNVMTZYWWw1bjdEMzB2Z0VpQjlyNEEvNTEyeDM4NA--/auto/auto/85/notrim/16ab40b6f9d58960857fe392b98fce6b.webp"} />
-      <ShopItem color="red" title="Кассета" price={738} type="weapon" stared={false} urlImg={"https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG9wdWp3ZXpoanhzellJMmdTMDktM2g1T09nLVB4RExmWWtXTkYxOGx3bU83RXU5VHczZ2F5OHhCdGEyM3hKZFRHSjFROVpsLUY4MVR2a09pLWpaYTY3cGpPejNVMTZYWWw1bjdEMzB2Z0VpQjlyNEEvNTEyeDM4NA--/auto/auto/85/notrim/16ab40b6f9d58960857fe392b98fce6b.webp"} />
-      <ShopItem color="gold" title="Кассета" price={738} type="weapon" stared={false} urlImg={"https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG9wdWp3ZXpoanhzellJMmdTMDktM2g1T09nLVB4RExmWWtXTkYxOGx3bU83RXU5VHczZ2F5OHhCdGEyM3hKZFRHSjFROVpsLUY4MVR2a09pLWpaYTY3cGpPejNVMTZYWWw1bjdEMzB2Z0VpQjlyNEEvNTEyeDM4NA--/auto/auto/85/notrim/16ab40b6f9d58960857fe392b98fce6b.webp"} />
-      <ShopItem color="red" title="Кассета" price={738} type="weapon" stared={false} urlImg={"https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG9wdWp3ZXpoanhzellJMmdTMDktM2g1T09nLVB4RExmWWtXTkYxOGx3bU83RXU5VHczZ2F5OHhCdGEyM3hKZFRHSjFROVpsLUY4MVR2a09pLWpaYTY3cGpPejNVMTZYWWw1bjdEMzB2Z0VpQjlyNEEvNTEyeDM4NA--/auto/auto/85/notrim/16ab40b6f9d58960857fe392b98fce6b.webp"} />
-      <ShopItem color="pink" title="Кассета" price={738} type="weapon" stared={false} urlImg={"https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG9wdWp3ZXpoanhzellJMmdTMDktM2g1T09nLVB4RExmWWtXTkYxOGx3bU83RXU5VHczZ2F5OHhCdGEyM3hKZFRHSjFROVpsLUY4MVR2a09pLWpaYTY3cGpPejNVMTZYWWw1bjdEMzB2Z0VpQjlyNEEvNTEyeDM4NA--/auto/auto/85/notrim/16ab40b6f9d58960857fe392b98fce6b.webp"} />
-      <ShopItem color="blue" title="Кассета" price={738} type="weapon" stared={false} urlImg={"https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG9wdWp3ZXpoanhzellJMmdTMDktM2g1T09nLVB4RExmWWtXTkYxOGx3bU83RXU5VHczZ2F5OHhCdGEyM3hKZFRHSjFROVpsLUY4MVR2a09pLWpaYTY3cGpPejNVMTZYWWw1bjdEMzB2Z0VpQjlyNEEvNTEyeDM4NA--/auto/auto/85/notrim/16ab40b6f9d58960857fe392b98fce6b.webp"} />
-      <ShopItem color="blue" title="Кассета" price={738} type="weapon" stared={false} urlImg={"https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG9wdWp3ZXpoanhzellJMmdTMDktM2g1T09nLVB4RExmWWtXTkYxOGx3bU83RXU5VHczZ2F5OHhCdGEyM3hKZFRHSjFROVpsLUY4MVR2a09pLWpaYTY3cGpPejNVMTZYWWw1bjdEMzB2Z0VpQjlyNEEvNTEyeDM4NA--/auto/auto/85/notrim/16ab40b6f9d58960857fe392b98fce6b.webp"} />
-      <ShopItem color="blue" title="Кассета" price={738} type="weapon" stared={false} urlImg={"https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG9wdWp3ZXpoanhzellJMmdTMDktM2g1T09nLVB4RExmWWtXTkYxOGx3bU83RXU5VHczZ2F5OHhCdGEyM3hKZFRHSjFROVpsLUY4MVR2a09pLWpaYTY3cGpPejNVMTZYWWw1bjdEMzB2Z0VpQjlyNEEvNTEyeDM4NA--/auto/auto/85/notrim/16ab40b6f9d58960857fe392b98fce6b.webp"} />
-      <ShopItem color="blue" title="Кассета" price={738} type="weapon" stared={false} urlImg={"https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG9wdWp3ZXpoanhzellJMmdTMDktM2g1T09nLVB4RExmWWtXTkYxOGx3bU83RXU5VHczZ2F5OHhCdGEyM3hKZFRHSjFROVpsLUY4MVR2a09pLWpaYTY3cGpPejNVMTZYWWw1bjdEMzB2Z0VpQjlyNEEvNTEyeDM4NA--/auto/auto/85/notrim/16ab40b6f9d58960857fe392b98fce6b.webp"} />
-      <ShopItem color="blue" title="Кассета" price={738} type="weapon" stared={false} urlImg={"https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG9wdWp3ZXpoanhzellJMmdTMDktM2g1T09nLVB4RExmWWtXTkYxOGx3bU83RXU5VHczZ2F5OHhCdGEyM3hKZFRHSjFROVpsLUY4MVR2a09pLWpaYTY3cGpPejNVMTZYWWw1bjdEMzB2Z0VpQjlyNEEvNTEyeDM4NA--/auto/auto/85/notrim/16ab40b6f9d58960857fe392b98fce6b.webp"} />
+      {shopItem.map((s, i) => (
+        <ShopItem key={i} stared={false} {...s} />
+      ))}
     </div>
   );
 };
+
+interface ShopComponentProps {
+  data: IShopItem[]
+}

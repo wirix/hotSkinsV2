@@ -12,39 +12,62 @@
   margin-bottom: 8px;
 }
 
-.img button {
+.buttonStar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
   width: 25px;
   height: 25px;
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  z-index: 10;
+  transition: all .1s linear;
+}
+
+.buttonStar:hover svg path {
+  fill: var(--gold);
 }
 
 .price svg {
-  width: 20px;
-  height: 20px;
+  width: 17px;
+  height: 17px;
 }
 
-.img button svg {
+.buttonStar svg {
   width: 14px;
   height: 14px;
 }
 
+.unstarred svg path {
+  fill: var(--white);
+}
+
+.starred svg path {
+  fill: var(--gold);
+}
+
 .title {
-  font-size: 15px;
-  font-weight: 500;
+  text-transform: capitalize;
   grid-row: 2 / 3;
+  font-weight: 500;
+  font-size: 15px;
 }
 
 .type {
-  font-size: 13px;
+  text-transform: capitalize;
   grid-row: 3 / 4;
   margin-bottom: 5px;
+  font-size: 13px;
 }
 
 .price {
-  display: flex;
   align-items: center;
+  display: flex;
   grid-row: 4 / 5;
+}
+
+.buyText {
+  margin-right: 5px;
+}
+
+.priceText {
+  margin-right: 2px;
 }

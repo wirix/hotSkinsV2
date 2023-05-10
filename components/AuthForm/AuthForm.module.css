@@ -1,0 +1,25 @@
+.form {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 250px;
+}
+
+.swapTab {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 8px;
+}
+
+.swapTab button {
+  text-transform: capitalize;
+  font-weight: 600;
+  transition: all .1s linear;
+}
+
+.swapTab button:hover {
+  color: var(--green);
+}
+
+.active {
+  color: var(--green);
+}

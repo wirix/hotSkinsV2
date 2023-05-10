@@ -5,7 +5,9 @@ export interface ShopItemProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivE
   type: string;
   price: number;
   urlImg: string;
-  // при получении магазина, прогоняем каждый айтем, если на нашем аккуаунте он в избранном, ставим true
-  stared: boolean;
   color: 'blue' | 'purple' | 'pink' | 'red' | 'gold';
+  skinId: number;
+  property: 'Factory New' | 'Minimal Wear' | 'Field-Tested' | 'Well-Worn' | 'Battle-Scarred';
+  // при получении магазина, прогоняем каждый айтем, если на нашем аккуаунте он в избранном, ставим true
+  stared?: boolean;
 }

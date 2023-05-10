@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import styles from './Header.module.css';
 import cn from 'classnames';
-import { ButtonIcon, Search } from '../../../components';
+import { Button, ButtonIcon, Search, Span } from '../../../components';
 import Image from 'next/image';
 import logoImage from './logo.png';
 import Link from 'next/link';
-import { firstLevelRoute } from '../../../helpers/helpers';
+import { firstLevelRoute, pushUrlAuthParams } from '../../../helpers/helpers';
 import MoneyIcon from './money.svg';
-import { useWindowSize } from '../../../helpers/useWindowSize';
+import { useWindowSize } from '../../../hooks/useWindowSize';
+import GetAuth from '../../../helpers/GetAuth';
+import { useRouter } from 'next/router';
 
 const Header = ({ className, ...props }): JSX.Element => {
   const { width } = useWindowSize();
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>('');
+  const { user } = GetAuth();
+  const router = useRouter();
 
   return (
     <>
@@ -25,7 +29,11 @@ const Header = ({ className, ...props }): JSX.Element => {
         </div>
         <div className={styles.mobileNav}>
           {firstLevelRoute.map(f => (
-            <Link key={f.id} href={'/' + f.route}>{f.name}</Link>
+            <Link key={f.id} href={'/' + f.route}>
+              <Span fontWeight='700' color='white' isHover>
+                {f.name}
+              </Span>
+            </Link>
           ))}
         </div>
       </div>
@@ -39,7 +47,11 @@ const Header = ({ className, ...props }): JSX.Element => {
         <Image className={styles.logo} src={logoImage} width={50} height={55} alt='' />
         <nav className={styles.nav}>
           {firstLevelRoute.map(f => (
-            f.isNavLink && <Link key={f.id} href={'/' + f.route}>{f.name}</Link>
+            f.isNavLink && <Link key={f.id} href={'/' + f.route}>
+              <Span fontWeight='700' color='white' isHover>
+                {f.name}
+              </Span>
+            </Link>
           ))}
         </nav>
         <div className={styles.search}>
@@ -51,18 +63,25 @@ const Header = ({ className, ...props }): JSX.Element => {
             placeholder='Поиск ...'
           />
         </div>
-        <div className={styles.profile}>
-          <span className={styles.money}>
-            <MoneyIcon />
-            <span className={styles.balance}>4666565</span>
-          </span>
-          {width > 1180 && <span className={cn(styles.border)}></span>}
-          {width >= 755 && <ButtonIcon className={styles.icon} icon='settings' />}
-          <ButtonIcon className={styles.icon} icon='bell' />
-          <Link href='/profile' >
-            <Image className={styles.photoProfile} src={logoImage} width={50} height={55} alt='' />
-          </Link>
-        </div>
+        {user ?
+          <div className={styles.profile}>
+            <span className={styles.money}>
+              <MoneyIcon />
+              <span className={styles.balance}>4666565</span>
+            </span>
+            {width > 1180 && <span className={cn(styles.border)}></span>}
+            {width >= 755 && <ButtonIcon className={styles.icon} icon='settings' />}
+            <ButtonIcon className={styles.icon} icon='bell' />
+            <Link href='/profile' >
+              <Image className={styles.photoProfile} src={logoImage} width={50} height={55} alt='' />
+            </Link>
+          </div>
+          : <Button className={styles.registration} onClick={() => pushUrlAuthParams('registration', router)}>
+            <Span fontSize='14px' fontWeight='700' color='white' isHover>
+              Регистрация
+            </Span>
+          </Button>
+        }
       </header>
     </>
   );
