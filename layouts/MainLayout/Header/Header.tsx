@@ -10,6 +10,7 @@ import MoneyIcon from './money.svg';
 import { useWindowSize } from '../../../hooks/useWindowSize';
 import GetAuth from '../../../helpers/GetAuth';
 import { useRouter } from 'next/router';
+import { logout } from '../../../firebase';
 
 const Header = ({ className, ...props }): JSX.Element => {
   const { width } = useWindowSize();
@@ -70,17 +71,16 @@ const Header = ({ className, ...props }): JSX.Element => {
               <span className={styles.balance}>4666565</span>
             </span>
             {width > 1180 && <span className={cn(styles.border)}></span>}
-            {width >= 755 && <ButtonIcon className={styles.icon} icon='settings' />}
+            {width >= 755 && <ButtonIcon className={styles.icon} icon='settings' onClick={() => logout()} />}
             <ButtonIcon className={styles.icon} icon='bell' />
             <Link href='/profile' >
               <Image className={styles.photoProfile} src={logoImage} width={50} height={55} alt='' />
             </Link>
           </div>
-          : <Button className={styles.registration} onClick={() => pushUrlAuthParams('registration', router)}>
-            <Span fontSize='14px' fontWeight='700' color='white' isHover>
-              Регистрация
-            </Span>
-          </Button>
+          :
+          <Span className={styles.registration} onClick={() => pushUrlAuthParams('registration', router)} fontSize='16px' fontWeight='700' color='white' isHover>
+            Регистрация
+          </Span>
         }
       </header>
     </>

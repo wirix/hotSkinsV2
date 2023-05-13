@@ -1,3 +1,7 @@
+.inputContainer {
+  position: relative;
+}
+
 .input {
   width: 200px;
   height: 30px;
@@ -18,4 +22,12 @@
 
 .black {
   background-color: var(--black);
+}
+
+.span {
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  bottom: 0;
+  padding-left: 15px;
 }

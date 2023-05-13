@@ -1,7 +1,7 @@
 .ImgWithSkin {
+  position: relative;
   display: flex;
   justify-content: center;
-  position: relative;
   overflow: hidden;
   background-color: var(--black);
   border-radius: 10px;

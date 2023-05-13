@@ -1,0 +1,42 @@
+.notification {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 400px;
+  padding: 16px;
+  color: var(--white);
+  border: 1px solid var(--white);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+}
+
+.notification p {
+  margin: 0;
+}
+
+.notification p::first-letter {
+  text-transform: capitalize;
+}
+
+.notification button {
+  width: 20px;
+  height: 20px;
+  color: var(--dark-gray);
+}
+
+.notification button:hover {
+  color: var(--dark-gray-hover);
+}
+
+.notification.success {
+  background-color: var(--green);
+  border-color: var(--dark-gray);
+}
+
+.notification.error {
+  background-color: #fb6363;
+  border-color: var(--dark-gray);
+}

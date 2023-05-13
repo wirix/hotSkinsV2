@@ -6,6 +6,14 @@
   color: var(--gray);
 }
 
+.red {
+  color: var(--red);
+}
+
+.green {
+  color: var(--green);
+}
+
 .white {
   color: var(--white);
 }

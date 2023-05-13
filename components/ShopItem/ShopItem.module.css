@@ -19,7 +19,15 @@
   z-index: 10;
   width: 25px;
   height: 25px;
-  transition: all .1s linear;
+  transition: all 0.1s linear;
+}
+
+.unstarred svg path {
+  fill: var(--white);
+}
+
+.starred svg path {
+  fill: var(--gold);
 }
 
 .buttonStar:hover svg path {
@@ -36,32 +44,24 @@
   height: 14px;
 }
 
-.unstarred svg path {
-  fill: var(--white);
-}
-
-.starred svg path {
-  fill: var(--gold);
-}
-
 .title {
-  text-transform: capitalize;
   grid-row: 2 / 3;
   font-weight: 500;
   font-size: 15px;
+  text-transform: capitalize;
 }
 
 .type {
-  text-transform: capitalize;
   grid-row: 3 / 4;
   margin-bottom: 5px;
   font-size: 13px;
+  text-transform: capitalize;
 }
 
 .price {
-  align-items: center;
   display: flex;
   grid-row: 4 / 5;
+  align-items: center;
 }
 
 .buyText {

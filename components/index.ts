@@ -9,3 +9,4 @@ export * from './ImgWithSkin/ImgWithSkin';
 export * from './AuthForm/AuthForm';
 export * from './AuthForm/LoginForm/LoginForm';
 export * from './AuthForm/RegistrationForm/RegistrationForm';
+export * from './Notification/Notification';

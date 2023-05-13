@@ -1,7 +1,7 @@
 .form {
   display: grid;
-  justify-content: center;
   grid-template-columns: 250px;
+  justify-content: center;
 }
 
 .swapTab {
@@ -11,9 +11,9 @@
 }
 
 .swapTab button {
-  text-transform: capitalize;
   font-weight: 600;
-  transition: all .1s linear;
+  text-transform: capitalize;
+  transition: none;
 }
 
 .swapTab button:hover {
@@ -22,4 +22,6 @@
 
 .active {
   color: var(--green);
+  border-bottom: 1px solid var(--green);
+  border-radius: 0;
 }

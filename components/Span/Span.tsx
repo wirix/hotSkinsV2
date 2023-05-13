@@ -9,6 +9,8 @@ export const Span = ({ children, isHover = false, color = 'gray', fontSize = '16
       [styles.isHover]: isHover,
       [styles.gray]: color === 'gray',
       [styles.white]: color === 'white',
+      [styles.green]: color === 'green',
+      [styles.red]: color === 'red',
       [styles.fontWeight200]: fontWeight === '200',
       [styles.fontWeight300]: fontWeight === '300',
       [styles.fontWeight400]: fontWeight === '400',

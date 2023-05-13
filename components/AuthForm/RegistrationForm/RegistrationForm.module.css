@@ -1,12 +1,17 @@
-.formInner input {
+.input {
   width: 250px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
-.formInner input:nth-child(3) {
+.lastinput {
+  width: 250px;
   margin-bottom: 0;
 }
 
 .formInner span button {
   margin-top: 20px;
+}
+
+.inputError {
+  margin-bottom: 20px;
 }

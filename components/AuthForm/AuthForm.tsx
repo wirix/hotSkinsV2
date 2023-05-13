@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { LoginForm } from './LoginForm/LoginForm';
 import { RegistrationForm } from './RegistrationForm/RegistrationForm';
 import { Button } from '../Button/Button';
 import styles from './AuthForm.module.css';
 import { pushUrlAuthParams } from '../../helpers/helpers';
+import { NotificationContext } from '../../context/notification.context';
 
 export const AuthForm = (): JSX.Element => {
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const { setMessage, setType } = useContext(NotificationContext);
   const router = useRouter();
-  const [typeAuth, setTypeAuth] = useState<'registration' | 'signup' | undefined>();
+  const [typeAuth, setTypeAuth] = useState<'registration' | 'signup'>('registration');
 
   useEffect(() => {
     const type = router.asPath.split('=')[1];
@@ -18,9 +19,9 @@ export const AuthForm = (): JSX.Element => {
     }
   }, [router.asPath]);
 
-  if (isSuccess) {
-    console.log('вход/регистр выполнен успешно');
-  }
+  useEffect(() => {
+    pushUrlAuthParams('registration', router);
+  }, []);
 
   return (
     <div className={styles.form}>
@@ -36,11 +37,13 @@ export const AuthForm = (): JSX.Element => {
         >войти
         </Button>
       </div>
-      {typeAuth === 'signup' && <LoginForm
-        setIsSuccess={setIsSuccess}
+      {setMessage && setType && typeAuth === 'signup' && <LoginForm
+        setMessage={setMessage}
+        setType={setType}
       />}
-      {typeAuth === 'registration' && <RegistrationForm
-        setIsSuccess={setIsSuccess}
+      {setMessage && setType && typeAuth === 'registration' && <RegistrationForm
+        setMessage={setMessage}
+        setType={setType}
       />}
     </div>
   );

@@ -46,7 +46,11 @@ export const registerWithEmailAndPassword = async (username: string, email: stri
     writeUserData(userData);
   } catch (e) {
     if (e instanceof Error) {
-      console.log(e.message);
+      // преобразовываем ошибку firebase для typeErrorRegistration
+      const regex = /\(([^)]+)\)/;
+      const match = regex.exec(e.message);
+      const errorMessage = match ? match[1] as typeErrorRegistration : 'unknownError';
+      return errorMessage;
     }
   }
 };
@@ -56,7 +60,11 @@ export const funSignInWithEmailAndPassword = async (email: string, password: str
     await signInWithEmailAndPassword(auth, email, password);
   } catch (e) {
     if (e instanceof Error) {
-      console.log(e.message);
+      // преобразовываем ошибку firebase для typeErrorLogin
+      const regex = /\(([^)]+)\)/;
+      const match = regex.exec(e.message);
+      const errorMessage = match ? match[1] as typeErrorLogin : 'unknownError';
+      return errorMessage;
     }
   }
 };
@@ -74,3 +82,7 @@ interface IProfileData {
   luckyChance: number;
   inventory: [];
 }
+
+export type typeErrorRegistration = 'auth/email-already-in-use' | 'auth/invalid-email' | 'auth/operation-not-allowed' | 'auth/weak-password' | 'auth/network-request-failed' | 'auth/too-many-requests' | 'auth/user-disabled' | 'auth/internal-error' | 'auth/user-not-found' | undefined | 'unknownError';
+
+export type typeErrorLogin = 'auth/wrong-password' | 'auth/user-not-found' | undefined | 'unknownError';
