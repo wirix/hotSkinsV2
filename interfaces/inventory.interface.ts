@@ -1,4 +1,4 @@
-export enum ShopEnum {
+export enum InventoryEnum {
   priceUp,
   priceDown,
   RareUp,

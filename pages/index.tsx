@@ -1,8 +1,34 @@
 import Head from "next/head";
 import { withLayout } from "../layouts/MainLayout/Layout";
 import { CasesListComponent } from "../page-components";
+import { auth, getUserData } from '../firebase';
+import GetAuth from "../helpers/GetAuth";
+import { IAccountFull } from "../interfaces/account.inteface";
+import { useDispatch } from "react-redux";
+import { setDataAccount } from "../redux/slices/accountSlice";
+import { setDataInventory } from "../redux/slices/inventorySlice";
 
-const Home = () => {
+const Home = (): JSX.Element => {
+  const { loading } = GetAuth();
+  const dispatch = useDispatch();
+
+  if (loading) {
+    return <div>ждемс</div>;
+  }
+
+  const getUserDataFunction = async () => {
+    try {
+      // данные аккаунта отдельно, инвентарь отдельно
+      const data = await getUserData(auth) as IAccountFull;
+      const { balance, uid, username, email, password, luckyChance } = data;
+      dispatch(setDataAccount({balance, uid, username, email, password, luckyChance}));
+      dispatch(setDataInventory(data.inventory));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getUserDataFunction();
   return (
     <>
       <Head>

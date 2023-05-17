@@ -9,8 +9,10 @@ import { LoginFormProps } from './LoginForm.props';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import cn from 'classnames';
+import { useRouter } from 'next/router';
 
 export const LoginForm = ({ setType, setMessage }: LoginFormProps): JSX.Element => {
+  const router = useRouter();
   const SignupSchema = Yup.object().shape({
     email: Yup.string().email(`Неверно указан email`).required('Поле обязательно!'),
     password: Yup.string().required('Поле обязательно!').min(8, 'Минимум 8 символов'),
@@ -26,6 +28,9 @@ export const LoginForm = ({ setType, setMessage }: LoginFormProps): JSX.Element 
     if (!res) {
       setMessage('успешный вход');
       setType('success');
+      setTimeout(() => {
+        router.push('/');
+      }, 1500);
     } else {
       switch (res) {
         // обработаны не все типы

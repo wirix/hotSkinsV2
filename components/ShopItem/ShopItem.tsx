@@ -9,10 +9,16 @@ import { Button } from '../Button/Button';
 import { ShopItemProps } from './ShopItem.props';
 
 export const ShopItem = ({ title, skinId, property, urlImg, price, type, stared = false, color, className, ...props }: ShopItemProps): JSX.Element => {
-
+  
   const onClickSendStar = () => {
     return;
     // ф-ия которая меняет stared на противоположный !stared
+  };
+
+  const onClickBuyItem = () => {
+    // можно прикрутить магазин к firebase, тем самым удалять проданный эл-нт из магазина
+    
+    
   };
 
   return (
@@ -37,7 +43,7 @@ export const ShopItem = ({ title, skinId, property, urlImg, price, type, stared 
         />
       </div>
       <Span className={styles.title} fontWeight='500' color='white'>
-        {title} (<Span color='white'>{property}</Span>)
+        {title} {property && (<Span color='white'>{property}</Span>)}
       </Span>
       <Span className={styles.type} fontWeight='300'>
         {type}
@@ -47,7 +53,7 @@ export const ShopItem = ({ title, skinId, property, urlImg, price, type, stared 
           className={styles.price}
           appearance={'green'}
         >
-          <Span fontSize={'14px'} color={'white'} className={styles.buyText} >Купить</Span>
+          <Span fontSize={'14px'} color={'white'} className={styles.buyText} onClick={() => onClickBuyItem()} >Купить</Span>
           <Span fontSize={'14px'} color={'white'} className={styles.priceText} >{price}</Span>
           <Money />
         </Button>

@@ -7,6 +7,8 @@ import Sidebar from './Sidebar/Sidebar';
 import { INotificationContext, NotificationContext } from '../../context/notification.context';
 import { NotificationContextProvider } from '../../context/notification.context';
 import { Notification } from '../../components';
+import { Provider } from 'react-redux';
+import store from '../../redux/store';
 
 const Layout = ({ children }: LayoutProps): JSX.Element => {
   const { message, type } = useContext(NotificationContext);
@@ -24,16 +26,20 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
 };
 
 export const withLayout = <T extends Record<string, unknown> & INotificationContext>(Component: FC<T>) => {
-  return function functionWithProps(props: T): JSX.Element {
-    return <NotificationContextProvider
-      message={props.message}
-      setMessage={props.setMessage}
-      type={props.type}
-      setType={props.setType}
-    >
-      <Layout>
-        <Component {...props} />
-      </Layout>
-    </NotificationContextProvider>;
+  return function functionWithProps(props: T) {
+    return (
+      <Provider store={store}>
+        <NotificationContextProvider
+          message={props.message}
+          // setMessage={props.setMessage}
+          type={props.type}
+          // setType={props.setType}
+        >
+          <Layout>
+            <Component {...props} />
+          </Layout>
+        </NotificationContextProvider>
+      </Provider>
+    );
   };
 };

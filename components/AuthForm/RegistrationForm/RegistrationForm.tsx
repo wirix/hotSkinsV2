@@ -9,8 +9,12 @@ import { RegistrationFormProps } from './RegistrationForm.props';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
 import cn from 'classnames';
+import { useRouter } from 'next/router';
+
 // при повторной попытке регистр NOte не появл
 export const RegistrationForm = ({ setType, setMessage }: RegistrationFormProps): JSX.Element => {
+  const router = useRouter();
+
   const SignupSchema = Yup.object().shape({
     email: Yup.string().email(`Неверно указан email`).required('Поле обязательно!'),
     password: Yup.string().required('Поле обязательно!').min(8, 'Минимум 8 символов'),
@@ -27,6 +31,9 @@ export const RegistrationForm = ({ setType, setMessage }: RegistrationFormProps)
     if (!res) {
       setMessage('успех регистр');
       setType('success');
+      setTimeout(() => {
+        router.push('/');
+      }, 1500);
     } else {
       switch (res) {
         // обработаны не все типы

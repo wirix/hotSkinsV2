@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withLayout } from '../layouts/MainLayout/Layout';
 import { CasesListComponent, ShopComponent, InventoryComponent } from '../page-components';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
@@ -6,11 +6,12 @@ import { firstLevelRoute } from '../helpers/helpers';
 import { ParsedUrlQuery } from 'querystring';
 import Error404 from './404';
 import axios from 'axios';
-import { IShopItem } from '../interfaces/shop.interface';
 import GetAuth from '../helpers/GetAuth';
 import { AuthForm } from '../components';
+import { TypeAllItems } from '../interfaces/items.interface';
+import { INotificationContext } from '../context/notification.context';
 
-const SlugType = ({ data, pageType }: ShopProps): JSX.Element => {
+const SlugType = ({ shopData, pageType }: ShopProps): JSX.Element => {
   const { user, loading, error } = GetAuth();
 
   if (loading) {
@@ -18,14 +19,14 @@ const SlugType = ({ data, pageType }: ShopProps): JSX.Element => {
   }
 
   if (error && error instanceof Error) {
-    return <div>ошбика {error.message}</div>;
+    return <div>ошибка {error.message}</div>;
   }
 
   if (user) {
     if (pageType) {
       switch (pageType[0]) {
         case 'shop':
-          return <ShopComponent data={data} />;
+          return <ShopComponent shopData={shopData} />;
         case 'cases':
           return <CasesListComponent />;
         case 'inventory':
@@ -40,6 +41,8 @@ const SlugType = ({ data, pageType }: ShopProps): JSX.Element => {
     return <AuthForm />;
   }
 };
+
+export default withLayout<ShopProps & INotificationContext>(SlugType);
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -62,12 +65,12 @@ export const getStaticProps: GetStaticProps<ShopProps> = async ({ params }: GetS
     };
   }
 
-  const { data } = await axios.get<IShopItem[]>(process.env.NEXT_PUBLIC_DOMAIN + 'shopItems');
-
+  const { data: shopData } = await axios.get<TypeAllItems[]>(process.env.NEXT_PUBLIC_DOMAIN + 'shopItems');
+  
   return {
     props: {
       pageType: params.slug,
-      data: data
+      shopData
     }
   };
 };
@@ -76,7 +79,5 @@ type pageType = string | string[] | undefined;
 
 interface ShopProps extends Record<string, unknown> {
   pageType: pageType;
-  data: IShopItem[];
+  shopData: TypeAllItems[];
 }
-
-export default withLayout(SlugType);

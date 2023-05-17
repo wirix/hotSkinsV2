@@ -1,10 +1,12 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import 'firebase/compat/auth';
 import 'firebase/compat/database';
 import 'firebase/compat/firestore';
 import firebase from 'firebase/compat/app';
+import { ref, getDatabase, onValue } from 'firebase/database';
+import { IAccountFull } from "./interfaces/account.inteface";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDN07lGFjcBYAmcXZlcD43hrk6jpqHtbtg",
@@ -21,7 +23,30 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-export const writeUserData = (user: IProfileData): void => {
+export const getUserData = (authUser) => {
+  if (authUser.currentUser) {
+    return new Promise((resolve, reject) => {
+      onAuthStateChanged(authUser, (user) => {
+        if (user) {
+          const uid: string = user.uid;
+          const database = getDatabase();
+          const balance = ref(database, 'users/' + uid);
+
+          onValue(balance, (snapshot) => {
+            const data = snapshot.val();
+            resolve(data);
+          });
+        } else {
+          reject('User not found');
+        }
+      });
+    });
+  } else {
+    throw new Error('Auth user not found');
+  }
+};
+
+export const writeUserData = (user: IAccountFull): void => {
   firebase.database().ref(`users/${user.uid}`).set(user)
     .catch(e => {
       if (e instanceof Error) {
@@ -34,7 +59,7 @@ export const registerWithEmailAndPassword = async (username: string, email: stri
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
-    const userData: IProfileData = {
+    const userData: IAccountFull = {
       uid: user.uid,
       username,
       email,
@@ -72,16 +97,6 @@ export const funSignInWithEmailAndPassword = async (email: string, password: str
 export const logout = (): void => {
   signOut(auth);
 };
-
-interface IProfileData {
-  uid: string;
-  username: string;
-  email: string;
-  password: string;
-  balance: number;
-  luckyChance: number;
-  inventory: [];
-}
 
 export type typeErrorRegistration = 'auth/email-already-in-use' | 'auth/invalid-email' | 'auth/operation-not-allowed' | 'auth/weak-password' | 'auth/network-request-failed' | 'auth/too-many-requests' | 'auth/user-disabled' | 'auth/internal-error' | 'auth/user-not-found' | undefined | 'unknownError';
 

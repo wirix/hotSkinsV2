@@ -1,23 +1,24 @@
-import React, { useReducer } from 'react';
+import React, { useEffect } from 'react';
 import styles from './ShopComponent.module.css';
 import { ShopItem } from '../../components';
-import { shopReducer } from './shop.reducer';
-import { IShopItem } from '../../interfaces/shop.interface';
+import { useDispatch } from 'react-redux';
+import { setDataShop } from '../../redux/slices/shopSlice';
+import { ShopComponentProps } from './ShopComponent.props';
 
-export const ShopComponent = ({ data }: ShopComponentProps): JSX.Element => {
-  const [{ shopItems: shopItem }, dispatchShop] = useReducer(shopReducer, {
-    shopItems: data
-  });
+export const ShopComponent = ({ shopData }: ShopComponentProps): JSX.Element => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (shopData) {
+      dispatch(setDataShop(shopData));
+    }
+  }, [shopData]);
 
   return (
     <div className={styles.shop}>
-      {shopItem.map((s, i) => (
+      {shopData.map((s, i) => (
         <ShopItem key={i} stared={false} {...s} />
       ))}
     </div>
   );
 };
-
-interface ShopComponentProps {
-  data: IShopItem[]
-}
