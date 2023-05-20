@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styles from './ShopComponent.module.css';
-import { ShopItem } from '../../components';
+import { UniversalItem, WeaponItem } from '../../components';
 import { useDispatch } from 'react-redux';
 import { setDataShop } from '../../redux/slices/shopSlice';
 import { ShopComponentProps } from './ShopComponent.props';
@@ -16,9 +16,14 @@ export const ShopComponent = ({ shopData }: ShopComponentProps): JSX.Element => 
 
   return (
     <div className={styles.shop}>
-      {shopData.map((s, i) => (
-        <ShopItem key={i} stared={false} {...s} />
-      ))}
+      {shopData.weapon.map((g, i) => {
+        // если есть float, тогда это оружие, иначе остальные айтемы
+        if (g.property) {
+          return <WeaponItem property={g.property} key={i} {...g} />;
+        } else {
+          return <UniversalItem key={i} {...g} />;
+        }
+      })}
     </div>
   );
 };

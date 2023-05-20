@@ -1,5 +1,5 @@
-import { TypeAllItems } from "../../interfaces/items.interface";
+import { shopData } from "../../interfaces/items.interface";
 
 export interface ShopComponentProps {
-  shopData: TypeAllItems[];
+  shopData: shopData;
 }

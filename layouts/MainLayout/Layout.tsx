@@ -12,6 +12,7 @@ import store from '../../redux/store';
 
 const Layout = ({ children }: LayoutProps): JSX.Element => {
   const { message, type } = useContext(NotificationContext);
+
   return (
     <div className={styles.layoutWrapper}>
       <div className={styles.layout}>

@@ -1,20 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { TypeAllItems } from '../../interfaces/items.interface';
+import { shopData } from '../../interfaces/items.interface';
 
 interface ShopState {
-  shop: TypeAllItems[];
+  shop: shopData;
 }
 
 const initialState: ShopState = {
-  shop: [],
+  shop: {
+    weapon: [],
+    graffiti: [],
+    sticker: [],
+  }
 };
 
 const shopSlice = createSlice({
   name: 'shop',
   initialState,
   reducers: {
-    setDataShop: (state, action: PayloadAction<TypeAllItems[]>) => {
+    setDataShop: (state, action: PayloadAction<shopData>) => {
       state.shop = action.payload;
     }
   }

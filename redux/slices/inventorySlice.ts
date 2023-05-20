@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { TypeAllItems } from '../../interfaces/items.interface';
+import { csgoItem } from '../../interfaces/items.interface';
 
 interface InventoryState {
-  inventory: TypeAllItems[];
+  inventory: csgoItem[];
 }
 
 const initialState: InventoryState = {
@@ -14,7 +14,7 @@ const inventorySlice = createSlice({
   name: 'inventory',
   initialState,
   reducers: {
-    setDataInventory: (state, action: PayloadAction<TypeAllItems[]>) => {
+    setDataInventory: (state, action: PayloadAction<csgoItem[]>) => {
       state.inventory = action.payload;
     }
   }

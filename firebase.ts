@@ -7,6 +7,7 @@ import 'firebase/compat/firestore';
 import firebase from 'firebase/compat/app';
 import { ref, getDatabase, onValue } from 'firebase/database';
 import { IAccountFull } from "./interfaces/account.inteface";
+import { csgoItem } from "./interfaces/items.interface";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDN07lGFjcBYAmcXZlcD43hrk6jpqHtbtg",
@@ -48,6 +49,15 @@ export const getUserData = (authUser) => {
 
 export const writeUserData = (user: IAccountFull): void => {
   firebase.database().ref(`users/${user.uid}`).set(user)
+    .catch(e => {
+      if (e instanceof Error) {
+        console.log(e.message);
+      }
+    });
+};
+
+export const updateInventoryUserData = (uid: string, inventory: csgoItem[]): void => {
+  firebase.database().ref(`users/${uid}/inventory`).set(inventory)
     .catch(e => {
       if (e instanceof Error) {
         console.log(e.message);

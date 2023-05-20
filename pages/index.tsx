@@ -20,8 +20,7 @@ const Home = (): JSX.Element => {
     try {
       // данные аккаунта отдельно, инвентарь отдельно
       const data = await getUserData(auth) as IAccountFull;
-      const { balance, uid, username, email, password, luckyChance } = data;
-      dispatch(setDataAccount({balance, uid, username, email, password, luckyChance}));
+      dispatch(setDataAccount(data));
       dispatch(setDataInventory(data.inventory));
     } catch (error) {
       console.log(error);
@@ -29,6 +28,7 @@ const Home = (): JSX.Element => {
   };
 
   getUserDataFunction();
+
   return (
     <>
       <Head>

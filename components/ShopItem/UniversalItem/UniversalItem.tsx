@@ -1,15 +1,19 @@
 import React from 'react';
-import styles from './ShopItem.module.css';
+import styles from '../ShopItem.module.css';
 import cn from 'classnames';
-import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
-import { Span } from '../Span/Span';
-import Money from './money.svg';
-import { ImgWithSkin } from '../ImgWithSkin/ImgWithSkin';
-import { Button } from '../Button/Button';
-import { ShopItemProps } from './ShopItem.props';
+import { ButtonIcon } from '../../ButtonIcon/ButtonIcon';
+import { Span } from '../../Span/Span';
+import Money from '../money.svg';
+import { ImgWithSkin } from '../../ImgWithSkin/ImgWithSkin';
+import { Button } from '../../Button/Button';
+import { UniversalItemProps } from './UniversalItem.props';
+import { updateInventoryUserData } from '../../../firebase';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
 
-export const ShopItem = ({ title, skinId, property, urlImg, price, type, stared = false, color, className, ...props }: ShopItemProps): JSX.Element => {
-  
+export const UniversalItem = ({ title, property, urlImg, price, type, stared = false, color, className, ...props }: UniversalItemProps): JSX.Element => {
+  const uid = useSelector((state: RootState) => state.account.uid);
+
   const onClickSendStar = () => {
     return;
     // ф-ия которая меняет stared на противоположный !stared
@@ -17,8 +21,8 @@ export const ShopItem = ({ title, skinId, property, urlImg, price, type, stared 
 
   const onClickBuyItem = () => {
     // можно прикрутить магазин к firebase, тем самым удалять проданный эл-нт из магазина
-    
-    
+    updateInventoryUserData(uid, []);
+    console.log('uid', uid);
   };
 
   return (
@@ -52,8 +56,9 @@ export const ShopItem = ({ title, skinId, property, urlImg, price, type, stared 
         <Button
           className={styles.price}
           appearance={'green'}
+          onClick={onClickBuyItem}
         >
-          <Span fontSize={'14px'} color={'white'} className={styles.buyText} onClick={() => onClickBuyItem()} >Купить</Span>
+          <Span fontSize={'14px'} color={'white'} className={styles.buyText} >Купить</Span>
           <Span fontSize={'14px'} color={'white'} className={styles.priceText} >{price}</Span>
           <Money />
         </Button>

@@ -18,7 +18,11 @@ const accountSlice = createSlice({
   initialState,
   reducers: {
     setDataAccount: (state, action: PayloadAction<AccountState>) => {
-      state = {...action.payload};
+      state.balance = action.payload.balance;
+      state.uid = action.payload.uid;
+      state.username = action.payload.username;
+      state.email = action.payload.email;
+      state.luckyChance = action.payload.luckyChance;
     }
   },
 });

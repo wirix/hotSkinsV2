@@ -1,29 +1,18 @@
-export interface IWeaponItem {
-  title: string;
-  type: 'weapon';
-  price: number;
-  urlImg: string;
-  color: 'blue' | 'purple' | 'pink' | 'red' | 'gold';
-  skinId: string;
-  property: 'Factory New' | 'Minimal Wear' | 'Field-Tested' | 'Well-Worn' | 'Battle-Scarred';
+export interface shopData {
+  weapon: csgoItem[];
+  graffiti: csgoItem[];
+  sticker: csgoItem[];
 }
 
-export interface IStickerItem {
-  color: 'blue' | 'purple' | 'pink' | 'red';
-  urlImg: string;
-  skinId: string;
+export interface csgoItem {
+  skinId: number;
+  color: Typecolor;
+  type: string;
   title: string;
-  type: 'sticker';
+  urlImg: string;
   price: number;
+  property?: TypeProperty;
 }
 
-export interface IGraffitiItem {
-  color: 'blue' | 'purple' | 'pink';
-  urlImg: string;
-  skinId: string;
-  title: string;
-  type: 'graffiti';
-  price: number;
-}
-
-export type TypeAllItems = (IWeaponItem | IStickerItem | IGraffitiItem);
+export type Typecolor = 'blue' | 'purple' | 'pink' | 'red' | 'gold';
+export type TypeProperty = 'Factory New' | 'Minimal Wear' | 'Field-Tested' | 'Well-Worn' | 'Battle-Scarred';

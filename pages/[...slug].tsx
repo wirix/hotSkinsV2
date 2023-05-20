@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { withLayout } from '../layouts/MainLayout/Layout';
 import { CasesListComponent, ShopComponent, InventoryComponent } from '../page-components';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
@@ -8,11 +8,17 @@ import Error404 from './404';
 import axios from 'axios';
 import GetAuth from '../helpers/GetAuth';
 import { AuthForm } from '../components';
-import { TypeAllItems } from '../interfaces/items.interface';
+import { shopData } from '../interfaces/items.interface';
 import { INotificationContext } from '../context/notification.context';
+import { auth, getUserData } from '../firebase';
+import { IAccountFull } from '../interfaces/account.inteface';
+import { setDataAccount } from '../redux/slices/accountSlice';
+import { setDataInventory } from '../redux/slices/inventorySlice';
+import { useDispatch } from 'react-redux';
 
 const SlugType = ({ shopData, pageType }: ShopProps): JSX.Element => {
   const { user, loading, error } = GetAuth();
+  const dispatch = useDispatch();
 
   if (loading) {
     return <>загрузка</>;
@@ -21,6 +27,21 @@ const SlugType = ({ shopData, pageType }: ShopProps): JSX.Element => {
   if (error && error instanceof Error) {
     return <div>ошибка {error.message}</div>;
   }
+
+  const getUserDataFunction = async () => {
+    try {
+      // данные аккаунта отдельно, инвентарь отдельно
+      const data = await getUserData(auth) as IAccountFull;
+      const { balance, uid, username, email, password, luckyChance } = data;
+      dispatch(setDataAccount({ balance, uid, username, email, password, luckyChance }));
+      dispatch(setDataInventory(data.inventory));
+      console.log('data', data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getUserDataFunction();
 
   if (user) {
     if (pageType) {
@@ -65,12 +86,12 @@ export const getStaticProps: GetStaticProps<ShopProps> = async ({ params }: GetS
     };
   }
 
-  const { data: shopData } = await axios.get<TypeAllItems[]>(process.env.NEXT_PUBLIC_DOMAIN + 'shopItems');
+  const { data: shopData } = await axios.get<shopData[]>(process.env.NEXT_PUBLIC_DOMAIN + 'shopItems');
   
   return {
     props: {
       pageType: params.slug,
-      shopData
+      shopData: shopData[0]
     }
   };
 };
@@ -79,5 +100,5 @@ type pageType = string | string[] | undefined;
 
 interface ShopProps extends Record<string, unknown> {
   pageType: pageType;
-  shopData: TypeAllItems[];
+  shopData: shopData;
 }
