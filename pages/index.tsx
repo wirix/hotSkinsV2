@@ -1,12 +1,9 @@
 import Head from "next/head";
 import { withLayout } from "../layouts/MainLayout/Layout";
 import { CasesListComponent } from "../page-components";
-import { auth, getUserData } from '../firebase';
+import { getUserDataFunction } from '../firebase';
 import GetAuth from "../helpers/GetAuth";
-import { IAccountFull } from "../interfaces/account.inteface";
 import { useDispatch } from "react-redux";
-import { setDataAccount } from "../redux/slices/accountSlice";
-import { setDataInventory } from "../redux/slices/inventorySlice";
 
 const Home = (): JSX.Element => {
   const { loading } = GetAuth();
@@ -16,19 +13,7 @@ const Home = (): JSX.Element => {
     return <div>ждемс</div>;
   }
 
-  const getUserDataFunction = async () => {
-    try {
-      // данные аккаунта отдельно, инвентарь отдельно
-      const data = await getUserData(auth) as IAccountFull;
-      dispatch(setDataAccount(data));
-      dispatch(setDataInventory(data.inventory));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  getUserDataFunction();
-
+  getUserDataFunction(dispatch);
   return (
     <>
       <Head>

@@ -7,7 +7,9 @@ import 'firebase/compat/firestore';
 import firebase from 'firebase/compat/app';
 import { ref, getDatabase, onValue } from 'firebase/database';
 import { IAccountFull } from "./interfaces/account.inteface";
-import { csgoItem } from "./interfaces/items.interface";
+import { shopData } from "./interfaces/items.interface";
+import { setDataAccount } from "./redux/slices/accountSlice";
+import { setDataInventory } from "./redux/slices/inventorySlice";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDN07lGFjcBYAmcXZlcD43hrk6jpqHtbtg",
@@ -47,6 +49,27 @@ export const getUserData = (authUser) => {
   }
 };
 
+export const getUserDataFunction = async (dispatch) => {
+  try {
+    // данные аккаунта отдельно, инвентарь отдельно
+    await onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid: string = user.uid;
+        const database = getDatabase();
+        const balance = ref(database, 'users/' + uid);
+        onValue(balance, (snapshot) => {
+          const data = snapshot.val();
+          const { balance, uid, username, email, password, luckyChance } = data;
+          dispatch(setDataAccount({ balance, uid, username, email, password, luckyChance }));
+          dispatch(setDataInventory(data.inventory));
+        });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const writeUserData = (user: IAccountFull): void => {
   firebase.database().ref(`users/${user.uid}`).set(user)
     .catch(e => {
@@ -56,7 +79,7 @@ export const writeUserData = (user: IAccountFull): void => {
     });
 };
 
-export const updateInventoryUserData = (uid: string, inventory: csgoItem[]): void => {
+export const updateInventoryUserData = (uid: string, inventory: shopData): void => {
   firebase.database().ref(`users/${uid}/inventory`).set(inventory)
     .catch(e => {
       if (e instanceof Error) {
@@ -76,7 +99,11 @@ export const registerWithEmailAndPassword = async (username: string, email: stri
       password,
       balance: 30000,
       luckyChance: 0,
-      inventory: [],
+      inventory: {
+        weapon: [],
+        sticker: [],
+        graffiti: []
+      },
     };
     writeUserData(userData);
   } catch (e) {

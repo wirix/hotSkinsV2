@@ -5,7 +5,7 @@
         "skinId": 1,
         "property": "Factory new",
         "color": "blue",
-        "type": "P250",
+        "type": "weapon",
         "title": "Кассета",
         "urlImg": "https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG9wdWp3ZXpoanhzellJMmdTMDktM2g1T09nLVB4RExmWWtXTkYxOGx3bU83RXU5VHczZ2F5OHhCdGEyM3hKZFRHSjFROVpsLUY4MVR2a09pLWpaYTY3cGpPejNVMTZYWWw1bjdEMzB2Z0VpQjlyNEEvNTEyeDM4NA--/auto/auto/85/notrim/16ab40b6f9d58960857fe392b98fce6b.webp",
         "price": 20
@@ -14,7 +14,7 @@
         "skinId": 2,
         "property": "Factory new",
         "color": "blue",
-        "type": "SSG 08",
+        "type": "weapon",
         "title": "Мэйнфрейм 001",
         "price": 20.95,
         "urlImg": "https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG9wYW1pZTE5ZjBPYjNZaTVGdklTSm1ZR0NtZkhtTXJiVXFXZFk3ODFsdGVYQTU0dnd4Z093X0Jka1pXaW5kWTZWSUZCck1ncUZfMUM2d0xqdWpNRHU2SjdMbTN0bTdISW00WGJiekVPcHdVWWJ6dW5wb2prLzUxMngzODQ-/auto/auto/85/notrim/a7437a6cb655f78ba3695f1205f8b80f.webp"
@@ -23,7 +23,7 @@
         "skinId": 19,
         "property": "Factory new",
         "color": "red",
-        "type": "AK-47",
+        "type": "weapon",
         "title": "Кровавый спорт",
         "price": 3827.86,
         "urlImg": "https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG90N0h4ZkRobndNekplbWtWMDk2Nm00LVBoT2Y3SWFfdW1tSlc0TkZPaHVqVDhvbTczQVN5LTBScU5XLWhMWVRBY2c1dk1ndlRfVm00d2VmdGhwT192OHlZd0hWbHNpY3I0QzNmelF2MzMwXzc5ZXlwRkEvNTEyeDM4NA--/auto/auto/85/notrim/518d3017011c760f97adf3a144650a0a.webp"
@@ -33,24 +33,24 @@
       {
         "skinId": 1,
         "color": "blue",
-        "type": "P250",
-        "title": "графитти",
+        "type": "graffiti",
+        "title": "граффити",
         "urlImg": "https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG9wdWp3ZXpoanhzellJMmdTMDktM2g1T09nLVB4RExmWWtXTkYxOGx3bU83RXU5VHczZ2F5OHhCdGEyM3hKZFRHSjFROVpsLUY4MVR2a09pLWpaYTY3cGpPejNVMTZYWWw1bjdEMzB2Z0VpQjlyNEEvNTEyeDM4NA--/auto/auto/85/notrim/16ab40b6f9d58960857fe392b98fce6b.webp",
         "price": 20
       },
       {
         "skinId": 2,
         "color": "blue",
-        "type": "SSG 08",
-        "title": "графитти",
+        "type": "graffiti",
+        "title": "граффити",
         "price": 20.95,
         "urlImg": "https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG9wYW1pZTE5ZjBPYjNZaTVGdklTSm1ZR0NtZkhtTXJiVXFXZFk3ODFsdGVYQTU0dnd4Z093X0Jka1pXaW5kWTZWSUZCck1ncUZfMUM2d0xqdWpNRHU2SjdMbTN0bTdISW00WGJiekVPcHdVWWJ6dW5wb2prLzUxMngzODQ-/auto/auto/85/notrim/a7437a6cb655f78ba3695f1205f8b80f.webp"
       },
       {
         "skinId": 19,
         "color": "red",
-        "type": "AK-47",
-        "title": "графитти",
+        "type": "graffiti",
+        "title": "граффити",
         "price": 3827.86,
         "urlImg": "https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG90N0h4ZkRobndNekplbWtWMDk2Nm00LVBoT2Y3SWFfdW1tSlc0TkZPaHVqVDhvbTczQVN5LTBScU5XLWhMWVRBY2c1dk1ndlRfVm00d2VmdGhwT192OHlZd0hWbHNpY3I0QzNmelF2MzMwXzc5ZXlwRkEvNTEyeDM4NA--/auto/auto/85/notrim/518d3017011c760f97adf3a144650a0a.webp"
       }
@@ -59,24 +59,24 @@
       {
         "skinId": 1,
         "color": "blue",
-        "type": "P250",
-        "title": "стикеры",
+        "type": "sticker",
+        "title": "стикер",
         "urlImg": "https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG9wdWp3ZXpoanhzellJMmdTMDktM2g1T09nLVB4RExmWWtXTkYxOGx3bU83RXU5VHczZ2F5OHhCdGEyM3hKZFRHSjFROVpsLUY4MVR2a09pLWpaYTY3cGpPejNVMTZYWWw1bjdEMzB2Z0VpQjlyNEEvNTEyeDM4NA--/auto/auto/85/notrim/16ab40b6f9d58960857fe392b98fce6b.webp",
         "price": 20
       },
       {
         "skinId": 2,
         "color": "blue",
-        "type": "SSG 08",
-        "title": "стикеры",
+        "type": "sticker",
+        "title": "стикер",
         "price": 20.95,
         "urlImg": "https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG9wYW1pZTE5ZjBPYjNZaTVGdklTSm1ZR0NtZkhtTXJiVXFXZFk3ODFsdGVYQTU0dnd4Z093X0Jka1pXaW5kWTZWSUZCck1ncUZfMUM2d0xqdWpNRHU2SjdMbTN0bTdISW00WGJiekVPcHdVWWJ6dW5wb2prLzUxMngzODQ-/auto/auto/85/notrim/a7437a6cb655f78ba3695f1205f8b80f.webp"
       },
       {
         "skinId": 19,
         "color": "red",
-        "type": "AK-47",
-        "title": "стикеры",
+        "type": "sticker",
+        "title": "стикер",
         "price": 3827.86,
         "urlImg": "https://cdn.csgoskins.gg/public/uih/products/aHR0cHM6Ly9zdGVhbWNvbW11bml0eS1hLmFrYW1haWhkLm5ldC9lY29ub215L2ltYWdlLy05YTgxZGxXTHdKMlVVR2NWc19uc1Z0emRPRWR0V3dLR1paTFFIVHhEWjdJNTZLVTBad3dvNE5VWDRvRkpaRUhMYlhINUFwZU80WW1saHhZUWtuQ1J2Q28wNERFVmx4a0tncG90N0h4ZkRobndNekplbWtWMDk2Nm00LVBoT2Y3SWFfdW1tSlc0TkZPaHVqVDhvbTczQVN5LTBScU5XLWhMWVRBY2c1dk1ndlRfVm00d2VmdGhwT192OHlZd0hWbHNpY3I0QzNmelF2MzMwXzc5ZXlwRkEvNTEyeDM4NA--/auto/auto/85/notrim/518d3017011c760f97adf3a144650a0a.webp"
       }

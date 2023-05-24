@@ -1,21 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { csgoItem } from '../../interfaces/items.interface';
+import { shopData } from '../../interfaces/items.interface';
 
 interface InventoryState {
-  inventory: csgoItem[];
+  inventory: shopData;
 }
 
 const initialState: InventoryState = {
-  inventory: [],
+  inventory: {
+    weapon: [],
+    graffiti: [],
+    sticker: []
+  },
 };
 
 const inventorySlice = createSlice({
   name: 'inventory',
   initialState,
   reducers: {
-    setDataInventory: (state, action: PayloadAction<csgoItem[]>) => {
-      state.inventory = action.payload;
+    setDataInventory: (state, action: PayloadAction<shopData>) => {
+      state.inventory.weapon = action.payload.weapon;
+      // state.inventory.graffiti = action.payload.graffiti;
+      // state.inventory.sticker = action.payload.sticker;
     }
   }
 });

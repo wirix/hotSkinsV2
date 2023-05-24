@@ -1,3 +1,5 @@
+import { TypeSidebarTitleItem } from "../layouts/MainLayout/Sidebar/Sidebar.props";
+
 export interface shopData {
   weapon: csgoItem[];
   graffiti: csgoItem[];
@@ -7,7 +9,7 @@ export interface shopData {
 export interface csgoItem {
   skinId: number;
   color: Typecolor;
-  type: string;
+  type: TypeSidebarTitleItem;
   title: string;
   urlImg: string;
   price: number;

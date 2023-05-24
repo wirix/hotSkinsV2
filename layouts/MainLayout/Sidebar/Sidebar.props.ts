@@ -1,0 +1,1 @@
+export type TypeSidebarTitleItem = 'all' | 'weapon' | 'cases' | 'graffiti' | 'sticker' | 'another';

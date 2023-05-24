@@ -1,4 +1,4 @@
-import { csgoItem } from "./items.interface";
+import { shopData } from "./items.interface";
 
 export interface IAccount {
   balance: number;
@@ -10,5 +10,5 @@ export interface IAccount {
 }
 
 export interface IAccountFull extends IAccount {
-  inventory: csgoItem[];
+  inventory: shopData;
 }

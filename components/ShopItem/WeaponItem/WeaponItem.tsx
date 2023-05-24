@@ -10,9 +10,11 @@ import { WeaponItemProps } from './WeaponItem.props';
 import { updateInventoryUserData } from '../../../firebase';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
+import { shopData } from '../../../interfaces/items.interface';
 
 export const WeaponItem = ({ title, skinId, property, urlImg, price, type, stared = false, color, className, ...props }: WeaponItemProps): JSX.Element => {
   const {uid} = useSelector((state: RootState) => state.account);
+  const inventory = useSelector((state: RootState) => state.inventory.inventory);
 
   const onClickSendStar = () => {
     return;
@@ -22,7 +24,11 @@ export const WeaponItem = ({ title, skinId, property, urlImg, price, type, stare
   const onClickBuyItem = () => {
     // можно прикрутить магазин к firebase, тем самым удалять проданный эл-нт из магазина
     // [...inventory, {title, skinId, property, urlImg, price, type, color}]
-    updateInventoryUserData(uid, [{title, skinId, property, urlImg, price, type, color}]);
+    const newInventory: shopData = {
+      ...inventory,
+      weapon: [...inventory.weapon, { title, skinId, property, urlImg, price, type, color }],
+    };
+    updateInventoryUserData(uid, newInventory);
   };
 
   return (

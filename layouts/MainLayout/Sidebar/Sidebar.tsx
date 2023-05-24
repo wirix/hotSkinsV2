@@ -4,23 +4,43 @@ import { ButtonIcon, Search } from '../../../components';
 import styles from './Sidebar.module.css';
 import { useRouter } from 'next/router';
 import difference from 'lodash.difference';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
+import { setCurrentCategory } from '../../../redux/slices/shopSlice';
+import { TypeSidebarTitleItem } from './Sidebar.props';
+// дело в том, что сортировка по категориям не правильная ,тк используем только из shop, а если мы перейдем в инвентарь, то будем использовать то же самое состояние Sidebar, что и прежеде, можно юзать useEffect при смене url и сносить категорию, но использовать категории только из шоп, что не тоже верно, или хранить категории в каждом reducere,
+// также можно в каждом состоянии хранить все возможные категории данной страницы и удаитть их от сюда, но тогда, как юзать useSelector в одном Sidebar
 
 const Sidebar = ({ className, ...props }): JSX.Element => {
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const [searchValue, setSearchValue] = useState<string>('');
-  const [currentCategory, setCurrentCategory] = useState<string>('всё');
+  const currentCategory = useSelector((state: RootState) => state.shop.currentCategory);
   const [additionalCategory, setAdditionalCategory] = useState<string>('');
 
-  const listCategories = ['всё', 'оружие', 'кейсы', 'граффити', 'коллекции', 'другое'];
-  const [currentCategories, setCurrentCategories] = useState<string[]>(listCategories);
+  const listCategories: ICurrentCategories[] = [
+    { category: 'all', title: 'всё' },
+    { category: 'weapon', title: 'оружие' },
+    { category: 'cases', title: 'кейсы' },
+    { category: 'graffiti', title: 'граффити' },
+    { category: 'sticker', title: 'стикеры' },
+    { category: 'another', title: 'другое' },
+  ];
 
-  const deleteCategoriesFromShop = ['кейсы', 'другое'];
-  const deleteCategoriesFromCases = ['другое', 'оружие'];
+  const [currentCategories, setCurrentCategories] = useState<ICurrentCategories[]>(listCategories);
+  // тперь не удаляются категории не подходящие поэтому их лцшеи перекиннуть в reducer, может юзать notshow как с иконкой, если получится
+  const deleteCategoriesFromShop = [{ category: 'weapon', title: 'оружие' }, { category: 'another', title: 'другое' }];
+  const deleteCategoriesFromCases = [{ category: 'another', title: 'другое' }, { category: 'weapon', title: 'оружие' }];
   const deleteCategoriesFromInventory = [];
 
   const additionalCategories = [
     { icon: <ButtonIcon icon='star' />, title: 'cохранённые', count: 0, notShow: ['/cases', '/inventory'] }
   ];
+
+  const onChangeCategoryClick = ((category: TypeSidebarTitleItem) => {
+    dispatch(setCurrentCategory(category));
+  });
 
   useEffect(() => {
     // если переходим на другой url, то убираем ненужные категории для этого url
@@ -29,7 +49,7 @@ const Sidebar = ({ className, ...props }): JSX.Element => {
         router.asPath === '/cases' ? deleteCategoriesFromCases :
           router.asPath === '/inventory' ? deleteCategoriesFromInventory : []
     ));
-    setCurrentCategory('всё');
+    setCurrentCategory('all');
   }, [router.asPath]);
 
   return (
@@ -47,12 +67,12 @@ const Sidebar = ({ className, ...props }): JSX.Element => {
       <ul className={styles.listCategory}>
         {currentCategories.map(l => (
           <li
-            key={l}
+            key={l.category}
             className={cn(styles.category, {
-              [styles.active]: l === currentCategory
+              [styles.active]: l.category === currentCategory
             })}
-            onClick={() => setCurrentCategory(l)}
-          >{l}</li>
+            onClick={() => onChangeCategoryClick(l.category)}
+          >{l.title}</li>
         ))}
       </ul>
       <hr className={styles.hr} />
@@ -75,13 +95,18 @@ const Sidebar = ({ className, ...props }): JSX.Element => {
                 </span>
               </div>
             );
-        } else {
-          return;
-        }
+          } else {
+            return;
+          }
         })}
       </div>
     </div>
   );
 };
+
+interface ICurrentCategories {
+  category: TypeSidebarTitleItem;
+  title: string;
+}
 
 export default Sidebar;

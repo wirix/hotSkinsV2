@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { shopData } from '../../interfaces/items.interface';
+import { TypeSidebarTitleItem } from '../../layouts/MainLayout/Sidebar/Sidebar.props';
 
 interface ShopState {
   shop: shopData;
+  currentCategory: TypeSidebarTitleItem;
 }
 
 const initialState: ShopState = {
@@ -11,7 +13,8 @@ const initialState: ShopState = {
     weapon: [],
     graffiti: [],
     sticker: [],
-  }
+  },
+  currentCategory: 'all'
 };
 
 const shopSlice = createSlice({
@@ -20,9 +23,12 @@ const shopSlice = createSlice({
   reducers: {
     setDataShop: (state, action: PayloadAction<shopData>) => {
       state.shop = action.payload;
+    },
+    setCurrentCategory: (state, action: PayloadAction<TypeSidebarTitleItem>) => {
+      state.currentCategory = action.payload;
     }
   }
 });
 
-export const { setDataShop } = shopSlice.actions;
+export const { setDataShop, setCurrentCategory } = shopSlice.actions;
 export default shopSlice.reducer;

@@ -10,10 +10,7 @@ import GetAuth from '../helpers/GetAuth';
 import { AuthForm } from '../components';
 import { shopData } from '../interfaces/items.interface';
 import { INotificationContext } from '../context/notification.context';
-import { auth, getUserData } from '../firebase';
-import { IAccountFull } from '../interfaces/account.inteface';
-import { setDataAccount } from '../redux/slices/accountSlice';
-import { setDataInventory } from '../redux/slices/inventorySlice';
+import { getUserDataFunction } from '../firebase';
 import { useDispatch } from 'react-redux';
 
 const SlugType = ({ shopData, pageType }: ShopProps): JSX.Element => {
@@ -28,24 +25,11 @@ const SlugType = ({ shopData, pageType }: ShopProps): JSX.Element => {
     return <div>ошибка {error.message}</div>;
   }
 
-  const getUserDataFunction = async () => {
-    try {
-      // данные аккаунта отдельно, инвентарь отдельно
-      const data = await getUserData(auth) as IAccountFull;
-      const { balance, uid, username, email, password, luckyChance } = data;
-      dispatch(setDataAccount({ balance, uid, username, email, password, luckyChance }));
-      dispatch(setDataInventory(data.inventory));
-      console.log('data', data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  getUserDataFunction();
+  getUserDataFunction(dispatch);
 
   if (user) {
     if (pageType) {
-      switch (pageType[0]) {
+      switch (pageType) {
         case 'shop':
           return <ShopComponent shopData={shopData} />;
         case 'cases':
@@ -79,6 +63,12 @@ export const getStaticProps: GetStaticProps<ShopProps> = async ({ params }: GetS
     };
   }
 
+  if (!params.slug) {
+    return {
+      notFound: true
+    };
+  }
+
   const firstLevelItem = firstLevelRoute.map(f => f.route === params.slug);
   if (!firstLevelItem) {
     return {
@@ -87,16 +77,16 @@ export const getStaticProps: GetStaticProps<ShopProps> = async ({ params }: GetS
   }
 
   const { data: shopData } = await axios.get<shopData[]>(process.env.NEXT_PUBLIC_DOMAIN + 'shopItems');
-  
+
   return {
     props: {
-      pageType: params.slug,
+      pageType: params.slug[0],
       shopData: shopData[0]
     }
   };
 };
-
-type pageType = string | string[] | undefined;
+// типизация не работает
+type pageType = 'cases' | 'inventory' | 'profile' | 'shop' | string;
 
 interface ShopProps extends Record<string, unknown> {
   pageType: pageType;
