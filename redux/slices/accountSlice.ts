@@ -10,7 +10,8 @@ const initialState: AccountState = {
   username: '',
   email: '',
   password: '',
-  luckyChance: 0
+  luckyChance: 0,
+  isAuth: false
 };
 
 const accountSlice = createSlice({
@@ -23,6 +24,7 @@ const accountSlice = createSlice({
       state.username = action.payload.username;
       state.email = action.payload.email;
       state.luckyChance = action.payload.luckyChance;
+      state.isAuth = true;
     }
   },
 });

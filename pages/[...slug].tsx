@@ -11,21 +11,23 @@ import { AuthForm } from '../components';
 import { shopData } from '../interfaces/items.interface';
 import { INotificationContext } from '../context/notification.context';
 import { getUserDataFunction } from '../firebase';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 const SlugType = ({ shopData, pageType }: ShopProps): JSX.Element => {
   const { user, loading, error } = GetAuth();
+  const isAuth = useSelector((state: RootState) => state.account.isAuth);
   const dispatch = useDispatch();
 
-  if (loading) {
+  getUserDataFunction(dispatch);
+
+  if (loading || !isAuth) {
     return <>загрузка</>;
   }
 
   if (error && error instanceof Error) {
     return <div>ошибка {error.message}</div>;
   }
-
-  getUserDataFunction(dispatch);
 
   if (user) {
     if (pageType) {

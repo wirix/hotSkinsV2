@@ -19,9 +19,17 @@ const inventorySlice = createSlice({
   initialState,
   reducers: {
     setDataInventory: (state, action: PayloadAction<shopData>) => {
-      state.inventory.weapon = action.payload.weapon;
-      // state.inventory.graffiti = action.payload.graffiti;
-      // state.inventory.sticker = action.payload.sticker;
+      if (action.payload) {
+        if (action.payload.graffiti) {
+          state.inventory.graffiti = action.payload.graffiti;
+        }
+        if (action.payload.sticker) {
+          state.inventory.sticker = action.payload.sticker;
+        }
+        if (action.payload.weapon) {
+          state.inventory.weapon = action.payload.weapon;
+        }
+      }
     }
   }
 });

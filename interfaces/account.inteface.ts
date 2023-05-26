@@ -7,6 +7,7 @@ export interface IAccount {
   email: string;
   password: string;
   luckyChance: number;
+  isAuth?: boolean;
 }
 
 export interface IAccountFull extends IAccount {

@@ -3,17 +3,20 @@ import { withLayout } from "../layouts/MainLayout/Layout";
 import { CasesListComponent } from "../page-components";
 import { getUserDataFunction } from '../firebase';
 import GetAuth from "../helpers/GetAuth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 const Home = (): JSX.Element => {
   const { loading } = GetAuth();
+  const isAuth = useSelector((state: RootState) => state.account.isAuth);
   const dispatch = useDispatch();
 
-  if (loading) {
+  getUserDataFunction(dispatch);
+
+  if (loading || !isAuth) {
     return <div>ждемс</div>;
   }
 
-  getUserDataFunction(dispatch);
   return (
     <>
       <Head>

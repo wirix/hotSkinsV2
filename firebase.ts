@@ -26,29 +26,6 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-export const getUserData = (authUser) => {
-  if (authUser.currentUser) {
-    return new Promise((resolve, reject) => {
-      onAuthStateChanged(authUser, (user) => {
-        if (user) {
-          const uid: string = user.uid;
-          const database = getDatabase();
-          const balance = ref(database, 'users/' + uid);
-
-          onValue(balance, (snapshot) => {
-            const data = snapshot.val();
-            resolve(data);
-          });
-        } else {
-          reject('User not found');
-        }
-      });
-    });
-  } else {
-    throw new Error('Auth user not found');
-  }
-};
-
 export const getUserDataFunction = async (dispatch) => {
   try {
     // данные аккаунта отдельно, инвентарь отдельно
@@ -58,7 +35,7 @@ export const getUserDataFunction = async (dispatch) => {
         const database = getDatabase();
         const balance = ref(database, 'users/' + uid);
         onValue(balance, (snapshot) => {
-          const data = snapshot.val();
+          const data: IAccountFull = snapshot.val();
           const { balance, uid, username, email, password, luckyChance } = data;
           dispatch(setDataAccount({ balance, uid, username, email, password, luckyChance }));
           dispatch(setDataInventory(data.inventory));
