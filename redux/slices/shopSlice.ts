@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { shopData } from '../../interfaces/items.interface';
-import { TypeSidebarTitleItem } from '../../layouts/MainLayout/Sidebar/Sidebar.props';
+import { TypeSidebarCategoryItem } from '../../layouts/MainLayout/Sidebar/Sidebar.props';
 
 interface ShopState {
   shop: shopData;
-  currentCategory: TypeSidebarTitleItem;
+  currentCategory: TypeSidebarCategoryItem;
+  saved: number[];
 }
 
 const initialState: ShopState = {
@@ -14,7 +15,8 @@ const initialState: ShopState = {
     graffiti: [],
     sticker: [],
   },
-  currentCategory: 'all'
+  currentCategory: 'all',
+  saved: []
 };
 
 const shopSlice = createSlice({
@@ -24,11 +26,14 @@ const shopSlice = createSlice({
     setDataShop: (state, action: PayloadAction<shopData>) => {
       state.shop = action.payload;
     },
-    setCurrentCategory: (state, action: PayloadAction<TypeSidebarTitleItem>) => {
+    setCurrentCategory: (state, action: PayloadAction<TypeSidebarCategoryItem>) => {
       state.currentCategory = action.payload;
+    },
+    setSaved: (state, action: PayloadAction<number[]>) => {
+      state.saved = action.payload;
     }
   }
 });
 
-export const { setDataShop, setCurrentCategory } = shopSlice.actions;
+export const { setDataShop, setCurrentCategory, setSaved } = shopSlice.actions;
 export default shopSlice.reducer;

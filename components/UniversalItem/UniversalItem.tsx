@@ -9,27 +9,32 @@ import { Button } from '../Button/Button';
 import { UniversalItemProps } from './UniversalItem.props';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { updateSavedUserData } from '../../firebase';
 
-export const UniversalItem = ({ title, urlImg, skinId, property, price, type, stared = false, color, buyItem, sellItem, className, ...props }: UniversalItemProps): JSX.Element => {
+export const UniversalItem = ({ title, urlImg, skinId, property, price, type, stared = false, color, buyItem, sellItem, timebuy, className, ...props }: UniversalItemProps): JSX.Element => {
 
   const uid = useSelector((state: RootState) => state.account.uid);
   const inventory = useSelector((state: RootState) => state.inventory.inventory);
+  const saved = useSelector((state: RootState) => state.shop.saved);
 
-  const onClickSendStar = () => {
-    return;
+  const onClickSendStar = (id: number) => {
+    console.log('новый', id)
+    console.log(saved ? [...saved, id].filter(savedId => savedId !== id) : [id])
+    const newSaved = saved ? [...saved, id].filter(savedId => savedId !== id) : [id];
+    updateSavedUserData(uid, newSaved);
     // ф-ия которая меняет stared на противоположный !stared
   };
 
   const onClickBuyItem = () => {
     buyItem && buyItem(inventory, property
-      ? { title, urlImg, skinId, price, type, color, property }
-      : { title, urlImg, skinId, price, type, color }, uid);
+      ? { title, urlImg, skinId, price, type, color, property, timebuy }
+      : { title, urlImg, skinId, price, type, color, timebuy }, uid);
   };
 
   const onClickSellItem = () => {
-    sellItem && sellItem(inventory, property
-      ? { title, urlImg, skinId, price, type, color, property }
-      : { title, urlImg, skinId, price, type, color }, uid);
+    timebuy && sellItem && sellItem(property
+      ? { title, urlImg, skinId, price, type, color, property, timebuy }
+      : { title, urlImg, skinId, price, type, color, timebuy }, timebuy, uid);
   };
 
   return (
@@ -50,7 +55,7 @@ export const UniversalItem = ({ title, urlImg, skinId, property, price, type, st
             [styles.starred]: stared,
             [styles.unstarred]: !stared,
           })}
-          onClick={() => onClickSendStar()}
+          onClick={() => onClickSendStar(skinId)}
         />
       </div>
       <Span className={styles.title} fontWeight='500' color='white'>

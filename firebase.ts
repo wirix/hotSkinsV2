@@ -10,6 +10,7 @@ import { IAccountFull } from "./interfaces/account.inteface";
 import { shopData } from "./interfaces/items.interface";
 import { setDataAccount } from "./redux/slices/accountSlice";
 import { setDataInventory } from "./redux/slices/inventorySlice";
+import { setSaved } from "./redux/slices/shopSlice";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDN07lGFjcBYAmcXZlcD43hrk6jpqHtbtg",
@@ -26,7 +27,7 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-export const getUserDataFunction = async (dispatch) => {
+export const getUserData = async (dispatch) => {
   try {
     // данные аккаунта отдельно, инвентарь отдельно
     await onAuthStateChanged(auth, (user) => {
@@ -36,7 +37,8 @@ export const getUserDataFunction = async (dispatch) => {
         const balance = ref(database, 'users/' + uid);
         onValue(balance, (snapshot) => {
           const data: IAccountFull = snapshot.val();
-          const { balance, uid, username, email, password, luckyChance } = data;
+          const { balance, uid, username, email, password, luckyChance, saved } = data;
+          dispatch(setSaved(saved));
           dispatch(setDataAccount({ balance, uid, username, email, password, luckyChance }));
           dispatch(setDataInventory(data.inventory));
         });
@@ -65,6 +67,15 @@ export const updateInventoryUserData = (uid: string, inventory: shopData): void 
     });
 };
 
+export const updateSavedUserData = (uid: string, savedData: number[]): void => {
+  firebase.database().ref(`users/${uid}/saved`).set(savedData)
+    .catch(e => {
+      if (e instanceof Error) {
+        console.log(e.message);
+      }
+    });
+};
+
 export const registerWithEmailAndPassword = async (username: string, email: string, password: string) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -81,6 +92,7 @@ export const registerWithEmailAndPassword = async (username: string, email: stri
         sticker: [],
         graffiti: []
       },
+      saved: []
     };
     writeUserData(userData);
   } catch (e) {

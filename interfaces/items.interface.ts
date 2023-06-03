@@ -1,4 +1,4 @@
-import { TypeSidebarTitleItem } from "../layouts/MainLayout/Sidebar/Sidebar.props";
+import { TypeSidebarCategoryItem } from "../layouts/MainLayout/Sidebar/Sidebar.props";
 
 export interface shopData {
   weapon: csgoItem[];
@@ -9,11 +9,12 @@ export interface shopData {
 export interface csgoItem {
   skinId: number;
   color: Typecolor;
-  type: TypeSidebarTitleItem;
+  type: TypeSidebarCategoryItem;
   title: string;
   urlImg: string;
   price: number;
   property?: TypeProperty;
+  timebuy?: number;
 }
 
 export type Typecolor = 'blue' | 'purple' | 'pink' | 'red' | 'gold';

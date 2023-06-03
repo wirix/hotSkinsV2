@@ -7,5 +7,5 @@ export interface UniversalItemProps extends csgoItem, DetailedHTMLProps<HTMLAttr
   stared?: boolean;
   property?: TypeProperty;
   buyItem?: (inventory: shopData, newItem: csgoItem, uid: string) => void;
-  sellItem?: (inventory: shopData, item: csgoItem, uid: string) => void;
+  sellItem?: (sellItem: csgoItem, timebuy: number, uid: string) => void;
 }

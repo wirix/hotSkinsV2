@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withLayout } from '../layouts/MainLayout/Layout';
 import { CasesListComponent, ShopComponent, InventoryComponent } from '../page-components';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
@@ -10,7 +10,7 @@ import GetAuth from '../helpers/GetAuth';
 import { AuthForm } from '../components';
 import { shopData } from '../interfaces/items.interface';
 import { INotificationContext } from '../context/notification.context';
-import { getUserDataFunction } from '../firebase';
+import { getUserData } from '../firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 
@@ -19,7 +19,9 @@ const SlugType = ({ shopData, pageType }: ShopProps): JSX.Element => {
   const isAuth = useSelector((state: RootState) => state.account.isAuth);
   const dispatch = useDispatch();
 
-  getUserDataFunction(dispatch);
+  useEffect(() => {
+    getUserData(dispatch);
+  }, []);
 
   if (loading || !isAuth) {
     return <>загрузка</>;
@@ -87,6 +89,7 @@ export const getStaticProps: GetStaticProps<ShopProps> = async ({ params }: GetS
     }
   };
 };
+
 // типизация не работает
 type pageType = 'cases' | 'inventory' | 'profile' | 'shop' | string;
 

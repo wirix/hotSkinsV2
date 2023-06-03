@@ -12,4 +12,5 @@ export interface IAccount {
 
 export interface IAccountFull extends IAccount {
   inventory: shopData;
+  saved: number[];
 }

@@ -7,7 +7,7 @@ import difference from 'lodash.difference';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { setCurrentCategory } from '../../../redux/slices/shopSlice';
-import { TypeSidebarTitleItem } from './Sidebar.props';
+import { TypeSidebarCategoryItem, TypeSidebarTitleItem } from './Sidebar.props';
 // дело в том, что сортировка по категориям не правильная ,тк используем только из shop, а если мы перейдем в инвентарь, то будем использовать то же самое состояние Sidebar, что и прежеде, можно юзать useEffect при смене url и сносить категорию, но использовать категории только из шоп, что не тоже верно, или хранить категории в каждом reducere,
 // также можно в каждом состоянии хранить все возможные категории данной страницы и удаитть их от сюда, но тогда, как юзать useSelector в одном Sidebar
 
@@ -24,21 +24,21 @@ const Sidebar = ({ className, ...props }): JSX.Element => {
     { category: 'weapon', title: 'оружие' },
     { category: 'cases', title: 'кейсы' },
     { category: 'graffiti', title: 'граффити' },
-    { category: 'sticker', title: 'стикеры' },
+    { category: 'sticker', title: 'наклейки' },
     { category: 'another', title: 'другое' },
   ];
 
   const [currentCategories, setCurrentCategories] = useState<ICurrentCategories[]>(listCategories);
-  // тперь не удаляются категории не подходящие поэтому их лцшеи перекиннуть в reducer, может юзать notshow как с иконкой, если получится
-  const deleteCategoriesFromShop = [{ category: 'weapon', title: 'оружие' }, { category: 'another', title: 'другое' }];
-  const deleteCategoriesFromCases = [{ category: 'another', title: 'другое' }, { category: 'weapon', title: 'оружие' }];
-  const deleteCategoriesFromInventory = [];
+  // тперь удаляются категории не подходящие поэтому их лцшеи перекиннуть в reducer, может юзать notshow как с иконкой, если получится
+  const deleteCategoriesFromShop: ICurrentCategories[] = [{ category: 'weapon', title: 'оружие' }, { category: 'another', title: 'другое' }];
+  const deleteCategoriesFromCases: ICurrentCategories[] = [{ category: 'another', title: 'другое' }, { category: 'weapon', title: 'оружие' }];
+  const deleteCategoriesFromInventory: ICurrentCategories[] = [];
 
   const additionalCategories = [
     { icon: <ButtonIcon icon='star' />, title: 'cохранённые', count: 0, notShow: ['/cases', '/inventory'] }
   ];
 
-  const onChangeCategoryClick = ((category: TypeSidebarTitleItem) => {
+  const onChangeCategoryClick = ((category: TypeSidebarCategoryItem) => {
     dispatch(setCurrentCategory(category));
   });
 
@@ -105,8 +105,8 @@ const Sidebar = ({ className, ...props }): JSX.Element => {
 };
 
 interface ICurrentCategories {
-  category: TypeSidebarTitleItem;
-  title: string;
+  category: TypeSidebarCategoryItem;
+  title: TypeSidebarTitleItem;
 }
 
 export default Sidebar;

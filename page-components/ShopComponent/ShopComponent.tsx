@@ -7,33 +7,36 @@ import { ShopComponentProps } from './ShopComponent.props';
 import { RootState } from '../../redux/store';
 import { csgoItem, shopData } from '../../interfaces/items.interface';
 import { updateInventoryUserData } from '../../firebase';
+import { flattenArrayOfObject } from '../../helpers/helpers';
 
 export const ShopComponent = ({ shopData }: ShopComponentProps): JSX.Element => {
   const dispatch = useDispatch();
-
   const currentCategory = useSelector((state: RootState) => state.shop.currentCategory);
+  const flattenShopData = flattenArrayOfObject(shopData);
+
   // определяем какой  тип товара, затем закидваем в firebase
   const buyItem = (inventory: shopData, newItem: csgoItem, uid: string) => {
-    console.log('купля');
     let newInventory = { ...inventory };
     const { title, skinId, urlImg, price, type, color, property } = newItem;
+    const timebuy = new Date().getTime();
+    
     switch (type) {
       case 'graffiti':
         newInventory = {
           ...inventory,
-          graffiti: [...inventory.graffiti, { title, skinId, urlImg, price, type, color }]
+          graffiti: [...inventory.graffiti, { title, skinId, urlImg, price, type, color, timebuy }]
         };
         break;
       case 'sticker':
         newInventory = {
           ...inventory,
-          sticker: [...inventory.sticker, { title, skinId, urlImg, price, type, color }],
+          sticker: [...inventory.sticker, { title, skinId, urlImg, price, type, color, timebuy }],
         };
         break;
       case 'weapon':
         newInventory = {
           ...inventory,
-          weapon: [...inventory.weapon, { title, skinId, urlImg, price, type, color, property }],
+          weapon: [...inventory.weapon, { title, skinId, urlImg, price, type, color, property, timebuy }],
         };
         break;
       default:
@@ -50,7 +53,7 @@ export const ShopComponent = ({ shopData }: ShopComponentProps): JSX.Element => 
 
   return (
     <div className={styles.shop}>
-      {Object.values(shopData).flatMap(itemShop => itemShop).filter((item: csgoItem) => currentCategory === 'all' ? true : (currentCategory === item.type)).map((g, i) => <UniversalItem key={i} buyItem={buyItem} {...g} />)}
+      {flattenShopData.filter(item => currentCategory === 'all' ? true : (currentCategory === item.type)).map((g, i) => <UniversalItem key={i} buyItem={buyItem} {...g} />)}
     </div>
   );
 };

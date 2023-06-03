@@ -1,4 +1,5 @@
 import { firstLevelRouteId } from "../interfaces/firstLevelRoute.interface";
+import { csgoItem, shopData } from "../interfaces/items.interface";
 
 export const firstLevelRoute = [
   { route: 'shop', name: 'магазин', id: firstLevelRouteId.shop, isNavLink: true },
@@ -13,4 +14,8 @@ export const pushUrlAuthParams = (params: 'registration' | 'signup', router) => 
     pathname: '/auth',
     query: { name: params }
   });
+};
+
+export const flattenArrayOfObject = (inventory: shopData): csgoItem[] => {
+  return Object.values(inventory).flatMap(itemShop => itemShop);
 };

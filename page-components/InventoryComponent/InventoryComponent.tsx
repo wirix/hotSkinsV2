@@ -3,30 +3,56 @@ import styles from './InventoryComponent.module.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { UniversalItem } from '../../components';
-import { csgoItem, shopData } from '../../interfaces/items.interface';
+import { csgoItem } from '../../interfaces/items.interface';
 import { updateInventoryUserData } from '../../firebase';
+import { flattenArrayOfObject } from '../../helpers/helpers';
 
 export const InventoryComponent = (): JSX.Element => {
   const { inventory } = useSelector((state: RootState) => state.inventory);
-
-  const sellItem = (inventory: shopData, newItem: csgoItem, uid: string) => {
-    // продажа
-
-
-
-    // по индексу нельзя тк если мы вдруг захотим выбрать другую сортировку, то все полетит, а свойств уникальных нет, можно добавить свойство  время покупки айтем вплоть до миллисекунд
+  const currentCategory = useSelector((state: RootState) => state.shop.currentCategory);
+  const flattenInventory = flattenArrayOfObject(inventory);
 
 
 
-    console.log('продажа');
-    updateInventoryUserData(uid, inventory);
+  // после покупки у нас рендерится страница, останавливается прокрутка 
+  // избавиться от миллиона отрисовок
+
+
+
+
+  const sellItem = (sellItem: csgoItem, timebuy: number, uid: string) => {
+    let newInventory = { ...inventory };
+
+    switch (sellItem.type) {
+      case 'sticker':
+        newInventory = {
+          ...inventory,
+          sticker: [...inventory.sticker.filter(s => s.timebuy !== timebuy)]
+        };
+        break;
+      case 'weapon':
+        newInventory = {
+          ...inventory,
+          weapon: [...inventory.weapon.filter(s => s.timebuy !== timebuy)]
+        };
+        break;
+      case 'graffiti':
+        newInventory = {
+          ...inventory,
+          graffiti: [...inventory.graffiti.filter(s => s.timebuy !== timebuy)]
+        };
+        break;
+      default:
+        console.error('Произошла продажа неизвестного предмета в инвентаре');
+        break;
+    }
+    updateInventoryUserData(uid, newInventory);
   };
-
   // ключи не уникальны
   return (
     <div className={styles.inventoryComponent}>
-      {inventory.weapon.map((g, i) => (
-        <UniversalItem key={i} sellItem={sellItem} {...g} />
+      {flattenInventory.filter(item => currentCategory === 'all' ? true : (item && currentCategory === item.type)).map(g => g && (
+        <UniversalItem key={g.timebuy} sellItem={sellItem} {...g} />
       ))}
     </div>
   );
