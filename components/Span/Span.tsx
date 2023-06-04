@@ -5,7 +5,7 @@ import cn from 'classnames';
 
 export const Span = ({ children, isHover = false, color = 'gray', fontSize = '16px', fontWeight = '400', className, ...props }: SpanProps): JSX.Element => {
   return (
-    <span className={cn(className, styles.span, {
+    <span className={cn(styles.span, className, {
       [styles.isHover]: isHover,
       [styles.gray]: color === 'gray',
       [styles.white]: color === 'white',

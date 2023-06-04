@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Header.module.css';
 import cn from 'classnames';
-import { Button, ButtonIcon, Search, Span } from '../../../components';
+import { ButtonIcon, Search, Span } from '../../../components';
 import Image from 'next/image';
 import logoImage from './logo.png';
 import Link from 'next/link';
@@ -31,7 +31,7 @@ const Header = ({ className, ...props }): JSX.Element => {
         <div className={styles.mobileNav}>
           {firstLevelRoute.map(f => (
             <Link key={f.id} href={'/' + f.route}>
-              <Span fontWeight='700' color='white' isHover>
+              <Span fontWeight='700' color={'/' + f.route === router.asPath ? 'green' : 'white'} isHover>
                 {f.name}
               </Span>
             </Link>
@@ -49,7 +49,7 @@ const Header = ({ className, ...props }): JSX.Element => {
         <nav className={styles.nav}>
           {firstLevelRoute.map(f => (
             f.isNavLink && <Link key={f.id} href={'/' + f.route}>
-              <Span fontWeight='700' color='white' isHover>
+              <Span fontWeight='700' color={'/' + f.route === router.asPath ? 'green' : 'white'} isHover>
                 {f.name}
               </Span>
             </Link>

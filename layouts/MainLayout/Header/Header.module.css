@@ -4,7 +4,7 @@
     [start] 50px [logoend] 50px [navstart] auto [navend] calc(50% - 440px)
     [middle] 200px [searchend] 10px [profilestart] auto [end];
   align-items: center;
-  padding: 33px 0;
+  padding: 20px 0;
   border-bottom: 2px solid var(--gray-border);
 }
 

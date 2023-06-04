@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
-import { ButtonIcon, Search } from '../../../components';
+import { ButtonIcon, Hr, Search } from '../../../components';
 import styles from './Sidebar.module.css';
 import { useRouter } from 'next/router';
 import difference from 'lodash.difference';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
-import { setCurrentCategory } from '../../../redux/slices/shopSlice';
+import { setCurrentCategory, setCurrentSorted, sortedType } from '../../../redux/slices/shopSlice';
 import { TypeSidebarCategoryItem, TypeSidebarTitleItem } from './Sidebar.props';
-// дело в том, что сортировка по категориям не правильная ,тк используем только из shop, а если мы перейдем в инвентарь, то будем использовать то же самое состояние Sidebar, что и прежеде, можно юзать useEffect при смене url и сносить категорию, но использовать категории только из шоп, что не тоже верно, или хранить категории в каждом reducere,
-// также можно в каждом состоянии хранить все возможные категории данной страницы и удаитть их от сюда, но тогда, как юзать useSelector в одном Sidebar
 
 const Sidebar = ({ className, ...props }): JSX.Element => {
   const router = useRouter();
+  const asPath = router.asPath;
   const dispatch = useDispatch();
 
   const [searchValue, setSearchValue] = useState<string>('');
-  const currentCategory = useSelector((state: RootState) => state.shop.currentCategory);
-  const [additionalCategory, setAdditionalCategory] = useState<string>('');
+  const { currentCategory, saved, currentSorted } = useSelector((state: RootState) => state.shop);
 
   const listCategories: ICurrentCategories[] = [
     { category: 'all', title: 'всё' },
@@ -34,23 +32,27 @@ const Sidebar = ({ className, ...props }): JSX.Element => {
   const deleteCategoriesFromCases: ICurrentCategories[] = [{ category: 'another', title: 'другое' }, { category: 'weapon', title: 'оружие' }];
   const deleteCategoriesFromInventory: ICurrentCategories[] = [];
 
-  const additionalCategories = [
-    { icon: <ButtonIcon icon='star' />, title: 'cохранённые', count: 0, notShow: ['/cases', '/inventory'] }
+  const additionalCategories: IAdditionalCategories[] = [
+    { icon: <ButtonIcon icon='star' />, title: 'cохранённые', sortedType: 'saved', count: saved ? saved.length : 0, notShow: ['/cases', '/inventory'] }
   ];
 
-  const onChangeCategoryClick = ((category: TypeSidebarCategoryItem) => {
+  const onSortedClick = (sorted: sortedType) => {
+    dispatch(setCurrentSorted(sorted !== currentSorted ? sorted : 'none'));
+  };
+
+  const onCategoryClick = ((category: TypeSidebarCategoryItem) => {
     dispatch(setCurrentCategory(category));
   });
 
   useEffect(() => {
     // если переходим на другой url, то убираем ненужные категории для этого url
     setCurrentCategories(difference(listCategories,
-      router.asPath === '/shop' ? deleteCategoriesFromShop :
-        router.asPath === '/cases' ? deleteCategoriesFromCases :
-          router.asPath === '/inventory' ? deleteCategoriesFromInventory : []
+      asPath === '/shop' ? deleteCategoriesFromShop :
+        asPath === '/cases' ? deleteCategoriesFromCases :
+          asPath === '/inventory' ? deleteCategoriesFromInventory : []
     ));
     setCurrentCategory('all');
-  }, [router.asPath]);
+  }, [asPath]);
 
   return (
     <div className={cn(className, styles.sidebar)} {...props}>
@@ -71,38 +73,40 @@ const Sidebar = ({ className, ...props }): JSX.Element => {
             className={cn(styles.category, {
               [styles.active]: l.category === currentCategory
             })}
-            onClick={() => onChangeCategoryClick(l.category)}
+            onClick={() => onCategoryClick(l.category)}
           >{l.title}</li>
         ))}
       </ul>
-      <hr className={styles.hr} />
+      {additionalCategories.map((a, i) => a.notShow.every(n => n !== asPath) && <Hr key={i} className={styles.hr} />)}
       <div className={styles.additional}>
-        {additionalCategories.map(a => {
-          if (a.notShow.every(n => n !== router.asPath)) {
-            return (
-              <div
-                key={a.title}
-                className={styles.additionalItem}
-              >
-                {a.icon}
-                <span
-                  onClick={() => setAdditionalCategory(prev => prev === a.title ? '' : a.title)}
-                  className={cn(styles.additionalTitle, {
-                    [styles.active]: additionalCategory === a.title
-                  })}>
-                  {a.title}
-                  <span>({a.count})</span>
-                </span>
-              </div>
-            );
-          } else {
-            return;
-          }
-        })}
+        {additionalCategories.map(a => a.notShow.every(n => n !== asPath) && <div
+          key={a.title}
+          className={styles.additionalItem}
+        >
+          {a.icon}
+          <span
+            // onClick={() => setAdditionalCategory(prev => prev === a.title ? '' : a.title)}
+            onClick={() => onSortedClick(a.sortedType)}
+            className={cn(styles.additionalTitle, {
+              [styles.active]: currentSorted === a.sortedType
+            })}>
+            {a.title}
+            <span>({a.count})</span>
+          </span>
+        </div>
+        )}
       </div>
     </div>
   );
 };
+
+interface IAdditionalCategories {
+  icon: JSX.Element;
+  title: string;
+  sortedType: sortedType;
+  count: number;
+  notShow: string[];
+}
 
 interface ICurrentCategories {
   category: TypeSidebarCategoryItem;

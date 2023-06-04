@@ -11,15 +11,15 @@ import { flattenArrayOfObject } from '../../helpers/helpers';
 
 export const ShopComponent = ({ shopData }: ShopComponentProps): JSX.Element => {
   const dispatch = useDispatch();
-  const currentCategory = useSelector((state: RootState) => state.shop.currentCategory);
+  const { currentCategory, saved, currentSorted } = useSelector((state: RootState) => state.shop);
+  const inventory = useSelector((state: RootState) => state.inventory.inventory);
   const flattenShopData = flattenArrayOfObject(shopData);
 
-  // определяем какой  тип товара, затем закидваем в firebase
   const buyItem = (inventory: shopData, newItem: csgoItem, uid: string) => {
     let newInventory = { ...inventory };
     const { title, skinId, urlImg, price, type, color, property } = newItem;
     const timebuy = new Date().getTime();
-    
+    // определяем какой  тип товара, затем закидваем в firebase
     switch (type) {
       case 'graffiti':
         newInventory = {
@@ -53,7 +53,19 @@ export const ShopComponent = ({ shopData }: ShopComponentProps): JSX.Element => 
 
   return (
     <div className={styles.shop}>
-      {flattenShopData.filter(item => currentCategory === 'all' ? true : (currentCategory === item.type)).map((g, i) => <UniversalItem key={i} buyItem={buyItem} {...g} />)}
+      {flattenShopData
+        .filter(item => currentCategory === 'all' ? true : (currentCategory === item.type))
+        .filter(f => (currentSorted === 'saved' && saved) ? saved.includes(f.skinId) : (!saved && currentSorted === 'saved') ? false : true)
+        .map((g, i) => (
+          <UniversalItem
+            key={i}
+            buyItem={buyItem}
+            stared={saved ? saved.some(s => s === g.skinId) : false}
+            saved={saved}
+            inventory={inventory}
+            {...g}
+          />
+        ))}
     </div>
   );
 };

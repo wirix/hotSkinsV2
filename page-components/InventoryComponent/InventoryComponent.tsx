@@ -8,17 +8,9 @@ import { updateInventoryUserData } from '../../firebase';
 import { flattenArrayOfObject } from '../../helpers/helpers';
 
 export const InventoryComponent = (): JSX.Element => {
-  const { inventory } = useSelector((state: RootState) => state.inventory);
-  const currentCategory = useSelector((state: RootState) => state.shop.currentCategory);
+  const inventory = useSelector((state: RootState) => state.inventory.inventory);
+  const { currentCategory, saved } = useSelector((state: RootState) => state.shop);
   const flattenInventory = flattenArrayOfObject(inventory);
-
-
-
-  // после покупки у нас рендерится страница, останавливается прокрутка 
-  // избавиться от миллиона отрисовок
-
-
-
 
   const sellItem = (sellItem: csgoItem, timebuy: number, uid: string) => {
     let newInventory = { ...inventory };
@@ -48,11 +40,18 @@ export const InventoryComponent = (): JSX.Element => {
     }
     updateInventoryUserData(uid, newInventory);
   };
-  // ключи не уникальны
+
   return (
     <div className={styles.inventoryComponent}>
       {flattenInventory.filter(item => currentCategory === 'all' ? true : (item && currentCategory === item.type)).map(g => g && (
-        <UniversalItem key={g.timebuy} sellItem={sellItem} {...g} />
+        <UniversalItem
+          key={g.timebuy}
+          sellItem={sellItem}
+          stared={saved ? saved.some(s => s === g.skinId) : false}
+          saved={saved}
+          inventory={inventory}
+          {...g}
+        />
       ))}
     </div>
   );

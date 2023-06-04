@@ -11,18 +11,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { updateSavedUserData } from '../../firebase';
 
-export const UniversalItem = ({ title, urlImg, skinId, property, price, type, stared = false, color, buyItem, sellItem, timebuy, className, ...props }: UniversalItemProps): JSX.Element => {
-
+export const UniversalItem = ({ title, urlImg, skinId, property, price, type, stared, color, buyItem, sellItem, timebuy, saved, inventory, className, ...props }: UniversalItemProps): JSX.Element => {
   const uid = useSelector((state: RootState) => state.account.uid);
-  const inventory = useSelector((state: RootState) => state.inventory.inventory);
-  const saved = useSelector((state: RootState) => state.shop.saved);
 
   const onClickSendStar = (id: number) => {
-    console.log('новый', id)
-    console.log(saved ? [...saved, id].filter(savedId => savedId !== id) : [id])
-    const newSaved = saved ? [...saved, id].filter(savedId => savedId !== id) : [id];
+    const newSaved = saved ? [...saved, id].filter((item, i, arr) => arr.indexOf(item) === i && arr.lastIndexOf(item) === i) : [id];
     updateSavedUserData(uid, newSaved);
-    // ф-ия которая меняет stared на противоположный !stared
   };
 
   const onClickBuyItem = () => {

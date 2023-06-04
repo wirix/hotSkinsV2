@@ -3,10 +3,13 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { shopData } from '../../interfaces/items.interface';
 import { TypeSidebarCategoryItem } from '../../layouts/MainLayout/Sidebar/Sidebar.props';
 
+export type sortedType = 'none' | 'saved';
+
 interface ShopState {
   shop: shopData;
   currentCategory: TypeSidebarCategoryItem;
   saved: number[];
+  currentSorted: sortedType;
 }
 
 const initialState: ShopState = {
@@ -16,7 +19,8 @@ const initialState: ShopState = {
     sticker: [],
   },
   currentCategory: 'all',
-  saved: []
+  saved: [],
+  currentSorted: 'none'
 };
 
 const shopSlice = createSlice({
@@ -31,9 +35,12 @@ const shopSlice = createSlice({
     },
     setSaved: (state, action: PayloadAction<number[]>) => {
       state.saved = action.payload;
+    },
+    setCurrentSorted: (state, action: PayloadAction<sortedType>) => {
+      state.currentSorted = action.payload;
     }
   }
 });
 
-export const { setDataShop, setCurrentCategory, setSaved } = shopSlice.actions;
+export const { setDataShop, setCurrentCategory, setSaved, setCurrentSorted } = shopSlice.actions;
 export default shopSlice.reducer;

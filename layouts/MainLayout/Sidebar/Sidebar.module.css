@@ -50,11 +50,6 @@
 .hr {
   grid-row: 5 / 6;
   grid-column: start / end;
-  height: 2px;
-  margin: 25px 0;
-  padding: 0;
-  background-color: var(--gray-border);
-  border: 0;
 }
 
 .additional {

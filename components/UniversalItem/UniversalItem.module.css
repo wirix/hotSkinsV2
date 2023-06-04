@@ -2,6 +2,7 @@
   display: grid;
   grid-template-rows: repeat(4, auto);
   grid-template-columns: 180px;
+  margin: 0 auto;
 }
 
 .img {
