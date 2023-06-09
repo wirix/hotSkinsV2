@@ -17,11 +17,8 @@ export const AuthForm = (): JSX.Element => {
     if (type === 'registration' || type === 'signup') {
       setTypeAuth(type);
     }
-  }, [router.asPath]);
 
-  useEffect(() => {
-    pushUrlAuthParams('registration', router);
-  }, []);
+  }, [router.asPath]);
 
   return (
     <div className={styles.form}>

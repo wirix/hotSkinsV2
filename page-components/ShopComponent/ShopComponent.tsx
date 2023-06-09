@@ -5,17 +5,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setDataShop } from '../../redux/slices/shopSlice';
 import { ShopComponentProps } from './ShopComponent.props';
 import { RootState } from '../../redux/store';
-import { csgoItem, shopData } from '../../interfaces/items.interface';
-import { updateInventoryUserData } from '../../firebase';
+import { csgoItem } from '../../interfaces/items.interface';
+import { updateBalanceUserData, updateInventoryUserData } from '../../firebase';
 import { flattenArrayOfObject } from '../../helpers/helpers';
 
 export const ShopComponent = ({ shopData }: ShopComponentProps): JSX.Element => {
   const dispatch = useDispatch();
   const { currentCategory, saved, currentSorted } = useSelector((state: RootState) => state.shop);
+  const balance = useSelector((state: RootState) => state.account.balance);
   const inventory = useSelector((state: RootState) => state.inventory.inventory);
   const flattenShopData = flattenArrayOfObject(shopData);
 
-  const buyItem = (inventory: shopData, newItem: csgoItem, uid: string) => {
+  const buyItem = (newItem: csgoItem, uid: string) => {
     let newInventory = { ...inventory };
     const { title, skinId, urlImg, price, type, color, property } = newItem;
     const timebuy = new Date().getTime();
@@ -43,6 +44,7 @@ export const ShopComponent = ({ shopData }: ShopComponentProps): JSX.Element => 
         break;
     }
     updateInventoryUserData(uid, newInventory);
+    updateBalanceUserData(uid, Number((balance - price).toFixed(2)));
   };
 
   useEffect(() => {

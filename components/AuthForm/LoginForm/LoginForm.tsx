@@ -24,7 +24,6 @@ export const LoginForm = ({ setType, setMessage }: LoginFormProps): JSX.Element 
 
   const onSubmit = async (formData: ILoginForm) => {
     const res: typeErrorLogin = await funSignInWithEmailAndPassword(formData.email, formData.password);
-    // если ошибки не было => успешно
     if (!res) {
       setMessage('успешный вход');
       setType('success');

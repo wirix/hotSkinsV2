@@ -10,25 +10,31 @@ import { UniversalItemProps } from './UniversalItem.props';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { updateSavedUserData } from '../../firebase';
+import { useRouter } from 'next/router';
 
-export const UniversalItem = ({ title, urlImg, skinId, property, price, type, stared, color, buyItem, sellItem, timebuy, saved, inventory, className, ...props }: UniversalItemProps): JSX.Element => {
-  const uid = useSelector((state: RootState) => state.account.uid);
+export const UniversalItem = ({ title, urlImg, skinId, property, price, type, stared, color, buyItem, sellItem, timebuy, saved, className, ...props }: UniversalItemProps): JSX.Element => {
+  const { uid, balance } = useSelector((state: RootState) => state.account);
+  const router = useRouter();
 
   const onClickSendStar = (id: number) => {
     const newSaved = saved ? [...saved, id].filter((item, i, arr) => arr.indexOf(item) === i && arr.lastIndexOf(item) === i) : [id];
     updateSavedUserData(uid, newSaved);
   };
 
+  const isBuyItem = () => {
+    return balance < price && router.asPath === '/shop';
+  };
+
   const onClickBuyItem = () => {
-    buyItem && buyItem(inventory, property
+    buyItem && buyItem(property
       ? { title, urlImg, skinId, price, type, color, property, timebuy }
       : { title, urlImg, skinId, price, type, color, timebuy }, uid);
   };
 
   const onClickSellItem = () => {
-    timebuy && sellItem && sellItem(property
+    sellItem && sellItem(property
       ? { title, urlImg, skinId, price, type, color, property, timebuy }
-      : { title, urlImg, skinId, price, type, color, timebuy }, timebuy, uid);
+      : { title, urlImg, skinId, price, type, color, timebuy }, uid);
   };
 
   return (
@@ -40,7 +46,6 @@ export const UniversalItem = ({ title, urlImg, skinId, property, price, type, st
           urlImg={urlImg}
           color={color}
         />
-        {/* при клике добавляем в databse firebase объект предмета */}
         <ButtonIcon
           icon='star'
           shape='circle'
@@ -61,10 +66,11 @@ export const UniversalItem = ({ title, urlImg, skinId, property, price, type, st
       <Span>
         <Button
           className={styles.price}
-          appearance={'green'}
-          onClick={() => buyItem ? onClickBuyItem() : sellItem ? onClickSellItem() : null}
+          appearance={isBuyItem() ? 'darkBlue' : 'green'}
+          onClick={() => router.asPath === '/shop' ? onClickBuyItem() : onClickSellItem()}
+          disabled={isBuyItem()}
         >
-          <Span fontSize={'14px'} color={'white'} className={styles.buyText} >{buyItem ? 'Купить' : sellItem ? 'Продать' : null}</Span>
+          <Span fontSize={'14px'} color={'white'} className={styles.buyText} >{router.asPath === '/shop' ? 'Купить' : 'Продать'}</Span>
           <Span fontSize={'14px'} color={'white'} className={styles.priceText} >{price}</Span>
           <Money />
         </Button>

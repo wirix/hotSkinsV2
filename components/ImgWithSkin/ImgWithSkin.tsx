@@ -13,7 +13,6 @@ export const ImgWithSkin = ({ color, width = 180, urlImg, height = 'auto', class
         [styles.red]: color === 'red',
         [styles.gold]: color === 'gold'
       })}></div>
-      {/* заменить на Image */}
       <img width={width} height={height} src={urlImg} alt="" />
     </div>
   );

@@ -11,7 +11,7 @@ import { TypeSidebarCategoryItem, TypeSidebarTitleItem } from './Sidebar.props';
 
 const Sidebar = ({ className, ...props }): JSX.Element => {
   const router = useRouter();
-  const asPath = router.asPath;
+  const asPath: s = router.asPath;
   const dispatch = useDispatch();
 
   const [searchValue, setSearchValue] = useState<string>('');
@@ -27,13 +27,13 @@ const Sidebar = ({ className, ...props }): JSX.Element => {
   ];
 
   const [currentCategories, setCurrentCategories] = useState<ICurrentCategories[]>(listCategories);
-  // тперь удаляются категории не подходящие поэтому их лцшеи перекиннуть в reducer, может юзать notshow как с иконкой, если получится
+  // тперь удаляются категории не подходящие поэтому их лцшеи перекиннуть в reducer, может юзать show как с иконкой, если получится
   const deleteCategoriesFromShop: ICurrentCategories[] = [{ category: 'weapon', title: 'оружие' }, { category: 'another', title: 'другое' }];
   const deleteCategoriesFromCases: ICurrentCategories[] = [{ category: 'another', title: 'другое' }, { category: 'weapon', title: 'оружие' }];
   const deleteCategoriesFromInventory: ICurrentCategories[] = [];
 
   const additionalCategories: IAdditionalCategories[] = [
-    { icon: <ButtonIcon icon='star' />, title: 'cохранённые', sortedType: 'saved', count: saved ? saved.length : 0, notShow: ['/cases', '/inventory'] }
+    { icon: <ButtonIcon icon='star' />, title: 'cохранённые', sortedType: 'saved', count: saved ? saved.length : 0, show: ['/shop'] }
   ];
 
   const onSortedClick = (sorted: sortedType) => {
@@ -77,15 +77,14 @@ const Sidebar = ({ className, ...props }): JSX.Element => {
           >{l.title}</li>
         ))}
       </ul>
-      {additionalCategories.map((a, i) => a.notShow.every(n => n !== asPath) && <Hr key={i} className={styles.hr} />)}
+      {additionalCategories.map((a, i) => a.show.every(n => n === asPath) && <Hr key={i} className={styles.hr} />)}
       <div className={styles.additional}>
-        {additionalCategories.map(a => a.notShow.every(n => n !== asPath) && <div
+        {additionalCategories.map(a => a.show.every(n => n === asPath) && <div
           key={a.title}
           className={styles.additionalItem}
         >
           {a.icon}
           <span
-            // onClick={() => setAdditionalCategory(prev => prev === a.title ? '' : a.title)}
             onClick={() => onSortedClick(a.sortedType)}
             className={cn(styles.additionalTitle, {
               [styles.active]: currentSorted === a.sortedType
@@ -105,7 +104,7 @@ interface IAdditionalCategories {
   title: string;
   sortedType: sortedType;
   count: number;
-  notShow: string[];
+  show: string[];
 }
 
 interface ICurrentCategories {

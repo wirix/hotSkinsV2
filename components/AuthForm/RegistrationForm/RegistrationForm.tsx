@@ -11,7 +11,6 @@ import * as Yup from 'yup';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
 
-// при повторной попытке регистр NOte не появл
 export const RegistrationForm = ({ setType, setMessage }: RegistrationFormProps): JSX.Element => {
   const router = useRouter();
 
@@ -27,7 +26,6 @@ export const RegistrationForm = ({ setType, setMessage }: RegistrationFormProps)
 
   const onSubmit = async (formData: IRegistrationForm) => {
     const res: typeErrorRegistration = await registerWithEmailAndPassword(formData.username, formData.email, formData.password);
-    // если ошибки не было => успешно
     if (!res) {
       setMessage('успех регистр');
       setType('success');

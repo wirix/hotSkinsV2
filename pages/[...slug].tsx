@@ -11,19 +11,17 @@ import { AuthForm } from '../components';
 import { shopData } from '../interfaces/items.interface';
 import { INotificationContext } from '../context/notification.context';
 import { getUserData } from '../firebase';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { useDispatch } from 'react-redux';
 
 const SlugType = ({ shopData, pageType }: ShopProps): JSX.Element => {
   const { user, loading, error } = GetAuth();
-  const isAuth = useSelector((state: RootState) => state.account.isAuth);
   const dispatch = useDispatch();
 
   useEffect(() => {
     getUserData(dispatch);
   }, []);
 
-  if (loading || !isAuth) {
+  if (loading) {
     return <>загрузка</>;
   }
 
@@ -90,10 +88,7 @@ export const getStaticProps: GetStaticProps<ShopProps> = async ({ params }: GetS
   };
 };
 
-// типизация не работает
-type pageType = 'cases' | 'inventory' | 'profile' | 'shop' | string;
-
 interface ShopProps extends Record<string, unknown> {
-  pageType: pageType;
+  pageType: string;
   shopData: shopData;
 }

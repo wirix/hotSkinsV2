@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './Header.module.css';
 import cn from 'classnames';
-import { ButtonIcon, Search, Span } from '../../../components';
+import { ButtonIcon, Span } from '../../../components';
 import Image from 'next/image';
 import logoImage from './logo.png';
 import Link from 'next/link';
@@ -11,13 +11,15 @@ import { useWindowSize } from '../../../hooks/useWindowSize';
 import GetAuth from '../../../helpers/GetAuth';
 import { useRouter } from 'next/router';
 import { logout } from '../../../firebase';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
 
 const Header = ({ className, ...props }): JSX.Element => {
   const { width } = useWindowSize();
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
-  const [searchValue, setSearchValue] = useState<string>('');
   const { user } = GetAuth();
   const router = useRouter();
+  const { balance } = useSelector((state: RootState) => state.account);
 
   return (
     <>
@@ -55,26 +57,17 @@ const Header = ({ className, ...props }): JSX.Element => {
             </Link>
           ))}
         </nav>
-        <div className={styles.search}>
-          <Search
-            setValue={setSearchValue}
-            className={styles.input}
-            value={searchValue}
-            appearance='black'
-            placeholder='Поиск ...'
-          />
-        </div>
         {user ?
           <div className={styles.profile}>
             <span className={styles.money}>
               <MoneyIcon />
-              <span className={styles.balance}>4666565</span>
+              <span className={styles.balance}>{balance}</span>
             </span>
             {width > 1180 && <span className={cn(styles.border)}></span>}
             {width >= 755 && <ButtonIcon className={styles.icon} icon='settings' onClick={() => logout()} />}
             <ButtonIcon className={styles.icon} icon='bell' />
             <Link href='/profile' >
-              <Image className={styles.photoProfile} src={logoImage} width={50} height={55} alt='' />
+              лого
             </Link>
           </div>
           :

@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns:
     [start] 50px [logoend] 50px [navstart] auto [navend] calc(50% - 440px)
-    [middle] 200px [searchend] 10px [profilestart] auto [end];
+    [middle] 10px [profilestart] auto [end];
   align-items: center;
   padding: 20px 0;
   border-bottom: 2px solid var(--gray-border);
@@ -73,12 +73,6 @@
   grid-column: start / logoend;
 }
 
-.search {
-  display: flex;
-  grid-column: middle / searchend;
-  align-items: center;
-}
-
 .profile {
   display: flex;
   grid-column: profilestart / end;
@@ -112,6 +106,8 @@
 }
 
 .registration {
+  grid-column: end;
+  text-align: end;
   margin-left: 15px;
   cursor: pointer;
 }
@@ -120,7 +116,7 @@
   .header {
     grid-template-columns:
       [start] 50px [logoend] 20px [navstart] auto [navend] calc(50% - 410px)
-      [middle] 200px [searchend] 10px [profilestart] auto [end];
+      [middle] 10px [profilestart] auto [end];
   }
 
   .icon {
@@ -132,7 +128,7 @@
   .header {
     grid-template-columns:
       [start] 30px [logoend] 20px [navstart] auto [navend] calc(50% - 390px)
-      [middle] 200px [searchend] 10px [profilestart] auto [end];
+      [middle] 10px [profilestart] auto [end];
     padding: 13px 0;
   }
 
@@ -151,7 +147,7 @@
 
 @media screen and (width <= 754px) {
   .header {
-    grid-template-columns: [start] 50px [middle] 200px [searchend] 1fr [profilestart] auto [end];
+    grid-template-columns: [start] 50px [middle] 1fr [profilestart] auto [end];
     padding: 13px 0;
   }
 
@@ -175,9 +171,5 @@
   .header {
     grid-template-columns: [start] 50px [middle] 1fr [profilestart] auto [end];
     padding: 13px 0;
-  }
-
-  .search {
-    display: none;
   }
 }

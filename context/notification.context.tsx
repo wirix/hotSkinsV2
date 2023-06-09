@@ -3,7 +3,7 @@ import { PropsWithChildren, createContext, useState } from "react";
 
 export const NotificationContext = createContext<INotificationContext>({
   message: '',
-  type: 'error',
+  type: 'error'
 });
 
 export const NotificationContextProvider = ({ children, message, type }: PropsWithChildren<INotificationContext>): JSX.Element => {

@@ -1,23 +1,20 @@
 import Head from "next/head";
 import { withLayout } from "../layouts/MainLayout/Layout";
-import { CasesListComponent } from "../page-components";
 import { getUserData } from '../firebase';
 import GetAuth from "../helpers/GetAuth";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 const Home = (): JSX.Element => {
   const { loading } = GetAuth();
-  const isAuth = useSelector((state: RootState) => state.account.isAuth);
   const dispatch = useDispatch();
 
   useEffect(() => {
     getUserData(dispatch);
   }, []);
 
-  if (loading || !isAuth) {
-    return <div>ждемс</div>;
+  if (loading) {
+    return <div>загрузка</div>;
   }
 
   return (
@@ -28,7 +25,7 @@ const Home = (): JSX.Element => {
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@200;300;400;500;700;900&display=swap" rel="stylesheet" />
       </Head>
-      <CasesListComponent />
+      Добро пожаловать. Выберите категорию
     </>
   );
 };

@@ -67,6 +67,15 @@ export const updateInventoryUserData = (uid: string, inventory: shopData): void 
     });
 };
 
+export const updateBalanceUserData = (uid: string, balance: number): void => {
+  firebase.database().ref(`users/${uid}/balance`).set(balance)
+    .catch(e => {
+      if (e instanceof Error) {
+        console.log(e.message);
+      }
+    });
+};
+
 export const updateSavedUserData = (uid: string, savedData: number[]): void => {
   firebase.database().ref(`users/${uid}/saved`).set(savedData)
     .catch(e => {

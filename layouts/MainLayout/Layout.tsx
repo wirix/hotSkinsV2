@@ -32,9 +32,7 @@ export const withLayout = <T extends Record<string, unknown> & INotificationCont
       <Provider store={store}>
         <NotificationContextProvider
           message={props.message}
-          // setMessage={props.setMessage}
           type={props.type}
-          // setType={props.setType}
         >
           <Layout>
             <Component {...props} />

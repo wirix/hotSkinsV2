@@ -4,41 +4,43 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { UniversalItem } from '../../components';
 import { csgoItem } from '../../interfaces/items.interface';
-import { updateInventoryUserData } from '../../firebase';
+import { updateBalanceUserData, updateInventoryUserData } from '../../firebase';
 import { flattenArrayOfObject } from '../../helpers/helpers';
 
 export const InventoryComponent = (): JSX.Element => {
   const inventory = useSelector((state: RootState) => state.inventory.inventory);
+  const balance = useSelector((state: RootState) => state.account.balance);
   const { currentCategory, saved } = useSelector((state: RootState) => state.shop);
   const flattenInventory = flattenArrayOfObject(inventory);
 
-  const sellItem = (sellItem: csgoItem, timebuy: number, uid: string) => {
+  const sellItem = (item: csgoItem, uid: string) => {
     let newInventory = { ...inventory };
-
-    switch (sellItem.type) {
+    const { price, type, timebuy } = item;
+    // определяем какой  тип товара, затем закидваем в firebase
+    switch (type) {
+      case 'graffiti':
+        newInventory = {
+          ...inventory,
+          graffiti: [...inventory.graffiti.filter(g => g.timebuy !== timebuy)]
+        };
+        break;
       case 'sticker':
         newInventory = {
           ...inventory,
-          sticker: [...inventory.sticker.filter(s => s.timebuy !== timebuy)]
+          sticker: [...inventory.sticker.filter(g => g.timebuy !== timebuy)],
         };
         break;
       case 'weapon':
         newInventory = {
           ...inventory,
-          weapon: [...inventory.weapon.filter(s => s.timebuy !== timebuy)]
-        };
-        break;
-      case 'graffiti':
-        newInventory = {
-          ...inventory,
-          graffiti: [...inventory.graffiti.filter(s => s.timebuy !== timebuy)]
+          weapon: [...inventory.weapon.filter(g => g.timebuy !== timebuy)],
         };
         break;
       default:
-        console.error('Произошла продажа неизвестного предмета в инвентаре');
         break;
     }
     updateInventoryUserData(uid, newInventory);
+    updateBalanceUserData(uid, Number((balance + price).toFixed(2)));
   };
 
   return (
