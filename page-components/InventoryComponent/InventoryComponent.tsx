@@ -43,6 +43,10 @@ export const InventoryComponent = (): JSX.Element => {
     updateBalanceUserData(uid, Number((balance + price).toFixed(2)));
   };
 
+  if (flattenInventory.length === 0) {
+    return <div>Пусто. Зайдите в раздел магазина</div>;
+  }
+
   return (
     <div className={styles.inventoryComponent}>
       {flattenInventory.filter(item => currentCategory === 'all' ? true : (item && currentCategory === item.type)).map(g => g && (
