@@ -4,17 +4,25 @@ import { getUserData } from '../firebase';
 import GetAuth from "../helpers/GetAuth";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { pushUrlAuthParams } from "../helpers/helpers";
+import { useRouter } from "next/router";
 
 const Home = (): JSX.Element => {
-  const { loading } = GetAuth();
+  const { loading, user } = GetAuth();
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     getUserData(dispatch);
   }, []);
 
   if (loading) {
-    return <div>загрузка</div>;
+    return <div>Загрузка</div>;
+  }
+
+  if (!user) {
+    pushUrlAuthParams('registration', router);
+    return <div>Загрузка</div>;
   }
 
   return (

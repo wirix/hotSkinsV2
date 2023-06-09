@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { withLayout } from '../layouts/MainLayout/Layout';
 import { CasesListComponent, ShopComponent, InventoryComponent } from '../page-components';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
-import { firstLevelRoute } from '../helpers/helpers';
+import { firstLevelRoute, pushUrlAuthParams } from '../helpers/helpers';
 import { ParsedUrlQuery } from 'querystring';
 import Error404 from './404';
 import axios from 'axios';
@@ -12,10 +12,12 @@ import { shopData } from '../interfaces/items.interface';
 import { INotificationContext } from '../context/notification.context';
 import { getUserData } from '../firebase';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 
 const SlugType = ({ shopData, pageType }: ShopProps): JSX.Element => {
   const { user, loading, error } = GetAuth();
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     getUserData(dispatch);
@@ -29,23 +31,22 @@ const SlugType = ({ shopData, pageType }: ShopProps): JSX.Element => {
     return <div>ошибка {error.message}</div>;
   }
 
-  if (user) {
-    if (pageType) {
-      switch (pageType) {
-        case 'shop':
-          return <ShopComponent shopData={shopData} />;
-        case 'cases':
-          return <CasesListComponent />;
-        case 'inventory':
-          return <InventoryComponent />;
-        default:
-          return <Error404 />;
-      }
-    } else {
+  if (!user && pageType !== 'auth') {
+    pushUrlAuthParams('registration', router);
+    return <div>Загрузка</div>;
+  }
+
+  switch (pageType) {
+    case 'shop':
+      return <ShopComponent shopData={shopData} />;
+    case 'cases':
+      return <CasesListComponent />;
+    case 'inventory':
+      return <InventoryComponent />;
+    case 'auth':
+      return <AuthForm />;
+    default:
       return <Error404 />;
-    }
-  } else {
-    return <AuthForm />;
   }
 };
 

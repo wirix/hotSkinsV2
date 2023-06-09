@@ -17,7 +17,6 @@ export const AuthForm = (): JSX.Element => {
     if (type === 'registration' || type === 'signup') {
       setTypeAuth(type);
     }
-
   }, [router.asPath]);
 
   return (
