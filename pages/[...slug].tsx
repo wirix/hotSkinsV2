@@ -54,7 +54,7 @@ export default withLayout<ShopProps & INotificationContext>(SlugType);
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: firstLevelRoute.map(f => '/' + f.route),
-    fallback: true
+    fallback: false
   };
 };
 

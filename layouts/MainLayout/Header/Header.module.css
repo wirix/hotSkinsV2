@@ -107,8 +107,8 @@
 
 .registration {
   grid-column: end;
-  text-align: end;
   margin-left: 15px;
+  text-align: end;
   cursor: pointer;
 }
 
