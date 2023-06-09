@@ -11,7 +11,7 @@ import { TypeSidebarCategoryItem, TypeSidebarTitleItem } from './Sidebar.props';
 
 const Sidebar = ({ className, ...props }): JSX.Element => {
   const router = useRouter();
-  const asPath: s = router.asPath;
+  const asPath = router.asPath;
   const dispatch = useDispatch();
 
   const [searchValue, setSearchValue] = useState<string>('');
