@@ -1,19 +1,26 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
-import accountSlice from './slices/accountSlice';
-import intentorySlice from './slices/inventorySlice';
-import shopSlice from './slices/shopSlice';
+import { ActionCreatorsMapObject, bindActionCreators, configureStore } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { accountReducer } from './slices/accountSlice';
+import { inventoryReducer } from './slices/inventorySlice';
+import { shopReducer } from './slices/shopSlice';
+import { useMemo } from 'react';
 
 const store = configureStore({
   reducer: {
-    account: accountSlice,
-    inventory: intentorySlice,
-    shop: shopSlice,
+    account: accountReducer,
+    inventory: inventoryReducer,
+    shop: shopReducer,
   },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
 export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useStateSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useActionCreators = (actions: ActionCreatorsMapObject) => {
+  const dispatch = useAppDispatch();
+  return useMemo(() => bindActionCreators(actions, dispatch), []);
+};
 
 export default store;

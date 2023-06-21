@@ -4,18 +4,18 @@ import { ButtonIcon, Hr, Search } from '../../../components';
 import styles from './Sidebar.module.css';
 import { useRouter } from 'next/router';
 import difference from 'lodash.difference';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store';
-import { setCurrentCategory, setCurrentSorted, sortedType } from '../../../redux/slices/shopSlice';
+import { useActionCreators, useStateSelector } from '../../../redux/store';
+import { shopActions, sortedType } from '../../../redux/slices/shopSlice';
 import { TypeSidebarCategoryItem, TypeSidebarTitleItem } from './Sidebar.props';
 
 const Sidebar = ({ className, ...props }): JSX.Element => {
+  console.log('sidebar');
   const router = useRouter();
   const asPath = router.asPath;
-  const dispatch = useDispatch();
+  const actions = useActionCreators(shopActions);
 
   const [searchValue, setSearchValue] = useState<string>('');
-  const { currentCategory, saved, currentSorted } = useSelector((state: RootState) => state.shop);
+  const { currentCategory, saved, currentSorted } = useStateSelector(state => state.shop);
 
   const listCategories: ICurrentCategories[] = [
     { category: 'all', title: 'всё' },
@@ -27,31 +27,30 @@ const Sidebar = ({ className, ...props }): JSX.Element => {
   ];
 
   const [currentCategories, setCurrentCategories] = useState<ICurrentCategories[]>(listCategories);
+
   // тперь удаляются категории не подходящие поэтому их лцшеи перекиннуть в reducer, может юзать show как с иконкой, если получится
   const deleteCategoriesFromShop: ICurrentCategories[] = [{ category: 'weapon', title: 'оружие' }, { category: 'another', title: 'другое' }];
   const deleteCategoriesFromCases: ICurrentCategories[] = [{ category: 'another', title: 'другое' }, { category: 'weapon', title: 'оружие' }];
-  const deleteCategoriesFromInventory: ICurrentCategories[] = [];
 
   const additionalCategories: IAdditionalCategories[] = [
     { icon: <ButtonIcon icon='star' />, title: 'cохранённые', sortedType: 'saved', count: saved ? saved.length : 0, show: ['/shop'] }
   ];
 
   const onSortedClick = (sorted: sortedType) => {
-    dispatch(setCurrentSorted(sorted !== currentSorted ? sorted : 'none'));
+    actions.setCurrentSorted(sorted !== currentSorted ? sorted : 'none');
   };
 
   const onCategoryClick = ((category: TypeSidebarCategoryItem) => {
-    dispatch(setCurrentCategory(category));
+    actions.setCurrentCategory(category);
   });
 
   useEffect(() => {
     // если переходим на другой url, то убираем ненужные категории для этого url
     setCurrentCategories(difference(listCategories,
       asPath === '/shop' ? deleteCategoriesFromShop :
-        asPath === '/cases' ? deleteCategoriesFromCases :
-          asPath === '/inventory' ? deleteCategoriesFromInventory : []
+        asPath === '/cases' ? deleteCategoriesFromCases : []
     ));
-    setCurrentCategory('all');
+    actions.setCurrentCategory('all');
   }, [asPath]);
 
   return (

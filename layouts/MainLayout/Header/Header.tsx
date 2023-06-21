@@ -11,15 +11,14 @@ import { useWindowSize } from '../../../hooks/useWindowSize';
 import GetAuth from '../../../helpers/GetAuth';
 import { useRouter } from 'next/router';
 import { logout } from '../../../firebase';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store';
+import { useStateSelector } from '../../../redux/store';
 
 const Header = ({ className, ...props }): JSX.Element => {
   const { width } = useWindowSize();
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
   const { user } = GetAuth();
   const router = useRouter();
-  const { balance } = useSelector((state: RootState) => state.account);
+  const balance = useStateSelector(state => state.account.balance);
 
   return (
     <>

@@ -22,7 +22,7 @@ export const NotificationContextProvider = ({ children, message, type }: PropsWi
     message: messageState,
     setMessage,
     type: typeState,
-    setType,
+    setType
   }}>
     {children}
   </NotificationContext.Provider>;

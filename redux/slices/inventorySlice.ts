@@ -27,5 +27,4 @@ const inventorySlice = createSlice({
   }
 });
 
-export const { setDataInventory } = inventorySlice.actions;
-export default inventorySlice.reducer;
+export const { reducer: inventoryReducer, actions: inventoryAction } = inventorySlice;

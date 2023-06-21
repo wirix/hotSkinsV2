@@ -1,7 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { shopData } from '../../interfaces/items.interface';
 import { TypeSidebarCategoryItem } from '../../layouts/MainLayout/Sidebar/Sidebar.props';
+import axios from 'axios';
 
 export type sortedType = 'none' | 'saved';
 
@@ -10,7 +11,17 @@ interface ShopState {
   currentCategory: TypeSidebarCategoryItem;
   saved: number[];
   currentSorted: sortedType;
+  loading: boolean;
 }
+
+export const fetchShopItems = createAsyncThunk(
+  'shop/fetchItems',
+  async () => {
+    console.log('fetchShopItems');
+    const { data: shopData } = await axios.get<shopData[]>(process.env.NEXT_PUBLIC_DOMAIN + 'shopItems');
+    return shopData;
+  }
+);
 
 const initialState: ShopState = {
   shop: {
@@ -20,7 +31,8 @@ const initialState: ShopState = {
   },
   currentCategory: 'all',
   saved: [],
-  currentSorted: 'none'
+  currentSorted: 'none',
+  loading: true
 };
 
 const shopSlice = createSlice({
@@ -39,8 +51,21 @@ const shopSlice = createSlice({
     setCurrentSorted: (state, action: PayloadAction<sortedType>) => {
       state.currentSorted = action.payload;
     }
-  }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchShopItems.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchShopItems.fulfilled, (state, action) => {
+        state.shop = action.payload[0];
+        state.loading = false;
+      })
+      .addCase(fetchShopItems.rejected, (state) => {
+        console.error('error loading shop items');
+        state.loading = false;
+      });
+  },
 });
 
-export const { setDataShop, setCurrentCategory, setSaved, setCurrentSorted } = shopSlice.actions;
-export default shopSlice.reducer;
+export const { reducer: shopReducer, actions: shopActions } = shopSlice;

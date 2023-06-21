@@ -32,7 +32,6 @@ export const LoginForm = ({ setType, setMessage }: LoginFormProps): JSX.Element 
       }, 1500);
     } else {
       switch (res) {
-        // обработаны не все типы
         case 'auth/wrong-password':
           setMessage('почта уже используется');
           setType('error');

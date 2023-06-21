@@ -1,20 +1,30 @@
 import React, { useEffect } from 'react';
 import styles from './ShopComponent.module.css';
 import { UniversalItem } from '../../components';
-import { useDispatch, useSelector } from 'react-redux';
-import { setDataShop } from '../../redux/slices/shopSlice';
-import { ShopComponentProps } from './ShopComponent.props';
-import { RootState } from '../../redux/store';
+import { fetchShopItems } from '../../redux/slices/shopSlice';
+import { useAppDispatch, useStateSelector } from '../../redux/store';
 import { csgoItem } from '../../interfaces/items.interface';
 import { updateBalanceUserData, updateInventoryUserData } from '../../firebase';
 import { flattenArrayOfObject } from '../../helpers/helpers';
 
-export const ShopComponent = ({ shopData }: ShopComponentProps): JSX.Element => {
-  const dispatch = useDispatch();
-  const { currentCategory, saved, currentSorted } = useSelector((state: RootState) => state.shop);
-  const balance = useSelector((state: RootState) => state.account.balance);
-  const inventory = useSelector((state: RootState) => state.inventory.inventory);
-  const flattenShopData = flattenArrayOfObject(shopData);
+export const ShopComponent = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchShopItems());
+  }, []);
+
+  const { currentCategory, saved, currentSorted, loading, shop } = useStateSelector(state => state.shop);
+  const balance = useStateSelector(state => state.account.balance);
+  const inventory = useStateSelector(state => state.inventory.inventory);
+
+  console.log('render shop');
+  
+  if (loading) {
+    return <div>Загрузка</div>;
+  }
+
+  const flattenShopData = flattenArrayOfObject(shop);
 
   const buyItem = (newItem: csgoItem, uid: string) => {
     let newInventory = { ...inventory };
@@ -46,12 +56,6 @@ export const ShopComponent = ({ shopData }: ShopComponentProps): JSX.Element => 
     updateInventoryUserData(uid, newInventory);
     updateBalanceUserData(uid, Number((balance - price).toFixed(2)));
   };
-
-  useEffect(() => {
-    if (shopData) {
-      dispatch(setDataShop(shopData));
-    }
-  }, [shopData]);
 
   return (
     <div className={styles.shop}>

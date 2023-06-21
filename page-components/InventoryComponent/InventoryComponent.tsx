@@ -1,16 +1,16 @@
 import React from 'react';
 import styles from './InventoryComponent.module.css';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { useStateSelector } from '../../redux/store';
 import { UniversalItem } from '../../components';
 import { csgoItem } from '../../interfaces/items.interface';
 import { updateBalanceUserData, updateInventoryUserData } from '../../firebase';
 import { flattenArrayOfObject } from '../../helpers/helpers';
 
 export const InventoryComponent = (): JSX.Element => {
-  const inventory = useSelector((state: RootState) => state.inventory.inventory);
-  const balance = useSelector((state: RootState) => state.account.balance);
-  const { currentCategory, saved } = useSelector((state: RootState) => state.shop);
+  const inventory = useStateSelector(state => state.inventory.inventory);
+  const balance = useStateSelector(state => state.account.balance);
+  const { currentCategory, saved } = useStateSelector(state => state.shop);
+  
   const flattenInventory = flattenArrayOfObject(inventory);
 
   const sellItem = (item: csgoItem, uid: string) => {

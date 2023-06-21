@@ -7,13 +7,12 @@ import Money from './money.svg';
 import { ImgWithSkin } from '../ImgWithSkin/ImgWithSkin';
 import { Button } from '../Button/Button';
 import { UniversalItemProps } from './UniversalItem.props';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { useStateSelector } from '../../redux/store';
 import { updateSavedUserData } from '../../firebase';
 import { useRouter } from 'next/router';
 
 export const UniversalItem = ({ title, urlImg, skinId, property, price, type, stared, color, buyItem, sellItem, timebuy, saved, className, ...props }: UniversalItemProps): JSX.Element => {
-  const { uid, balance } = useSelector((state: RootState) => state.account);
+  const { uid, balance } = useStateSelector(state => state.account);
   const router = useRouter();
 
   const onClickSendStar = (id: number) => {

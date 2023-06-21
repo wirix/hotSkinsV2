@@ -5,18 +5,17 @@ import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
 import { firstLevelRoute, pushUrlAuthParams } from '../helpers/helpers';
 import { ParsedUrlQuery } from 'querystring';
 import Error404 from './404';
-import axios from 'axios';
 import GetAuth from '../helpers/GetAuth';
 import { AuthForm } from '../components';
-import { shopData } from '../interfaces/items.interface';
 import { INotificationContext } from '../context/notification.context';
 import { getUserData } from '../firebase';
-import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+import { useAppDispatch } from '../redux/store';
 
-const SlugType = ({ shopData, pageType }: ShopProps): JSX.Element => {
+const SlugType = ({ pageType }: ShopProps): JSX.Element => {
+  console.log('render SlugType');
   const { user, loading, error } = GetAuth();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   useEffect(() => {
@@ -38,7 +37,7 @@ const SlugType = ({ shopData, pageType }: ShopProps): JSX.Element => {
 
   switch (pageType) {
     case 'shop':
-      return <ShopComponent shopData={shopData} />;
+      return <ShopComponent />;
     case 'cases':
       return <CasesListComponent />;
     case 'inventory':
@@ -55,18 +54,12 @@ export default withLayout<ShopProps & INotificationContext>(SlugType);
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: firstLevelRoute.map(f => '/' + f.route),
-    fallback: false
+    fallback: true
   };
 };
 
 export const getStaticProps: GetStaticProps<ShopProps> = async ({ params }: GetStaticPropsContext<ParsedUrlQuery>) => {
-  if (!params) {
-    return {
-      notFound: true
-    };
-  }
-
-  if (!params.slug) {
+  if (!params || !params.slug) {
     return {
       notFound: true
     };
@@ -79,17 +72,13 @@ export const getStaticProps: GetStaticProps<ShopProps> = async ({ params }: GetS
     };
   }
 
-  const { data: shopData } = await axios.get<shopData[]>(process.env.NEXT_PUBLIC_DOMAIN + 'shopItems');
-
   return {
     props: {
-      pageType: params.slug[0],
-      shopData: shopData[0]
+      pageType: params.slug[0]
     }
   };
 };
 
 interface ShopProps extends Record<string, unknown> {
   pageType: string;
-  shopData: shopData;
 }

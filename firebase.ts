@@ -8,9 +8,9 @@ import firebase from 'firebase/compat/app';
 import { ref, getDatabase, onValue } from 'firebase/database';
 import { IAccountFull } from "./interfaces/account.inteface";
 import { shopData } from "./interfaces/items.interface";
-import { setDataAccount } from "./redux/slices/accountSlice";
-import { setDataInventory } from "./redux/slices/inventorySlice";
-import { setSaved } from "./redux/slices/shopSlice";
+import { accountAction } from "./redux/slices/accountSlice";
+import { inventoryAction } from "./redux/slices/inventorySlice";
+import { shopActions } from "./redux/slices/shopSlice";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDN07lGFjcBYAmcXZlcD43hrk6jpqHtbtg",
@@ -27,20 +27,20 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-export const getUserData = async (dispatch) => {
+export const getUserData = (dispatch) => {
   try {
-    // данные аккаунта отдельно, инвентарь отдельно
-    await onAuthStateChanged(auth, (user) => {
+    console.log('getUserData firebase');
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid: string = user.uid;
         const database = getDatabase();
         const balance = ref(database, 'users/' + uid);
         onValue(balance, (snapshot) => {
           const data: IAccountFull = snapshot.val();
-          const { balance, uid, username, email, password, luckyChance, saved } = data;
-          dispatch(setSaved(saved));
-          dispatch(setDataAccount({ balance, uid, username, email, password, luckyChance }));
-          dispatch(setDataInventory(data.inventory));
+          const { balance, uid, username, email, password, luckyChance, saved, inventory } = data;
+          dispatch(shopActions.setSaved(saved));
+          dispatch(accountAction.setDataAccount({ balance, uid, username, email, password, luckyChance }));
+          dispatch(inventoryAction.setDataInventory(inventory));
         });
       }
     });
@@ -106,7 +106,6 @@ export const registerWithEmailAndPassword = async (username: string, email: stri
     writeUserData(userData);
   } catch (e) {
     if (e instanceof Error) {
-      // преобразовываем ошибку firebase для typeErrorRegistration
       const regex = /\(([^)]+)\)/;
       const match = regex.exec(e.message);
       const errorMessage = match ? match[1] as typeErrorRegistration : 'unknownError';
@@ -120,7 +119,6 @@ export const funSignInWithEmailAndPassword = async (email: string, password: str
     await signInWithEmailAndPassword(auth, email, password);
   } catch (e) {
     if (e instanceof Error) {
-      // преобразовываем ошибку firebase для typeErrorLogin
       const regex = /\(([^)]+)\)/;
       const match = regex.exec(e.message);
       const errorMessage = match ? match[1] as typeErrorLogin : 'unknownError';
@@ -133,6 +131,6 @@ export const logout = (): void => {
   signOut(auth);
 };
 
-export type typeErrorRegistration = 'auth/email-already-in-use' | 'auth/invalid-email' | 'auth/operation-not-allowed' | 'auth/weak-password' | 'auth/network-request-failed' | 'auth/too-many-requests' | 'auth/user-disabled' | 'auth/internal-error' | 'auth/user-not-found' | undefined | 'unknownError';
+export type typeErrorRegistration = 'auth/email-already-in-use' | 'auth/invalid-email' | 'auth/operation-not-allowed' | 'auth/weak-password' | 'auth/network-request-failed' | 'auth/too-many-requests' | 'auth/user-disabled' | 'auth/internal-error' | 'auth/user-not-found' | 'unknownError' | undefined;
 
-export type typeErrorLogin = 'auth/wrong-password' | 'auth/user-not-found' | undefined | 'unknownError';
+export type typeErrorLogin = 'auth/wrong-password' | 'auth/user-not-found' | 'unknownError' | undefined;
