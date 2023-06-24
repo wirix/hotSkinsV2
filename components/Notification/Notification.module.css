@@ -1,42 +1,41 @@
-.notification {
+.tooltip {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 400px;
-  padding: 16px;
-  color: var(--white);
-  border: 1px solid var(--white);
+  width: 400px;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
 }
 
-.notification p {
-  margin: 0;
+.redBg {
+  border: 1px solid var(--black);
+  color: var(--white);
+  background-color: var(--red);
+  box-shadow: 3px 3px 13px rgb(255 0 0 / 27%);
 }
 
-.notification p::first-letter {
-  text-transform: capitalize;
-}
-
-.notification button {
-  width: 20px;
-  height: 20px;
-  color: var(--dark-gray);
-}
-
-.notification button:hover {
-  color: var(--dark-gray-hover);
-}
-
-.notification.success {
+.greenBg {
+  border: 1px solid var(--gray);
+  color: var(--white);
   background-color: var(--green);
-  border-color: var(--dark-gray);
+  box-shadow: 3px 3px 13px rgb(0 255 122 / 20%);
 }
 
-.notification.error {
-  background-color: #fb6363;
-  border-color: var(--dark-gray);
+.tooltipContainer {
+  width: 100%;
+  padding: 10px;
+}
+
+.tooltipContainer div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 1023px) {
+  .tooltip {
+    display: none;
+  }
 }

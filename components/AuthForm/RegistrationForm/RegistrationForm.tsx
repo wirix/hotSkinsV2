@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../Input/Input';
 import { Button } from '../../Button/Button';
 import { registerWithEmailAndPassword, typeErrorRegistration } from '../../../firebase';
 import styles from './RegistrationForm.module.css';
 import { IRegistrationForm } from './RegistrationForm.interface';
-import { RegistrationFormProps } from './RegistrationForm.props';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
+import { NotificationContext } from '../../../context/notification.context';
 
-export const RegistrationForm = ({ setType, setMessage }: RegistrationFormProps): JSX.Element => {
+export const RegistrationForm = (): JSX.Element => {
   const router = useRouter();
+  const { setTypeMessage, setText } = useContext(NotificationContext);
 
   const SignupSchema = Yup.object().shape({
     email: Yup.string().email(`Неверно указан email`).required('Поле обязательно!'),
@@ -25,46 +26,39 @@ export const RegistrationForm = ({ setType, setMessage }: RegistrationFormProps)
   });
 
   const onSubmit = async (formData: IRegistrationForm) => {
-    const res: typeErrorRegistration = await registerWithEmailAndPassword(formData.username, formData.email, formData.password);
-    if (!res) {
-      setMessage('успех регистр');
-      setType('success');
-      setTimeout(() => {
+    if (setTypeMessage && setText) {
+      const res: typeErrorRegistration = await registerWithEmailAndPassword(formData.username, formData.email, formData.password);
+      if (!res) {
         router.push('/');
-      }, 1500);
-    } else {
-      switch (res) {
-        // обработаны не все типы
-        case 'auth/email-already-in-use':
-          setMessage('почта уже используется');
-          setType('error');
-          break;
-        case 'auth/invalid-email':
-          setMessage('неправильная почта');
-          setType('error');
-          break;
-        case 'auth/weak-password':
-          setMessage('пароль слишком слабый, добавьте как можно больше разных символов');
-          setType('error');
-          break;
-        case 'auth/network-request-failed':
-          setMessage('сетевое соединение было потеряно во время регистрации. Попробуйте повторить попытку позже или проверьте свое интернет-соединение.');
-          setType('error');
-          break;
-        case 'auth/too-many-requests':
-          setMessage('было слишком много неудачных попыток регистрации с вашего IP-адреса. Попробуйте повторить попытку позже');
-          setType('error');
-          break;
-        case 'auth/internal-error':
-          setMessage('ошибка возникает, если произошла внутренняя ошибка Firebase. Попробуйте повторить попытку позже или свяжитесь с поддержкой Firebase, чтобы решить эту проблему.');
-          setType('error');
-          break;
-        default:
-          setMessage('неизвестная ошибка');
-          setType('error');
+        setTypeMessage('success');
+        setText('Вы успешно зарегистрировались');
+      } else {
+        setTypeMessage('error');
+        switch (res) {
+          case 'auth/email-already-in-use':
+            setText('почта уже используется');
+            break;
+          case 'auth/invalid-email':
+            setText('неправильная почта');
+            break;
+          case 'auth/weak-password':
+            setText('пароль слишком слабый, добавьте как можно больше разных символов');
+            break;
+          case 'auth/network-request-failed':
+            setText('сетевое соединение было потеряно во время регистрации. Попробуйте повторить попытку позже или проверьте свое интернет-соединение.');
+            break;
+          case 'auth/too-many-requests':
+            setText('было слишком много неудачных попыток регистрации с вашего IP-адреса. Попробуйте повторить попытку позже');
+            break;
+          case 'auth/internal-error':
+            setText('ошибка возникает, если произошла внутренняя ошибка Firebase. Попробуйте повторить попытку позже или свяжитесь с поддержкой Firebase, чтобы решить эту проблему.');
+            break;
+          default:
+            setText('неизвестная ошибка');
+        }
       }
+      reset();
     }
-    reset();
   };
 
   return (

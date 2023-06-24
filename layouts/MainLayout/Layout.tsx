@@ -1,18 +1,15 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import styles from './Layout.module.css';
 import { LayoutProps } from './Layout.props';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import Sidebar from './Sidebar/Sidebar';
-import { INotificationContext, NotificationContext } from '../../context/notification.context';
-import { NotificationContextProvider } from '../../context/notification.context';
-import { Notification } from '../../components';
 import { Provider } from 'react-redux';
 import store from '../../redux/store';
+import { NotificationProvider } from '../../context/notification.context';
+import { Notification } from '../../components';
 
 const Layout = ({ children }: LayoutProps): JSX.Element => {
-  const { message, type } = useContext(NotificationContext);
-
   return (
     <div className={styles.layoutWrapper}>
       <div className={styles.layout}>
@@ -21,23 +18,20 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
         <main className={styles.main} >{children}</main>
         <Footer className={styles.footer} />
       </div>
-      {message && <Notification message={message} type={type} />}
     </div>
   );
 };
 
-export const withLayout = <T extends Record<string, unknown> & INotificationContext>(Component: FC<T>) => {
+export const withLayout = <T extends Record<string, unknown>>(Component: FC<T>) => {
   return function functionWithProps(props: T) {
     return (
       <Provider store={store}>
-        <NotificationContextProvider
-          message={props.message}
-          type={props.type}
-        >
+        <NotificationProvider>
           <Layout>
             <Component {...props} />
           </Layout>
-        </NotificationContextProvider>
+          <Notification />
+        </NotificationProvider>
       </Provider>
     );
   };

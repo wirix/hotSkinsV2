@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { LoginForm } from './LoginForm/LoginForm';
 import { RegistrationForm } from './RegistrationForm/RegistrationForm';
 import { Button } from '../Button/Button';
 import styles from './AuthForm.module.css';
 import { pushUrlAuthParams } from '../../helpers/helpers';
-import { NotificationContext } from '../../context/notification.context';
 
-export const AuthForm = (): JSX.Element => {
-  const { setMessage, setType } = useContext(NotificationContext);
+export const AuthForm = () => {
   const router = useRouter();
   const [typeAuth, setTypeAuth] = useState<'registration' | 'signup'>('registration');
 
@@ -33,14 +31,8 @@ export const AuthForm = (): JSX.Element => {
         >войти
         </Button>
       </div>
-      {setMessage && setType && typeAuth === 'signup' && <LoginForm
-        setMessage={setMessage}
-        setType={setType}
-      />}
-      {setMessage && setType && typeAuth === 'registration' && <RegistrationForm
-        setMessage={setMessage}
-        setType={setType}
-      />}
+      {typeAuth === 'signup' && <LoginForm />}
+      {typeAuth === 'registration' && <RegistrationForm />}
     </div>
   );
 };

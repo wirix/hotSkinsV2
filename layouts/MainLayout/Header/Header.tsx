@@ -46,7 +46,9 @@ const Header = ({ className, ...props }): JSX.Element => {
           onClick={() => setIsShowMenu(!isShowMenu)}
         />
         }
-        <Image className={styles.logo} src={logoImage} width={50} height={55} alt='' />
+        <Link href={'/'}>
+          <Image className={styles.logo} src={logoImage} width={50} height={55} alt='' />
+        </Link>
         <nav className={styles.nav}>
           {firstLevelRoute.map(f => (
             f.isNavLink && <Link key={f.id} href={'/' + f.route}>

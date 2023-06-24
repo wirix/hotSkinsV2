@@ -20,3 +20,7 @@ export const pushUrlAuthParams = (params: 'registration' | 'signup', router) => 
 export const flattenArrayOfObject = (inventory: shopData): csgoItem[] => {
   return Object.values(inventory).flatMap(itemShop => itemShop);
 };
+
+export const setFirstUpperLetter = (str: string):string => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};

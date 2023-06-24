@@ -9,6 +9,6 @@ export * from './ImgWithSkin/ImgWithSkin';
 export * from './AuthForm/AuthForm';
 export * from './AuthForm/LoginForm/LoginForm';
 export * from './AuthForm/RegistrationForm/RegistrationForm';
-export * from './Notification/Notification';
 export * from './UniversalItem/UniversalItem';
 export * from './Hr/Hr';
+export * from './Notification/Notification';
