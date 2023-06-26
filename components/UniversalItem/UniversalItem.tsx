@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './UniversalItem.module.css';
 import cn from 'classnames';
 import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
@@ -8,10 +8,10 @@ import { ImgWithSkin } from '../ImgWithSkin/ImgWithSkin';
 import { Button } from '../Button/Button';
 import { UniversalItemProps } from './UniversalItem.props';
 import { useStateSelector } from '../../redux/store';
-import { updateSavedUserData } from '../../firebase';
+import { updateSavedUserData } from '../../firebase/manager';
 import { useRouter } from 'next/router';
 
-export const UniversalItem = ({ title, urlImg, skinId, property, price, type, stared, color, buyItem, sellItem, timebuy, saved, className, ...props }: UniversalItemProps): JSX.Element => {
+export const UniversalItem: FC<UniversalItemProps> = ({ title, urlImg, skinId, property, price, type, stared, color, buyItem, sellItem, timebuy, saved, className, ...props }): JSX.Element => {
   const { uid, balance } = useStateSelector(state => state.account);
   const router = useRouter();
 

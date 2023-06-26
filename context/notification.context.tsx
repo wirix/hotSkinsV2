@@ -1,65 +1,62 @@
 import { ReactNode, createContext, useState } from "react";
 
 export type TypeMessage = 'success' | 'error';
-export type TypeHeadText = 'Уведомление' | 'Ошибка' | 'Успешно';
+
+export enum EnumHeadText {
+  SUCCESS = 'Успешно',
+  ERROR = 'Ошибка',
+  NOTIFICATION = 'Уведомление'
+}
+
+interface INotificationParams {
+  typeMessage: TypeMessage;
+  text: string;
+  headText: EnumHeadText;
+}
 
 export interface INotificationContext {
-  typeMessage: TypeMessage;
-  setTypeMessage?: (newTypeMessage: TypeMessage) => void;
-  text: string;
-  setText?: (newText: string) => void;
-  headText: TypeHeadText;
-  setHeadText?: (newHeadText: TypeHeadText) => void;
+  notificationParams: INotificationParams;
+  setNotificationParams?: (newNotificationParams: INotificationParams) => void;
   isOpened: boolean;
   setIsOpened?: (newIsOpened: boolean) => void;
 }
 
 export const NotificationContext = createContext<INotificationContext>({
-  typeMessage: 'success',
-  text: '',
-  headText: 'Уведомление',
+  notificationParams: {
+    typeMessage: 'success',
+    text: '',
+    headText: EnumHeadText.NOTIFICATION,
+  },
   isOpened: false
 });
 
 export const NotificationProvider = ({ children }: { children: ReactNode }): JSX.Element => {
-  const [typeMessageState, setTypeMessageState] = useState<TypeMessage>('success');
-  const [textState, setTextState] = useState<string>('');
+  const [notificationParamsState, setNotificationParamsState] = useState<INotificationParams>({
+    typeMessage: 'success',
+    text: '',
+    headText: EnumHeadText.NOTIFICATION
+  });
   const [isOpenedState, setIsOpenedState] = useState<boolean>(false);
-  const [headTextState, setHeadTextState] = useState<TypeHeadText>('Уведомление');
-
-  const setTypeMessage = (newTypeMessage: TypeMessage) => {
-    setTypeMessageState(newTypeMessage);
-    setIsOpenedState(true);
-  };
-
-  const setText = (newText: string) => {
-    setTextState(newText);
-    setIsOpenedState(true);
-  };
 
   const setIsOpened = (isOpened: boolean) => {
     setIsOpenedState(isOpened);
   };
 
-  const setHeadText = (newHeadText: TypeHeadText) => {
-    setHeadTextState(newHeadText);
+  const setNotificationParams = (newNotificationParams: INotificationParams) => {
+    setNotificationParamsState(newNotificationParams);
     setIsOpenedState(true);
   };
 
   return (
     <NotificationContext.Provider
-      value={{ text: textState,
-        typeMessage: typeMessageState,
-        headText: headTextState,
+      value={{
+        notificationParams: notificationParamsState,
+        setNotificationParams,
         isOpened: isOpenedState,
-        setTypeMessage,
-        setText,
         setIsOpened,
-        setHeadText
       }}
     >
       {children}
     </NotificationContext.Provider>
   );
 };
-

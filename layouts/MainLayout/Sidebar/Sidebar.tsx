@@ -9,7 +9,6 @@ import { shopActions, sortedType } from '../../../redux/slices/shopSlice';
 import { TypeSidebarCategoryItem, TypeSidebarTitleItem } from './Sidebar.props';
 
 const Sidebar = ({ className, ...props }): JSX.Element => {
-  console.log('sidebar');
   const router = useRouter();
   const asPath = router.asPath;
   const actions = useActionCreators(shopActions);

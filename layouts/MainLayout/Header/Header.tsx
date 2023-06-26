@@ -5,12 +5,12 @@ import { ButtonIcon, Span } from '../../../components';
 import Image from 'next/image';
 import logoImage from './logo.png';
 import Link from 'next/link';
-import { firstLevelRoute, pushUrlAuthParams } from '../../../helpers/helpers';
+import { firstLevelRoute } from '../../../helpers/helpers';
 import MoneyIcon from './money.svg';
 import { useWindowSize } from '../../../hooks/useWindowSize';
 import GetAuth from '../../../helpers/GetAuth';
 import { useRouter } from 'next/router';
-import { logout } from '../../../firebase';
+import { logout } from '../../../firebase/manager';
 import { useStateSelector } from '../../../redux/store';
 
 const Header = ({ className, ...props }): JSX.Element => {

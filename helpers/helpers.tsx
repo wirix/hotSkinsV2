@@ -1,3 +1,4 @@
+import { NextRouter } from "next/router";
 import { firstLevelRouteId } from "../interfaces/firstLevelRoute.interface";
 import { csgoItem, shopData } from "../interfaces/items.interface";
 
@@ -10,7 +11,7 @@ export const firstLevelRoute = [
   { route: 'auth', name: 'Настройки', id: firstLevelRouteId.auth, isNavLink: false },
 ];
 
-export const pushUrlAuthParams = (params: 'registration' | 'signup', router) => {
+export const pushUrlAuthParams = (params: 'registration' | 'signup', router: NextRouter) => {
   router.push({
     pathname: '/auth',
     query: { name: params }

@@ -1,35 +1,15 @@
-import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import 'firebase/compat/auth';
-import 'firebase/compat/database';
-import 'firebase/compat/firestore';
 import firebase from 'firebase/compat/app';
-import { ref, getDatabase, onValue } from 'firebase/database';
-import { IAccountFull } from "./interfaces/account.inteface";
-import { shopData } from "./interfaces/items.interface";
-import { accountAction } from "./redux/slices/accountSlice";
-import { inventoryAction } from "./redux/slices/inventorySlice";
-import { shopActions } from "./redux/slices/shopSlice";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDN07lGFjcBYAmcXZlcD43hrk6jpqHtbtg",
-  authDomain: "hotskins-23b4c.firebaseapp.com",
-  projectId: "hotskins-23b4c",
-  storageBucket: "hotskins-23b4c.appspot.com",
-  messagingSenderId: "438463365403",
-  appId: "1:438463365403:web:b07b7df54c5db86d4c13be"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getDatabase, onValue, ref } from "firebase/database";
+import { IAccountFull } from "../interfaces/account.inteface";
+import { shopActions } from "../redux/slices/shopSlice";
+import { accountActions } from "../redux/slices/accountSlice";
+import { inventoryActions } from "../redux/slices/inventorySlice";
+import { auth } from '../firebase/initialization';
+import { csgoItem } from '../interfaces/items.interface';
 
 export const getUserData = (dispatch) => {
   try {
-    console.log('getUserData firebase');
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid: string = user.uid;
@@ -39,8 +19,8 @@ export const getUserData = (dispatch) => {
           const data: IAccountFull = snapshot.val();
           const { balance, uid, username, email, password, luckyChance, saved, inventory } = data;
           dispatch(shopActions.setSaved(saved));
-          dispatch(accountAction.setDataAccount({ balance, uid, username, email, password, luckyChance }));
-          dispatch(inventoryAction.setDataInventory(inventory));
+          dispatch(accountActions.setDataAccount({ balance, uid, username, email, password, luckyChance }));
+          dispatch(inventoryActions.setDataInventory(inventory));
         });
       }
     });
@@ -58,7 +38,7 @@ export const writeUserData = (user: IAccountFull): void => {
     });
 };
 
-export const updateInventoryUserData = (uid: string, inventory: shopData): void => {
+export const updateInventoryUserData = (uid: string, inventory: csgoItem[]): void => {
   firebase.database().ref(`users/${uid}/inventory`).set(inventory)
     .catch(e => {
       if (e instanceof Error) {
@@ -96,11 +76,7 @@ export const registerWithEmailAndPassword = async (username: string, email: stri
       password,
       balance: 30000,
       luckyChance: 0,
-      inventory: {
-        weapon: [],
-        sticker: [],
-        graffiti: []
-      },
+      inventory: [],
       saved: []
     };
     writeUserData(userData);

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { NotificationProps } from './Notification.props';
 import styles from './Notification.module.css';
 import cn from 'classnames';
@@ -6,12 +6,12 @@ import { Portal } from '../../portal';
 import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
 import { NotificationContext } from '../../context/notification.context';
 
-export const Notification = ({ className, ...props }: NotificationProps) => {
+export const Notification: FC<NotificationProps> = ({ className, ...props }): JSX.Element | null => {
   const [position, setPosition] = useState({
     right: 20,
     bottom: 20,
   });
-  const { text, isOpened, typeMessage, headText, setIsOpened } = useContext(NotificationContext);
+  const { notificationParams, isOpened, setIsOpened } = useContext(NotificationContext);
 
   const closeNotification = () => {
     setIsOpened && setIsOpened(false);
@@ -29,18 +29,18 @@ export const Notification = ({ className, ...props }: NotificationProps) => {
       <Portal>
         <div
           className={cn(styles.tooltip, className, {
-            [styles.redBg]: typeMessage === 'error',
-            [styles.greenBg]: typeMessage === 'success'
+            [styles.redBg]: notificationParams.typeMessage === 'error',
+            [styles.greenBg]: notificationParams.typeMessage === 'success'
           })}
           style={{ bottom: position.bottom, right: position.right }}
           {...props}
         >
           <div className={styles.tooltipContainer}>
             <div>
-              <h3 className={styles.headText}>{headText ?? 'Уведомление'}</h3>
+              <h3 className={styles.headText}>{notificationParams.headText ?? 'Уведомление'}</h3>
               <ButtonIcon icon='close' onClick={() => setIsOpened && setIsOpened(false)} />
             </div>
-            <span>{text}</span>
+            <span>{notificationParams.text}</span>
           </div>
         </div>
       </Portal>)

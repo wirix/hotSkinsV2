@@ -18,15 +18,12 @@ const accountSlice = createSlice({
   name: 'account',
   initialState,
   reducers: {
-    setDataAccount: (state, action: PayloadAction<AccountState>) => {
-      state.balance = action.payload.balance;
-      state.uid = action.payload.uid;
-      state.username = action.payload.username;
-      state.email = action.payload.email;
-      state.luckyChance = action.payload.luckyChance;
-      state.isAuth = true;
-    }
+    setDataAccount: (state, action: PayloadAction<AccountState>) => ({
+      ...state,
+      ...action.payload,
+      isAuth: true
+    })
   },
 });
 
-export const { reducer: accountReducer, actions: accountAction } = accountSlice;
+export const { reducer: accountReducer, actions: accountActions } = accountSlice;

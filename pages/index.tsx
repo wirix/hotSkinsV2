@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { withLayout } from "../layouts/MainLayout/Layout";
-import { getUserData } from '../firebase';
+import { getUserData } from '../firebase/manager';
 import GetAuth from "../helpers/GetAuth";
 import { useEffect } from "react";
 import { pushUrlAuthParams } from "../helpers/helpers";
@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import { useAppDispatch } from "../redux/store";
 
 const Home = (): JSX.Element => {
-  console.log('render Home')
   const { loading, user } = GetAuth();
   const dispatch = useAppDispatch();
   const router = useRouter();

@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { shopData } from '../../interfaces/items.interface';
+import { csgoItem, shopData } from '../../interfaces/items.interface';
 import { TypeSidebarCategoryItem } from '../../layouts/MainLayout/Sidebar/Sidebar.props';
 import axios from 'axios';
+import { flattenArrayOfObject } from '../../helpers/helpers';
 
 export type sortedType = 'none' | 'saved';
 
 interface ShopState {
-  shop: shopData;
+  shop: csgoItem[];
   currentCategory: TypeSidebarCategoryItem;
   saved: number[];
   currentSorted: sortedType;
@@ -17,18 +18,13 @@ interface ShopState {
 export const fetchShopItems = createAsyncThunk(
   'shop/fetchItems',
   async () => {
-    console.log('fetchShopItems');
-    const { data: shopData } = await axios.get<shopData[]>(process.env.NEXT_PUBLIC_DOMAIN + 'shopItems');
+    const { data: shopData } = await axios.get<shopData>(process.env.NEXT_PUBLIC_DOMAIN + 'shopItems');
     return shopData;
   }
 );
 
 const initialState: ShopState = {
-  shop: {
-    weapon: [],
-    graffiti: [],
-    sticker: [],
-  },
+  shop: [],
   currentCategory: 'all',
   saved: [],
   currentSorted: 'none',
@@ -39,8 +35,8 @@ const shopSlice = createSlice({
   name: 'shop',
   initialState,
   reducers: {
-    setDataShop: (state, action: PayloadAction<shopData>) => {
-      state.shop = action.payload;
+    setDataShop: (state, action: PayloadAction<csgoItem[]>) => {
+      state.shop = action.payload || [];
     },
     setCurrentCategory: (state, action: PayloadAction<TypeSidebarCategoryItem>) => {
       state.currentCategory = action.payload;
@@ -58,7 +54,7 @@ const shopSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchShopItems.fulfilled, (state, action) => {
-        state.shop = action.payload[0];
+        state.shop = flattenArrayOfObject(action.payload[0]);
         state.loading = false;
       })
       .addCase(fetchShopItems.rejected, (state) => {

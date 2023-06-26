@@ -8,12 +8,11 @@ import Error404 from './404';
 import GetAuth from '../helpers/GetAuth';
 import { AuthForm } from '../components';
 import { INotificationContext } from '../context/notification.context';
-import { getUserData } from '../firebase';
+import { getUserData } from '../firebase/manager';
 import { useRouter } from 'next/router';
 import { useAppDispatch } from '../redux/store';
 
 const SlugType = ({ pageType }: ShopProps): JSX.Element => {
-  console.log('render SlugType');
   const { user, loading, error } = GetAuth();
   const dispatch = useAppDispatch();
   const router = useRouter();
