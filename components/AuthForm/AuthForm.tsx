@@ -4,29 +4,28 @@ import { LoginForm } from './LoginForm/LoginForm';
 import { RegistrationForm } from './RegistrationForm/RegistrationForm';
 import { Button } from '../Button/Button';
 import styles from './AuthForm.module.css';
-import { pushUrlAuthParams } from '../../helpers/helpers';
 
-export const AuthForm = () => {
+export const AuthForm = (): JSX.Element => {
   const router = useRouter();
   const [typeAuth, setTypeAuth] = useState<'registration' | 'signup'>('registration');
 
   useEffect(() => {
-    const type = router.asPath.split('=')[1];
-    if (type === 'registration' || type === 'signup') {
-      setTypeAuth(type);
-    }
-  }, [router.asPath]);
+    router.push({
+      pathname: '/auth',
+      query: { name: typeAuth }
+    });
+  }, [typeAuth, router.asPath]);
 
   return (
     <div className={styles.form}>
       <div className={styles.swapTab}>
         <Button
           className={typeAuth === 'registration' ? styles.active : ''}
-          onClick={() => pushUrlAuthParams('registration', router)}
+          onClick={() => setTypeAuth('registration')}
         >регистрация
         </Button>
         <Button
-          onClick={() => pushUrlAuthParams('signup', router)}
+          onClick={() => setTypeAuth('signup')}
           className={typeAuth === 'signup' ? styles.active : ''}
         >войти
         </Button>

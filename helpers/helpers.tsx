@@ -1,4 +1,3 @@
-import { NextRouter } from "next/router";
 import { firstLevelRouteId } from "../interfaces/firstLevelRoute.interface";
 import { csgoItem, shopData } from "../interfaces/items.interface";
 
@@ -10,13 +9,6 @@ export const firstLevelRoute = [
   { route: 'settings', name: 'Настройки', id: firstLevelRouteId.settings, isNavLink: false },
   { route: 'auth', name: 'Настройки', id: firstLevelRouteId.auth, isNavLink: false },
 ];
-
-export const pushUrlAuthParams = (params: 'registration' | 'signup', router: NextRouter) => {
-  router.push({
-    pathname: '/auth',
-    query: { name: params }
-  });
-};
 
 export const flattenArrayOfObject = (inventory: shopData): csgoItem[] => {
   return Object.values(inventory).flatMap(itemShop => itemShop);

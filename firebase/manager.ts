@@ -8,27 +8,6 @@ import { inventoryActions } from "../redux/slices/inventorySlice";
 import { auth } from '../firebase/initialization';
 import { csgoItem } from '../interfaces/items.interface';
 
-export const getUserData = (dispatch) => {
-  try {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid: string = user.uid;
-        const database = getDatabase();
-        const balance = ref(database, 'users/' + uid);
-        onValue(balance, (snapshot) => {
-          const data: IAccountFull = snapshot.val();
-          const { balance, uid, username, email, password, luckyChance, saved, inventory } = data;
-          dispatch(shopActions.setSaved(saved));
-          dispatch(accountActions.setDataAccount({ balance, uid, username, email, password, luckyChance }));
-          dispatch(inventoryActions.setDataInventory(inventory));
-        });
-      }
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const writeUserData = (user: IAccountFull): void => {
   firebase.database().ref(`users/${user.uid}`).set(user)
     .catch(e => {
@@ -99,6 +78,30 @@ export const funSignInWithEmailAndPassword = async (email: string, password: str
       const match = regex.exec(e.message);
       const errorMessage = match ? match[1] as typeErrorLogin : 'unknownError';
       return errorMessage;
+    }
+  }
+};
+
+export const getUserData = (dispatch): IAccountFull | undefined => {
+  try {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid: string = user.uid;
+        const database = getDatabase();
+        const balance = ref(database, 'users/' + uid);
+        onValue(balance, (snapshot) => {
+          const data: IAccountFull = snapshot.val();
+          const { balance, uid, username, email, password, luckyChance, saved, inventory } = data;
+          dispatch(shopActions.setSaved(saved));
+          dispatch(accountActions.setDataAccount({ balance, uid, username, email, password, luckyChance }));
+          dispatch(inventoryActions.setDataInventory(inventory));
+        });
+      }
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error);
+      return;
     }
   }
 };

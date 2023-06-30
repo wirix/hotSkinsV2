@@ -16,6 +16,6 @@
 .submit {
   position: absolute;
   top: -1px;
-  right: 0;
+  right: 15px;
   z-index: 1;
 }

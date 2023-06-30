@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import styles from './ShopComponent.module.css';
-import { UniversalItem } from '../../components';
+import { Loader, UniversalItem } from '../../components';
 import { fetchShopItems } from '../../redux/slices/shopSlice';
 import { useAppDispatch, useStateSelector } from '../../redux/store';
 import { csgoItem } from '../../interfaces/items.interface';
@@ -16,7 +16,7 @@ export const ShopComponent = (): JSX.Element => {
   }, []);
 
   const { setNotificationParams } = useContext(NotificationContext);
-  const { currentCategory, saved, currentSorted, shop } = useStateSelector(state => state.shop);
+  const { currentCategory, saved, currentSorted, shop, loading } = useStateSelector(state => state.shop);
   const balance = useStateSelector(state => state.account.balance);
   const inventory = useStateSelector(state => state.inventory.inventory);
 
@@ -43,6 +43,10 @@ export const ShopComponent = (): JSX.Element => {
       }
     }
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className={styles.shop}>

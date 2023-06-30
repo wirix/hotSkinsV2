@@ -12,6 +12,7 @@ export const InventoryComponent = (): JSX.Element => {
   const balance = useStateSelector(state => state.account.balance);
   const { currentCategory, saved } = useStateSelector(state => state.shop);
   const { setNotificationParams } = useContext(NotificationContext);
+  
   const sellItem = (item: csgoItem, uid: string) => {
     try {
       if (!(inventory.length && setNotificationParams)) {

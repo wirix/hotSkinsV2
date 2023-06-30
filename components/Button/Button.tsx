@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 import cn from 'classnames';
 import styles from './Button.module.css';
 import { ButtonProps } from './Button.props';
 import Arrow from './arrow.svg';
 
-export const Button = ({ children, arrow = 'none', appearance = 'transparent', className, ...props }: ButtonProps): JSX.Element => {
+export const Button: FC<ButtonProps> = ({ children, arrow = 'none', appearance = 'transparent', className, ...props }) => {
   return (
     <button className={cn(styles.button, className, {
       [styles.black]: appearance === 'black',

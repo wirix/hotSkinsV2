@@ -3,9 +3,9 @@ import { withLayout } from "../layouts/MainLayout/Layout";
 import { getUserData } from '../firebase/manager';
 import GetAuth from "../helpers/GetAuth";
 import { useEffect } from "react";
-import { pushUrlAuthParams } from "../helpers/helpers";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "../redux/store";
+import { Loader } from "../components";
 
 const Home = (): JSX.Element => {
   const { loading, user } = GetAuth();
@@ -17,12 +17,15 @@ const Home = (): JSX.Element => {
   }, []);
 
   if (loading) {
-    return <div>Загрузка</div>;
+    return <Loader />;
   }
 
   if (!user) {
-    pushUrlAuthParams('registration', router);
-    return <div>Загрузка</div>;
+    router.push({
+      pathname: '/auth',
+      query: { name: 'registration' }
+    });
+    return <Loader />;
   }
 
   return (

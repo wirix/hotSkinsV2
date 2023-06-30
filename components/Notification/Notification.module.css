@@ -9,16 +9,16 @@
 }
 
 .redBg {
-  border: 1px solid var(--black);
   color: var(--white);
   background-color: var(--red);
+  border: 1px solid var(--black);
   box-shadow: 3px 3px 13px rgb(255 0 0 / 27%);
 }
 
 .greenBg {
-  border: 1px solid var(--gray);
   color: var(--white);
   background-color: var(--green);
+  border: 1px solid var(--gray);
   box-shadow: 3px 3px 13px rgb(0 255 122 / 20%);
 }
 
@@ -29,8 +29,8 @@
 
 .tooltipContainer div {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 10px;
 }
 

@@ -11,7 +11,7 @@ const initialState: AccountState = {
   email: '',
   password: '',
   luckyChance: 0,
-  isAuth: false
+  isAuth: false,
 };
 
 const accountSlice = createSlice({
@@ -23,7 +23,7 @@ const accountSlice = createSlice({
       ...action.payload,
       isAuth: true
     })
-  },
+  }
 });
 
 export const { reducer: accountReducer, actions: accountActions } = accountSlice;

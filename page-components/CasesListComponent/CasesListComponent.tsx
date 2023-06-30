@@ -1,10 +1,8 @@
-import React, { useContext } from 'react';
-import { NotificationContext } from '../../context/notification.context';
+import React from 'react';
 
 export const CasesListComponent = (): JSX.Element => {
-  const {setIsOpened, } = useContext(NotificationContext);
   return (
-    <div onClick={() => setIsOpened && setIsOpened(true)}>
+    <div>
       <span>кейсы</span>
     </div>
   );

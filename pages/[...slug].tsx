@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { withLayout } from '../layouts/MainLayout/Layout';
 import { CasesListComponent, ShopComponent, InventoryComponent } from '../page-components';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
-import { firstLevelRoute, pushUrlAuthParams } from '../helpers/helpers';
+import { firstLevelRoute } from '../helpers/helpers';
 import { ParsedUrlQuery } from 'querystring';
 import Error404 from './404';
 import GetAuth from '../helpers/GetAuth';
-import { AuthForm } from '../components';
+import { AuthForm, Loader } from '../components';
 import { INotificationContext } from '../context/notification.context';
 import { getUserData } from '../firebase/manager';
 import { useRouter } from 'next/router';
@@ -22,7 +22,7 @@ const SlugType = ({ pageType }: ShopProps): JSX.Element => {
   }, []);
 
   if (loading) {
-    return <>загрузка</>;
+    return <Loader />;
   }
 
   if (error && error instanceof Error) {
@@ -30,8 +30,11 @@ const SlugType = ({ pageType }: ShopProps): JSX.Element => {
   }
 
   if (!user && pageType !== 'auth') {
-    pushUrlAuthParams('registration', router);
-    return <div>Загрузка</div>;
+    router.push({
+      pathname: '/auth',
+      query: { name: 'registration' }
+    });
+    return <Loader />;
   }
 
   switch (pageType) {

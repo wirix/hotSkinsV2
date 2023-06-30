@@ -1,10 +1,10 @@
-import React, { ForwardedRef, forwardRef } from 'react';
+import React, { FC, forwardRef } from 'react';
 import cn from 'classnames';
 import styles from './Input.module.css';
 import { InputProps } from './Input.props';
 import { Span } from '../Span/Span';
 
-export const Input = forwardRef(({ appearance = 'transparent', error, className, ...props }: InputProps, ref: ForwardedRef<HTMLInputElement>): JSX.Element => {
+export const Input: FC<InputProps> = forwardRef(({ appearance = 'transparent', error, className, ...props }, ref) => {
   return (
     <div className={styles.inputContainer}>
       <input

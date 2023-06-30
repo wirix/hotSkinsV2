@@ -12,3 +12,4 @@ export * from './AuthForm/RegistrationForm/RegistrationForm';
 export * from './UniversalItem/UniversalItem';
 export * from './Hr/Hr';
 export * from './Notification/Notification';
+export * from './Loader/Loader';

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { SpanProps } from './Span.props';
 import styles from './Span.module.css';
 import cn from 'classnames';
 
-export const Span = ({ children, isHover = false, color = 'gray', fontSize = '16px', fontWeight = '400', className, ...props }: SpanProps): JSX.Element => {
+export const Span: FC<SpanProps> = ({ children, isHover = false, color = 'gray', fontSize = '16px', fontWeight = '400', className, ...props }) => {
   return (
     <span className={cn(styles.span, className, {
       [styles.isHover]: isHover,

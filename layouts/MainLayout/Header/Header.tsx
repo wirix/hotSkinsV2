@@ -74,7 +74,7 @@ const Header = ({ className, ...props }): JSX.Element => {
           :
           <Span className={styles.registration}
             fontSize='16px' fontWeight='700' color='white' isHover>
-            <Link href='/auth' >Регистрация</Link>
+            <Link href='/auth'>Регистрация</Link>
           </Span>
         }
       </header>

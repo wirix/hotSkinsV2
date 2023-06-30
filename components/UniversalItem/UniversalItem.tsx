@@ -11,7 +11,7 @@ import { useStateSelector } from '../../redux/store';
 import { updateSavedUserData } from '../../firebase/manager';
 import { useRouter } from 'next/router';
 
-export const UniversalItem: FC<UniversalItemProps> = ({ title, urlImg, skinId, property, price, type, stared, color, buyItem, sellItem, timebuy, saved, className, ...props }): JSX.Element => {
+export const UniversalItem: FC<UniversalItemProps> = ({ title, urlImg, skinId, property, price, type, stared, color, buyItem, sellItem, timebuy, saved, className, ...props }) => {
   const { uid, balance } = useStateSelector(state => state.account);
   const router = useRouter();
 

@@ -7,15 +7,11 @@ import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
 import { NotificationContext } from '../../context/notification.context';
 
 export const Notification: FC<NotificationProps> = ({ className, ...props }): JSX.Element | null => {
+  const { notificationParams, isOpened, setIsOpened } = useContext(NotificationContext);
   const [position, setPosition] = useState({
     right: 20,
     bottom: 20,
   });
-  const { notificationParams, isOpened, setIsOpened } = useContext(NotificationContext);
-
-  const closeNotification = () => {
-    setIsOpened && setIsOpened(false);
-  };
 
   useEffect(() => {
     if (isOpened) {
@@ -23,6 +19,14 @@ export const Notification: FC<NotificationProps> = ({ className, ...props }): JS
       return () => clearTimeout(timerId);
     }
   }, [isOpened]);
+  
+  if (!setIsOpened) {
+    return null;
+  }
+
+  const closeNotification = () => {
+    setIsOpened(false);
+  };
 
   return isOpened
     ? (
@@ -37,8 +41,8 @@ export const Notification: FC<NotificationProps> = ({ className, ...props }): JS
         >
           <div className={styles.tooltipContainer}>
             <div>
-              <h3 className={styles.headText}>{notificationParams.headText ?? 'Уведомление'}</h3>
-              <ButtonIcon icon='close' onClick={() => setIsOpened && setIsOpened(false)} />
+              <h3 className={styles.headText}>{notificationParams.headText}</h3>
+              <ButtonIcon icon='close' onClick={() => closeNotification()} />
             </div>
             <span>{notificationParams.text}</span>
           </div>
