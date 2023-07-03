@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import styles from './ShopComponent.module.css';
-import { Loader, UniversalItem } from '../../components';
+import { Loader, SkinItemCover } from '../../components';
 import { fetchShopItems } from '../../redux/slices/shopSlice';
 import { useAppDispatch, useStateSelector } from '../../redux/store';
 import { csgoItem } from '../../interfaces/items.interface';
@@ -54,7 +54,7 @@ export const ShopComponent = (): JSX.Element => {
         .filter(item => currentCategory === 'all' ? true : (currentCategory === item.type))
         .filter(item => (currentSorted === 'saved' && saved) ? saved.includes(item.skinId) : (!saved && currentSorted === 'saved') ? false : true)
         .map((g, i) => (
-          <UniversalItem
+          <SkinItemCover
             key={i}
             buyItem={buyItem}
             stared={saved ? saved.some(s => s === g.skinId) : false}

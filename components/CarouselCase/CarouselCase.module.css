@@ -1,0 +1,45 @@
+.container {
+  position: relative;
+}
+
+.carouselCase {
+  width: 500px;
+  position: absolute;
+  z-index: 100;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+  border: 3px solid var(--gold);
+}
+
+.itemContainer {
+  display: flex;
+  position: absolute;
+}
+
+.centerBorder {
+  width: 3px;
+  background-color: var(--gold);
+  position: absolute;
+  left: 250px;
+  z-index: 100;
+}
+
+.item {
+  position: relative;
+  border-right: 2px solid var(--gray);
+}
+
+.item:last-child {
+  border-right: none;
+}
+
+.title {
+  position: absolute;
+  bottom: 10px;
+  left: 13px;
+  font-size: 15px;
+  color: var(--white);
+  opacity: .6;
+  z-index: 10;
+}

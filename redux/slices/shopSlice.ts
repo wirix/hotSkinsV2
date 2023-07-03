@@ -18,7 +18,7 @@ interface ShopState {
 export const fetchShopItems = createAsyncThunk(
   'shop/fetchItems',
   async () => {
-    const { data: shopData } = await axios.get<shopData>(process.env.NEXT_PUBLIC_DOMAIN + 'shopItems');
+    const { data: shopData } = await axios.get<shopData>(process.env.NEXT_PUBLIC_DOMAIN + 'shop');
     return shopData;
   }
 );
@@ -52,6 +52,7 @@ const shopSlice = createSlice({
     builder
       .addCase(fetchShopItems.pending, (state) => {
         state.loading = true;
+        state.shop = [];
       })
       .addCase(fetchShopItems.fulfilled, (state, action) => {
         state.shop = flattenArrayOfObject(action.payload[0]);

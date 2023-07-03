@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styles from './InventoryComponent.module.css';
 import { useStateSelector } from '../../redux/store';
-import { UniversalItem } from '../../components';
+import { SkinItemCover } from '../../components';
 import { csgoItem } from '../../interfaces/items.interface';
 import { updateBalanceUserData, updateInventoryUserData } from '../../firebase/manager';
 import { EnumHeadText, NotificationContext } from '../../context/notification.context';
@@ -43,7 +43,7 @@ export const InventoryComponent = (): JSX.Element => {
   return (
     <div className={styles.inventoryComponent}>
       {inventory.filter(item => currentCategory === 'all' ? true : (item && currentCategory === item.type)).map(g => g && (
-        <UniversalItem
+        <SkinItemCover
           key={g.timebuy}
           sellItem={sellItem}
           stared={saved ? saved.some(s => s === g.skinId) : false}

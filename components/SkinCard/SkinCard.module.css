@@ -1,10 +1,9 @@
-.ImgWithSkin {
+.SkinCard {
   position: relative;
   display: flex;
   justify-content: center;
   overflow: hidden;
   background-color: var(--black);
-  border-radius: 10px;
 }
 
 .circleShadow {

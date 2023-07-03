@@ -1,4 +1,4 @@
-.shopItem {
+.CaseCover {
   display: grid;
   grid-template-rows: repeat(4, auto);
   grid-template-columns: 180px;
@@ -9,18 +9,8 @@
   position: relative;
 }
 
-.imgWithSkin {
+.SkinCard {
   margin-bottom: 4px;
-}
-
-.buttonStar {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 10;
-  width: 25px;
-  height: 25px;
-  transition: all 0.1s linear;
 }
 
 .unstarred svg path {

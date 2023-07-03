@@ -4,12 +4,16 @@ import { accountReducer } from './slices/accountSlice';
 import { inventoryReducer } from './slices/inventorySlice';
 import { shopReducer } from './slices/shopSlice';
 import { useMemo } from 'react';
+import { carouselReducer } from './slices/carouselSlice';
+import { casesReducer } from './slices/casesSlice';
 
 const store = configureStore({
   reducer: {
     account: accountReducer,
     inventory: inventoryReducer,
     shop: shopReducer,
+    carousel: carouselReducer,
+    cases: casesReducer,
   },
 });
 

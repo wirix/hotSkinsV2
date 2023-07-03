@@ -1,5 +1,6 @@
 .button {
   box-sizing: border-box;
+  display: inline-block;
   padding: 10px;
   color: var(--white);
   font-size: 16px;

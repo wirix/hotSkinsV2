@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react';
-import styles from './ImgWithSkin.module.css';
+import styles from './SkinCard.module.css';
 import cn from 'classnames';
-import { ImgWithSkinProps } from './ImgWithSkin.props';
+import { SkinCardProps } from './SkinCard.props';
 
-export const ImgWithSkin: FC<ImgWithSkinProps> = ({ color, width = 180, urlImg, height = 'auto', className, ...props }) => {
+export const SkinCard: FC<SkinCardProps> = ({ color, width = 180, urlImg, borderRadius = '0px', height = 'auto', className, ...props }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   const handleImageLoad = () => {
@@ -12,7 +12,7 @@ export const ImgWithSkin: FC<ImgWithSkinProps> = ({ color, width = 180, urlImg, 
 
   return isImageLoaded
     ? (
-      <div className={cn(styles.ImgWithSkin, className)} {...props}>
+      <div style={{ width, height, borderRadius }} className={cn(styles.SkinCard, className)} {...props}>
         <div className={cn(styles.circleShadow, {
           [styles.blue]: color === 'blue',
           [styles.purple]: color === 'purple',
@@ -20,10 +20,12 @@ export const ImgWithSkin: FC<ImgWithSkinProps> = ({ color, width = 180, urlImg, 
           [styles.red]: color === 'red',
           [styles.gold]: color === 'gold'
         })}></div>
-        <img width={width} height={height} src={urlImg} alt="" />
+        <span>
+          <img width={width - 10} src={urlImg} alt="" />
+        </span>
       </div>
     )
     : (
-      <img width={width} height={height} onLoad={() => handleImageLoad()} src={urlImg} alt="" />
+      <img width={width - 10} height={height} onLoad={() => handleImageLoad()} src={urlImg} alt="" />
     );
 };

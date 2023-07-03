@@ -1,17 +1,17 @@
 import React, { FC } from 'react';
-import styles from './UniversalItem.module.css';
+import styles from './SkinItemCover.module.css';
 import cn from 'classnames';
 import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
 import { Span } from '../Span/Span';
 import Money from './money.svg';
-import { ImgWithSkin } from '../ImgWithSkin/ImgWithSkin';
+import { SkinCard } from '../SkinCard/SkinCard';
 import { Button } from '../Button/Button';
-import { UniversalItemProps } from './UniversalItem.props';
+import { SkinItemCoverProps } from './SkinItemCover.props';
 import { useStateSelector } from '../../redux/store';
 import { updateSavedUserData } from '../../firebase/manager';
 import { useRouter } from 'next/router';
 
-export const UniversalItem: FC<UniversalItemProps> = ({ title, urlImg, skinId, property, price, type, stared, color, buyItem, sellItem, timebuy, saved, className, ...props }) => {
+export const SkinItemCover: FC<SkinItemCoverProps> = ({ title, urlImg, skinId, property, price, type, stared, color, buyItem, sellItem, timebuy, saved, className, ...props }) => {
   const { uid, balance } = useStateSelector(state => state.account);
   const router = useRouter();
 
@@ -37,11 +37,12 @@ export const UniversalItem: FC<UniversalItemProps> = ({ title, urlImg, skinId, p
   };
 
   return (
-    <div className={styles.shopItem}>
+    <div className={styles.SkinItemCover}>
       <div className={cn(styles.img, className)} {...props}>
-        <ImgWithSkin
-          width={170}
-          className={styles.imgWithSkin}
+        <SkinCard
+          borderRadius={'10px'}
+          width={180}
+          className={styles.SkinCard}
           urlImg={urlImg}
           color={color}
         />
