@@ -13,5 +13,4 @@ export * from './Hr/Hr';
 export * from './Notification/Notification';
 export * from './Loader/Loader';
 export * from './CarouselCase/CarouselCase';
-export * from './CaseContent/CaseContent';
 export * from './CaseCard/CaseCard';
