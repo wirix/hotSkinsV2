@@ -3,26 +3,26 @@
 }
 
 .carouselCase {
-  width: 500px;
   position: absolute;
-  z-index: 100;
   left: 50%;
-  transform: translateX(-50%);
+  z-index: 100;
+  width: 500px;
   overflow: hidden;
   border: 3px solid var(--gold);
+  transform: translateX(-50%);
 }
 
 .itemContainer {
-  display: flex;
   position: absolute;
+  display: flex;
 }
 
 .centerBorder {
-  width: 3px;
-  background-color: var(--gold);
   position: absolute;
   left: 250px;
   z-index: 100;
+  width: 3px;
+  background-color: var(--gold);
 }
 
 .item {
