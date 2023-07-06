@@ -55,7 +55,6 @@ export const CaseComponent = ({ idCase }: CaseComponentProps): JSX.Element | nul
     carouselAction.setIsOpening('notOpened');
   };
 
-
   const getInfoCardCase = () => {
     return (
       <div>
