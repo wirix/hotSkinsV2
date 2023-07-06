@@ -33,13 +33,3 @@
 .item:last-child {
   border-right: none;
 }
-
-.title {
-  position: absolute;
-  bottom: 10px;
-  left: 13px;
-  font-size: 15px;
-  color: var(--white);
-  opacity: .6;
-  z-index: 10;
-}

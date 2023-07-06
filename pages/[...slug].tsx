@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { withLayout } from '../layouts/MainLayout/Layout';
-import { CasesListComponent, ShopComponent, InventoryComponent } from '../page-components';
+import { CasesListComponent, ShopComponent, InventoryComponent, CaseComponent } from '../page-components';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
 import { firstLevelRoute } from '../helpers/helpers';
 import { ParsedUrlQuery } from 'querystring';
@@ -29,7 +29,7 @@ const SlugType = ({ pageType }: ShopProps): JSX.Element => {
     return <div>ошибка {error.message}</div>;
   }
 
-  if (!user && pageType !== 'auth') {
+  if (!user && pageType[0] !== 'auth') {
     router.push({
       pathname: '/auth',
       query: { name: 'registration' }
@@ -37,13 +37,15 @@ const SlugType = ({ pageType }: ShopProps): JSX.Element => {
     return <Loader />;
   }
 
-  switch (pageType) {
+  switch (pageType[0]) {
     case 'shop':
       return <ShopComponent />;
     case 'cases':
       return <CasesListComponent />;
     case 'inventory':
       return <InventoryComponent />;
+    case 'case':
+      return <CaseComponent idCase={+pageType[1]} />;
     case 'auth':
       return <AuthForm />;
     default:
@@ -76,11 +78,11 @@ export const getStaticProps: GetStaticProps<ShopProps> = async ({ params }: GetS
 
   return {
     props: {
-      pageType: params.slug[0]
+      pageType: params.slug,
     }
   };
 };
 
 interface ShopProps extends Record<string, unknown> {
-  pageType: string;
+  pageType: string[] | string;
 }

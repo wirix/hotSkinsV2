@@ -1,0 +1,25 @@
+.CaseComponent {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+
+.newItem {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.buttons button {
+  flex-grow: 1;
+}

@@ -1,3 +1,5 @@
+import { Typecolor } from "./items.interface";
+
 export interface ICaseInfo {
   id: number;
   title: string;
@@ -8,7 +10,7 @@ export interface ICaseInfo {
 
 export interface Skin {
   skinId: number;
-  color: string;
+  color: Typecolor;
   type: string;
   skinTitle: string;
   skinItems: SkinItem[];

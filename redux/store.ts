@@ -6,6 +6,7 @@ import { shopReducer } from './slices/shopSlice';
 import { useMemo } from 'react';
 import { carouselReducer } from './slices/carouselSlice';
 import { casesReducer } from './slices/casesSlice';
+import { caseReducer } from './slices/caseSlice';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     shop: shopReducer,
     carousel: carouselReducer,
     cases: casesReducer,
+    case: caseReducer,
   },
 });
 

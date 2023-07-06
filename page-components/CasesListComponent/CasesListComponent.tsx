@@ -3,7 +3,7 @@ import styles from './CasesListComponent.module.css';
 import { useAppDispatch, useStateSelector } from '../../redux/store';
 import { fetchCasesList } from '../../redux/slices/casesSlice';
 import Error404 from '../../pages/404';
-import { CaseCover, Loader } from '../../components';
+import { CaseCard, Loader } from '../../components';
 
 export const CasesListComponent: FC = () => {
   const dispatch = useAppDispatch();
@@ -24,7 +24,7 @@ export const CasesListComponent: FC = () => {
   return (
     <div className={styles.CasesListComponent}>
       {casesList.map(c => (
-        <CaseCover
+        <CaseCard
           key={c.id}
           title={c.title}
           urlImg={c.imageUrl}

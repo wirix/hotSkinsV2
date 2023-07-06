@@ -27,7 +27,7 @@ export const updateInventoryUserData = (uid: string, inventory: csgoItem[]): voi
 };
 
 export const updateBalanceUserData = (uid: string, balance: number): void => {
-  firebase.database().ref(`users/${uid}/balance`).set(balance)
+  firebase.database().ref(`users/${uid}/balance`).set(Number(balance.toFixed(2)))
     .catch(e => {
       if (e instanceof Error) {
         console.log(e.message);

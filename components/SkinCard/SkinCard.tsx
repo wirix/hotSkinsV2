@@ -10,22 +10,24 @@ export const SkinCard: FC<SkinCardProps> = ({ color, width = 180, urlImg, border
     setIsImageLoaded(true);
   };
 
-  return isImageLoaded
-    ? (
-      <div style={{ width, height, borderRadius }} className={cn(styles.SkinCard, className)} {...props}>
-        <div className={cn(styles.circleShadow, {
-          [styles.blue]: color === 'blue',
-          [styles.purple]: color === 'purple',
-          [styles.pink]: color === 'pink',
-          [styles.red]: color === 'red',
-          [styles.gold]: color === 'gold'
-        })}></div>
-        <span>
-          <img width={width - 10} src={urlImg} alt="" />
-        </span>
-      </div>
-    )
-    : (
-      <img width={width - 10} height={height} onLoad={() => handleImageLoad()} src={urlImg} alt="" />
-    );
+  return (
+    <div style={{ width, height, borderRadius }} className={cn(styles.SkinCard, className)} {...props}>
+      <div className={cn(styles.circleShadow, {
+        [styles.blue]: color === 'blue',
+        [styles.purple]: color === 'purple',
+        [styles.pink]: color === 'pink',
+        [styles.red]: color === 'red',
+        [styles.gold]: color === 'gold'
+      })}></div>
+      <span>
+        <img
+          width={width - 10}
+          src={urlImg}
+          alt=""
+          style={{ visibility: isImageLoaded ? 'visible' : 'hidden'}}
+          onLoad={() => handleImageLoad()}
+        />
+      </span>
+    </div>
+  );
 };

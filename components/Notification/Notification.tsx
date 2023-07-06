@@ -13,20 +13,20 @@ export const Notification: FC<NotificationProps> = ({ className, ...props }): JS
     bottom: 20,
   });
 
+  const closeNotification = () => {
+    setIsOpened && setIsOpened(false);
+  };
+
   useEffect(() => {
     if (isOpened) {
       const timerId = setTimeout(closeNotification, 4000);
       return () => clearTimeout(timerId);
     }
   }, [isOpened]);
-  
+
   if (!setIsOpened) {
     return null;
   }
-
-  const closeNotification = () => {
-    setIsOpened(false);
-  };
 
   return isOpened
     ? (
