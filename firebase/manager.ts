@@ -7,6 +7,7 @@ import { accountActions } from "../redux/slices/accountSlice";
 import { inventoryActions } from "../redux/slices/inventorySlice";
 import { auth } from '../firebase/initialization';
 import { csgoItem } from '../interfaces/items.interface';
+import { useStateSelector } from '../redux/store';
 
 export const writeUserData = (user: IAccountFull): void => {
   firebase.database().ref(`users/${user.uid}`).set(user)

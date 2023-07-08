@@ -25,11 +25,8 @@ export const ShopComponent = (): JSX.Element => {
       if (!(uid && newItem && setNotificationParams)) {
         return;
       }
-
-      const { title, property, price } = newItem;
-      const timebuy = new Date().getTime();
-      const newInventory = [...inventory, { ...newItem, timebuy }];
-
+      const { title, property, price, skinKey } = newItem;
+      const newInventory = [...inventory, { ...newItem, skinKey }];
       updateInventoryUserData(uid, newInventory);
       updateBalanceUserData(uid, Number((balance - price).toFixed(2)));
       setNotificationParams({
@@ -53,9 +50,9 @@ export const ShopComponent = (): JSX.Element => {
       {shop
         .filter(item => currentCategory === 'all' ? true : (currentCategory === item.type))
         .filter(item => (currentSorted === 'saved' && saved) ? saved.includes(item.skinId) : (!saved && currentSorted === 'saved') ? false : true)
-        .map((g, i) => (
+        .map(g => (
           <SkinItemCover
-            key={i}
+            key={g.skinId}
             buyItem={buyItem}
             stared={saved ? saved.some(s => s === g.skinId) : false}
             saved={saved}

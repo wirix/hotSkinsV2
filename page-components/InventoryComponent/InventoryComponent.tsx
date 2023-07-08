@@ -12,16 +12,14 @@ export const InventoryComponent = (): JSX.Element => {
   const balance = useStateSelector(state => state.account.balance);
   const { currentCategory, saved } = useStateSelector(state => state.shop);
   const { setNotificationParams } = useContext(NotificationContext);
-  
+
   const sellItem = (item: csgoItem, uid: string) => {
     try {
       if (!(inventory.length && setNotificationParams)) {
         return;
       }
-
-      const { price, timebuy, title, property } = item;
-      const newInventory = { ...inventory.filter(item => item.timebuy !== timebuy) };
-
+      const { price, skinKey, title, property } = item;
+      const newInventory = [...inventory.filter(i => i.skinKey !== skinKey)];
       updateInventoryUserData(uid, newInventory);
       updateBalanceUserData(uid, Number((balance + price).toFixed(2)));
       setNotificationParams({
@@ -42,9 +40,10 @@ export const InventoryComponent = (): JSX.Element => {
 
   return (
     <div className={styles.inventoryComponent}>
-      {inventory.filter(item => currentCategory === 'all' ? true : (item && currentCategory === item.type)).map(g => g && (
+      {inventory.filter(item => currentCategory === 'all' ? true : (item && currentCategory === item.type)).map(g => (
         <SkinItemCover
-          key={g.timebuy}
+          key={g.skinKey}
+          skinKey={g.skinKey}
           sellItem={sellItem}
           stared={saved ? saved.some(s => s === g.skinId) : false}
           saved={saved}

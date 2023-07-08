@@ -2,9 +2,9 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import { NotificationProps } from './Notification.props';
 import styles from './Notification.module.css';
 import cn from 'classnames';
-import { Portal } from '../../portal';
 import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
 import { NotificationContext } from '../../context/notification.context';
+import { Portal } from '../../portal/Portal';
 
 export const Notification: FC<NotificationProps> = ({ className, ...props }): JSX.Element | null => {
   const { notificationParams, isOpened, setIsOpened } = useContext(NotificationContext);

@@ -1,15 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useActionCreators, useAppDispatch, useStateSelector } from '../../redux/store';
 import Error404 from '../../pages/404';
-import { Button, CarouselCase, Loader, Span } from '../../components';
+import { Button, CarouselCase, Loader, SkinCard, Span } from '../../components';
 import { fetchCaseInfo } from '../../redux/slices/caseSlice';
 import { CaseComponentProps } from './CaseComponent.props';
 import Money from './money.svg';
 import styles from './CaseComponent.module.css';
 import { carouselActions } from '../../redux/slices/carouselSlice';
-import { updateBalanceUserData } from '../../firebase/manager';
-import { Typecolor } from '../../interfaces/items.interface';
+import { updateBalanceUserData, updateInventoryUserData } from '../../firebase/manager';
+import { Typecolor, csgoItem } from '../../interfaces/items.interface';
 import { createNewItemForInventory, generateFakeItemsForCarousel } from './case.opening';
+import { EnumHeadText, NotificationContext } from '../../context/notification.context';
+import { setFirstUpperLetter } from '../../helpers/helpers';
 
 export const CaseComponent = ({ idCase }: CaseComponentProps): JSX.Element | null => {
   const dispatch = useAppDispatch();
@@ -17,7 +19,10 @@ export const CaseComponent = ({ idCase }: CaseComponentProps): JSX.Element | nul
   const { status, caseInfo } = useStateSelector(state => state.case);
   const { isOpening, carouselParams } = useStateSelector(state => state.carousel);
   const { balance, isAuth, uid } = useStateSelector(state => state.account);
-  const dropItem = useRef<ICaseItemForInventory | null>(null);
+  const inventory = useStateSelector(state => state.inventory.inventory);
+  const { setNotificationParams } = useContext(NotificationContext);
+
+  const dropItem = useRef<csgoItem | null>(null);
 
   useEffect(() => {
     dispatch(fetchCaseInfo(idCase));
@@ -36,23 +41,32 @@ export const CaseComponent = ({ idCase }: CaseComponentProps): JSX.Element | nul
   }
 
   const onBuyCaseClick = () => {
-    updateBalanceUserData(uid, balance - caseInfo.price);
-    carouselAction.setIsOpening('opening');
     dropItem.current = createNewItemForInventory(caseInfo);
+    updateInventoryUserData(uid, [...inventory, dropItem.current]);
+    carouselAction.setIsOpening('opening');
+    updateBalanceUserData(uid, balance - caseInfo.price);
   };
 
-  const onSellCurrentItemClick = () => {
+  const onSellCurrentItemClick = (skinKey: string | undefined) => {
     if (!dropItem.current) {
       return;
     }
     updateBalanceUserData(uid, balance + dropItem.current.price);
+    updateInventoryUserData(uid, [...inventory.filter(i => i.skinKey !== skinKey)]);
     carouselAction.setIsOpening('notOpened');
     dropItem.current = null;
-    // sellItem(id)
   };
 
   const leaveNewItem = () => {
+    if (!dropItem.current) {
+      return;
+    }
     carouselAction.setIsOpening('notOpened');
+    setNotificationParams && setNotificationParams({
+      typeMessage: 'success',
+      text: `Приобретён предмет: ${dropItem.current.title} ${dropItem.current.property !== undefined ? `(${setFirstUpperLetter(dropItem.current.property)})` : ''}`,
+      headText: EnumHeadText.SUCCESS
+    });
   };
 
   const getInfoCardCase = () => {
@@ -70,12 +84,12 @@ export const CaseComponent = ({ idCase }: CaseComponentProps): JSX.Element | nul
     return (
       <div className={styles.newItem}>
         <div>
-          {dropItem.current.skinTitle} 
-          {dropItem.current.property && ` (${dropItem.current.property})`} 
-          <Span color={'red'}>{dropItem.current.StatTrak && ' ★ StatTrak'}</Span>
+          {dropItem.current.title}
+          {dropItem.current.property && ` (${dropItem.current.property})`}
+          <Span color={'red'}>{dropItem.current.statTrak && ' ★ StatTrak'}</Span>
         </div>
         <div>
-          <img height={124} src={dropItem.current.image} alt="" />
+          <img height={124} src={dropItem.current.urlImg} alt="" />
         </div>
       </div>
     );
@@ -96,12 +110,12 @@ export const CaseComponent = ({ idCase }: CaseComponentProps): JSX.Element | nul
         <div className={styles.buttons}>
           <Button
             appearance='green'
-            onClick={onSellCurrentItemClick}
+            onClick={() => onSellCurrentItemClick(dropItem.current?.skinKey)}
           >Продать за {dropItem.current.price} <Money /></Button>
-          <Button 
-          appearance='darkBlue'
-          onClick={leaveNewItem}
-          >Оставить в инвентаре(пока нет)</Button>
+          <Button
+            appearance='darkBlue'
+            onClick={leaveNewItem}
+          >Оставить в инвентаре</Button>
         </div>
       );
     }
@@ -125,8 +139,8 @@ export const CaseComponent = ({ idCase }: CaseComponentProps): JSX.Element | nul
     if (!dropItem.current) {
       return;
     }
-    const imagesCarousel = generateFakeItemsForCarousel(caseInfo, 20);
-    imagesCarousel[16] = { urlImg: dropItem.current.image, color: dropItem.current.color };
+    const imagesCarousel = generateFakeItemsForCarousel(caseInfo, carouselParams.idxPasteNewItem + 4);
+    imagesCarousel[carouselParams.idxPasteNewItem] = { urlImg: dropItem.current.urlImg, color: dropItem.current.color };
     return <CarouselCase imagesCarousel={imagesCarousel} carouselParams={carouselParams} isOpening={isOpening} />;
   };
 
@@ -140,6 +154,21 @@ export const CaseComponent = ({ idCase }: CaseComponentProps): JSX.Element | nul
         }
       </div>
       <span>{getCurrentButton()}</span>
+      <div className={styles.skinList}>
+        {caseInfo.skins.map(s => (
+          <div key={s.skinId} className={styles.skin}>
+            <SkinCard
+              color={s.color}
+              urlImg={s.skinItems[0].image}
+              borderRadius={'10px'}
+            />
+            <span className={styles.info}>
+              <span className={styles.type}>{s.type}</span> |
+              <span className={styles.skinTitle}> {s.skinTitle}</span>
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
@@ -147,15 +176,4 @@ export const CaseComponent = ({ idCase }: CaseComponentProps): JSX.Element | nul
 export interface IImagesCarousel {
   urlImg: string;
   color: Typecolor;
-}
-
-export interface ICaseItemForInventory {
-  color: Typecolor;
-  skinId: number;
-  skinTitle: string;
-  type: string;
-  property: string;
-  StatTrak: boolean;
-  price: number;
-  image: string;
 }

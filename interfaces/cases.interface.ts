@@ -1,4 +1,5 @@
-import { Typecolor } from "./items.interface";
+import { TypeSidebarCategoryItem } from "../layouts/MainLayout/Sidebar/Sidebar.props";
+import { TypeProperty, Typecolor } from "./items.interface";
 
 export interface ICaseInfo {
   id: number;
@@ -11,14 +12,14 @@ export interface ICaseInfo {
 export interface Skin {
   skinId: number;
   color: Typecolor;
-  type: string;
+  type: TypeSidebarCategoryItem;
   skinTitle: string;
   skinItems: SkinItem[];
 }
 
 export interface SkinItem {
   StatTrak: boolean;
-  property: string;
+  property: TypeProperty;
   image: string;
   price: number;
 }

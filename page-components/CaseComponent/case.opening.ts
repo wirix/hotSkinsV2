@@ -1,22 +1,24 @@
 import { getRandomInt } from "../../helpers/getRandomInt";
 import { ICaseInfo } from "../../interfaces/cases.interface";
+import { csgoItem } from "../../interfaces/items.interface";
 import { IImagesCarousel } from "./CaseComponent";
+import { v4 as uuidv4 } from 'uuid';
 
-export const createNewItemForInventory = (caseInfo: ICaseInfo) => {
+export const createNewItemForInventory = (caseInfo: ICaseInfo): csgoItem => {
   const idxItem = getRandomInt(0, caseInfo.skins.length - 1);
   const dropItem = caseInfo.skins[idxItem];
   const idxProperty = getRandomInt(0, dropItem.skinItems.length - 1);
   const newItem = {
     color: dropItem.color,
     skinId: dropItem.skinId,
-    skinTitle: dropItem.skinTitle,
+    title: dropItem.skinTitle,
     type: dropItem.type,
     property: dropItem.skinItems[idxProperty].property,
-    StatTrak: dropItem.skinItems[idxProperty].StatTrak,
+    statTrak: dropItem.skinItems[idxProperty].StatTrak,
     price: dropItem.skinItems[idxProperty].price,
-    image: dropItem.skinItems[idxProperty].image
+    urlImg: dropItem.skinItems[idxProperty].image,
+    skinKey: uuidv4() as string
   };
-  console.log('newItem', newItem);
   return newItem;
 };
 

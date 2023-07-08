@@ -7,6 +7,7 @@ export interface CarouselType {
   swapNextItem: number;
   randomRange: number;
   timeTransition: number;
+  idxPasteNewItem: number;
 }
 
 export type BigCarouselType = CarouselType & {
@@ -37,7 +38,9 @@ const initialState: CarouselState = {
     height: 124,
     swapNextItem: 0,
     randomRange: 145,
-    timeTransition: 5
+    timeTransition: 5,
+    // увеличивает скорость прокрутки
+    idxPasteNewItem: 30
   }
 };
 
@@ -47,20 +50,20 @@ const carouselSlice = createSlice({
   reducers: {
     setBigCarousel: (state) => {
       state.carouselParams = {
+        ...state.carouselParams,
         width: 150,
         height: 124,
         swapNextItem: 0,
         randomRange: 145,
-        timeTransition: 5
       };
     },
     setSmallCarousel: (state) => {
       state.carouselParams = {
+        ...state.carouselParams,
         width: 99,
         height: 100,
         swapNextItem: -1,
         randomRange: 93,
-        timeTransition: 5
       };
     },
     setIsOpening: (state, action: PayloadAction<IsOpeningType>) => {

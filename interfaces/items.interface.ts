@@ -13,8 +13,9 @@ export interface csgoItem {
   title: string;
   urlImg: string;
   price: number;
+  statTrak?: boolean;
   property?: TypeProperty;
-  timebuy?: number;
+  skinKey?: string;
 }
 
 export type Typecolor = 'blue' | 'purple' | 'pink' | 'red' | 'gold';

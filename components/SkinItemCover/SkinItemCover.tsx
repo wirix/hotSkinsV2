@@ -10,8 +10,9 @@ import { SkinItemCoverProps } from './SkinItemCover.props';
 import { useStateSelector } from '../../redux/store';
 import { updateSavedUserData } from '../../firebase/manager';
 import { useRouter } from 'next/router';
+import { v4 as uuidv4 } from 'uuid';
 
-export const SkinItemCover: FC<SkinItemCoverProps> = ({ title, urlImg, skinId, property, price, type, stared, color, buyItem, sellItem, timebuy, saved, className, ...props }) => {
+export const SkinItemCover: FC<SkinItemCoverProps> = ({ title, urlImg, skinId, property, statTrak, price, type, stared, color, buyItem, sellItem, skinKey, saved, className, ...props }) => {
   const { uid, balance } = useStateSelector(state => state.account);
   const router = useRouter();
 
@@ -25,15 +26,20 @@ export const SkinItemCover: FC<SkinItemCoverProps> = ({ title, urlImg, skinId, p
   };
 
   const onClickBuyItem = () => {
+    // нет изначально ключей(
+    const key = uuidv4() as string;
     buyItem && buyItem(property
-      ? { title, urlImg, skinId, price, type, color, property, timebuy }
-      : { title, urlImg, skinId, price, type, color, timebuy }, uid);
+      ? { title, urlImg, skinId, price, type, color, statTrak, property, skinKey: key }
+      : { title, urlImg, skinId, price, type, color, statTrak, skinKey: key }, uid);
   };
 
   const onClickSellItem = () => {
+    if (!skinKey) {
+      return;
+    }
     sellItem && sellItem(property
-      ? { title, urlImg, skinId, price, type, color, property, timebuy }
-      : { title, urlImg, skinId, price, type, color, timebuy }, uid);
+      ? { title, urlImg, skinId, price, type, color, statTrak, property, skinKey }
+      : { title, urlImg, skinId, price, type, color, statTrak, skinKey }, uid);
   };
 
   return (

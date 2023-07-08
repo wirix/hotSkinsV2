@@ -42,7 +42,7 @@ export const CarouselCase = ({ imagesCarousel, carouselParams, isOpening, classN
   return (
     <div
       className={cn(styles.container, className)}
-      style={{ height: carouselParams.height + 6 }}
+      style={{ height: carouselParams.height + 11 }}
       {...props}
     >
       <div
