@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useLayoutEffect } from 'react';
 import styles from './CasesListComponent.module.css';
 import { useAppDispatch, useStateSelector } from '../../redux/store';
 import { fetchCasesList } from '../../redux/slices/casesSlice';
@@ -9,16 +9,16 @@ export const CasesListComponent: FC = () => {
   const dispatch = useAppDispatch();
   const { status, casesList } = useStateSelector(state => state.cases);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(fetchCasesList());
   }, []);
 
-  if (status === 'error') {
-    return <Error404 />;
-  }
-
   if (status === 'loading') {
     return <Loader />;
+  }
+
+  if (status === 'error') {
+    return <Error404 />;
   }
 
   return (

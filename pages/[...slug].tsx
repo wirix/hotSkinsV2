@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { withLayout } from '../layouts/MainLayout/Layout';
 import { CasesListComponent, ShopComponent, InventoryComponent, CaseComponent } from '../page-components';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
@@ -17,7 +17,7 @@ const SlugType = ({ pageType }: ShopProps): JSX.Element => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getUserData(dispatch);
   }, []);
 

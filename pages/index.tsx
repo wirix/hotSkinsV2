@@ -2,24 +2,28 @@ import Head from "next/head";
 import { withLayout } from "../layouts/MainLayout/Layout";
 import { getUserData } from '../firebase/manager';
 import GetAuth from "../helpers/GetAuth";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "../redux/store";
 import { Loader } from "../components";
+import Error404 from "./404";
 
 const Home = (): JSX.Element => {
-  const { loading, user } = GetAuth();
+  const { loading, user, error } = GetAuth();
   const dispatch = useAppDispatch();
   const router = useRouter();
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     getUserData(dispatch);
   }, []);
-
+  
   if (loading) {
     return <Loader />;
   }
-
+  
+  if (error) {
+    return <Error404 />;
+  }
+  
   if (!user) {
     router.push({
       pathname: '/auth',
@@ -27,6 +31,7 @@ const Home = (): JSX.Element => {
     });
     return <Loader />;
   }
+  console.log('index')
 
   return (
     <>

@@ -12,7 +12,6 @@ const Sidebar = ({ className, ...props }): JSX.Element => {
   const router = useRouter();
   const asPath = router.asPath;
   const actions = useActionCreators(shopActions);
-
   const [searchValue, setSearchValue] = useState<string>('');
   const { currentCategory, saved, currentSorted } = useStateSelector(state => state.shop);
 
@@ -42,7 +41,7 @@ const Sidebar = ({ className, ...props }): JSX.Element => {
   const onCategoryClick = ((category: TypeSidebarCategoryItem) => {
     actions.setCurrentCategory(category);
   });
-
+  
   useEffect(() => {
     // если переходим на другой url, то убираем ненужные категории для этого url
     setCurrentCategories(difference(listCategories,

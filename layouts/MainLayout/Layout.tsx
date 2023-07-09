@@ -9,7 +9,7 @@ import store from '../../redux/store';
 import { NotificationProvider } from '../../context/notification.context';
 import { Notification } from '../../components';
 
-const Layout = ({ children }: LayoutProps): JSX.Element => {
+const Layout: FC<LayoutProps> = ({ children }) => {
   return (
     <div className={styles.layoutWrapper}>
       <div className={styles.layout}>

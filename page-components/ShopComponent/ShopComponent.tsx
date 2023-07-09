@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useLayoutEffect } from 'react';
 import styles from './ShopComponent.module.css';
 import { Loader, SkinItemCover } from '../../components';
 import { fetchShopItems } from '../../redux/slices/shopSlice';
@@ -11,7 +11,7 @@ import { EnumHeadText, NotificationContext } from '../../context/notification.co
 export const ShopComponent = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch(fetchShopItems());
   }, []);
 

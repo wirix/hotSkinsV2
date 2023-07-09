@@ -27,8 +27,7 @@
 .skinList {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: row;
+  flex-flow: row wrap;
   gap: 20px 10px;
   margin-top: 50px;
 }
@@ -39,17 +38,9 @@
 
 .info {
   font-size: 12px;
-  opacity: .5;
+  opacity: 0.5;
   position: absolute;
   bottom: 0;
   left: 10px;
   z-index: 10;
 }
-
-
-
-
-
-
-
-

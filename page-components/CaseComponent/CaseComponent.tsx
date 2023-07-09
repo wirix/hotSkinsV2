@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useLayoutEffect, useRef } from 'react';
 import { useActionCreators, useAppDispatch, useStateSelector } from '../../redux/store';
 import Error404 from '../../pages/404';
 import { Button, CarouselCase, Loader, SkinCard, Span } from '../../components';
@@ -23,15 +23,16 @@ export const CaseComponent = ({ idCase }: CaseComponentProps): JSX.Element | nul
   const { setNotificationParams } = useContext(NotificationContext);
 
   const dropItem = useRef<csgoItem | null>(null);
-
-  useEffect(() => {
+  
+  useLayoutEffect(() => {
     dispatch(fetchCaseInfo(idCase));
   }, [idCase]);
-
+  
   if (status === 'loading') {
     return <Loader />;
   }
 
+  console.log('CaseComponent')
   if (status === 'error') {
     return <Error404 />;
   }
@@ -42,17 +43,18 @@ export const CaseComponent = ({ idCase }: CaseComponentProps): JSX.Element | nul
 
   const onBuyCaseClick = () => {
     dropItem.current = createNewItemForInventory(caseInfo);
-    updateInventoryUserData(uid, [...inventory, dropItem.current]);
     carouselAction.setIsOpening('opening');
+    updateInventoryUserData(uid, [...inventory, dropItem.current]);
     updateBalanceUserData(uid, balance - caseInfo.price);
   };
 
-  const onSellCurrentItemClick = (skinKey: string | undefined) => {
+  const onSellCurrentItemClick = () => {
     if (!dropItem.current) {
       return;
     }
+    const skinKey = dropItem.current.skinKey;
     updateBalanceUserData(uid, balance + dropItem.current.price);
-    updateInventoryUserData(uid, [...inventory.filter(i => i.skinKey !== skinKey)]);
+    updateInventoryUserData(uid, inventory.filter(i => i.skinKey !== skinKey));
     carouselAction.setIsOpening('notOpened');
     dropItem.current = null;
   };
@@ -86,7 +88,7 @@ export const CaseComponent = ({ idCase }: CaseComponentProps): JSX.Element | nul
         <div>
           {dropItem.current.title}
           {dropItem.current.property && ` (${dropItem.current.property})`}
-          <Span color={'red'}>{dropItem.current.statTrak && ' ★ StatTrak'}</Span>
+          <Span fontSize='16px' color={'red'}>{dropItem.current.statTrak && ' ★ StatTrak'}</Span>
         </div>
         <div>
           <img height={124} src={dropItem.current.urlImg} alt="" />
@@ -110,7 +112,7 @@ export const CaseComponent = ({ idCase }: CaseComponentProps): JSX.Element | nul
         <div className={styles.buttons}>
           <Button
             appearance='green'
-            onClick={() => onSellCurrentItemClick(dropItem.current?.skinKey)}
+            onClick={() => onSellCurrentItemClick()}
           >Продать за {dropItem.current.price} <Money /></Button>
           <Button
             appearance='darkBlue'

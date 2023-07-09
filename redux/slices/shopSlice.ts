@@ -4,6 +4,7 @@ import { csgoItem, shopData } from '../../interfaces/items.interface';
 import { TypeSidebarCategoryItem } from '../../layouts/MainLayout/Sidebar/Sidebar.props';
 import axios from 'axios';
 import { flattenArrayOfObject } from '../../helpers/helpers';
+import { apiUrls } from '../../api/apiUrls';
 
 export type sortedType = 'none' | 'saved';
 
@@ -18,7 +19,7 @@ interface ShopState {
 export const fetchShopItems = createAsyncThunk(
   'shop/fetchItems',
   async () => {
-    const { data: shopData } = await axios.get<shopData>(process.env.NEXT_PUBLIC_DOMAIN + 'shop');
+    const { data: shopData } = await axios.get<shopData>(apiUrls.shop.getShopData);
     return shopData;
   }
 );

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ICaseInfo } from '../../interfaces/cases.interface';
+import { apiUrls } from '../../api/apiUrls';
 
 interface CasesState {
   caseInfo: ICaseInfo | null;
@@ -11,7 +12,7 @@ interface CasesState {
 export const fetchCaseInfo = createAsyncThunk(
   'cases/fetchCaseInfo',
   async (id: number) => {
-    const { data: caseInfo } = await axios.get<ICaseInfo>(process.env.NEXT_PUBLIC_DOMAIN + `case/${id}`);
+    const { data: caseInfo } = await axios.get<ICaseInfo>(apiUrls.case.getCaseDataById(id));
     return caseInfo;
   }
 );
