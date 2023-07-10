@@ -32,7 +32,6 @@ export const CaseComponent = ({ idCase }: CaseComponentProps): JSX.Element | nul
     return <Loader />;
   }
 
-  console.log('CaseComponent')
   if (status === 'error') {
     return <Error404 />;
   }

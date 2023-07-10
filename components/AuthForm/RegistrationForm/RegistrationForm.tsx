@@ -25,8 +25,8 @@ export const RegistrationForm = (): JSX.Element => {
     }
     const res: typeErrorRegistration = await registerWithEmailAndPassword(formData.username, formData.email, formData.password);
     if (!res) {
-      router.push('/');
       setNotificationParams({ typeMessage: 'success', text: 'Вы успешно зарегистрировались', headText: EnumHeadText.SUCCESS });
+      router.push('/');
     } else {
       const typeMessage = 'error';
       const headText = EnumHeadText.ERROR;

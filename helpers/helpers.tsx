@@ -7,7 +7,7 @@ export const firstLevelRoute = [
   { route: 'inventory', name: 'Инвентарь', id: firstLevelRouteId.inventory, isNavLink: true },
   { route: 'profile', name: 'Профиль', id: firstLevelRouteId.profile, isNavLink: false },
   { route: 'settings', name: 'Настройки', id: firstLevelRouteId.settings, isNavLink: false },
-  { route: 'auth', name: 'Настройки', id: firstLevelRouteId.auth, isNavLink: false },
+  { route: 'auth', name: '', id: firstLevelRouteId.auth, isNavLink: false },
 ];
 
 export const flattenArrayOfObject = (inventory: shopData): csgoItem[] => {

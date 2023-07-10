@@ -26,8 +26,8 @@ export const LoginForm = (): JSX.Element => {
 
     const res: typeErrorLogin = await funSignInWithEmailAndPassword(formData.email, formData.password);
     if (!res) {
-      router.push('/');
       setNotificationParams({ typeMessage: 'success', text: 'Успешный вход', headText: EnumHeadText.SUCCESS });
+      router.push('/');
     } else {
       const typeMessage = 'error';
       const headText = EnumHeadText.ERROR;

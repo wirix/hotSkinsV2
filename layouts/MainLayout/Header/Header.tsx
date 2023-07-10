@@ -7,18 +7,23 @@ import logoImage from './logo.png';
 import Link from 'next/link';
 import { firstLevelRoute } from '../../../helpers/helpers';
 import MoneyIcon from './money.svg';
-import { useWindowSize } from '../../../hooks/useWindowSize';
 import GetAuth from '../../../helpers/GetAuth';
 import { useRouter } from 'next/router';
 import { logout } from '../../../firebase/manager';
-import { useStateSelector } from '../../../redux/store';
+import { useActionCreators, useStateSelector } from '../../../redux/store';
+import { accountActions } from '../../../redux/slices/accountSlice';
 
 const Header = ({ className, ...props }): JSX.Element => {
-  const { width } = useWindowSize();
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
   const { user } = GetAuth();
   const router = useRouter();
   const balance = useStateSelector(state => state.account.balance);
+  const accountAction = useActionCreators(accountActions);
+
+  const onLogoutClick = () => {
+    accountAction.resetState();
+    logout();
+  };
 
   return (
     <>
@@ -41,11 +46,11 @@ const Header = ({ className, ...props }): JSX.Element => {
       </div>
       }
       <header className={cn(className, styles.header)} {...props}>
-        {width <= 754 && <ButtonIcon
+        <ButtonIcon
+        className={styles.burger}
           icon='menu'
           onClick={() => setIsShowMenu(!isShowMenu)}
         />
-        }
         <Link href={'/'}>
           <Image className={styles.logo} src={logoImage} width={50} height={55} alt='' />
         </Link>
@@ -64,9 +69,9 @@ const Header = ({ className, ...props }): JSX.Element => {
               <MoneyIcon />
               <span className={styles.balance}>{balance}</span>
             </span>
-            {width > 1180 && <span className={cn(styles.border)}></span>}
-            {width >= 755 && <ButtonIcon className={styles.icon} icon='settings' onClick={() => logout()} />}
-            <ButtonIcon className={styles.icon} icon='bell' />
+            <span className={cn(styles.border)}></span>
+            <ButtonIcon className={styles.iconSettings} icon='settings' onClick={onLogoutClick} />
+            <ButtonIcon className={styles.iconProfile} icon='bell' />
             <Link href='/profile' >
               лого
             </Link>

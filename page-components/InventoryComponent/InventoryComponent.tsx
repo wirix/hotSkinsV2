@@ -43,7 +43,6 @@ export const InventoryComponent = (): JSX.Element => {
       {inventory.filter(item => currentCategory === 'all' ? true : (item && currentCategory === item.type)).map(g => (
         <SkinItemCover
           key={g.skinKey}
-          skinKey={g.skinKey}
           sellItem={sellItem}
           stared={saved ? saved.some(s => s === g.skinId) : false}
           saved={saved}

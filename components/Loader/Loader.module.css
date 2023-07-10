@@ -2,8 +2,3 @@
   display: flex;
   justify-content: center;
 }
-
-.loader img {
-  width: 100px;
-  height: 100px;
-}

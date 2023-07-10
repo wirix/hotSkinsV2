@@ -1,21 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import { LoginForm } from './LoginForm/LoginForm';
 import { RegistrationForm } from './RegistrationForm/RegistrationForm';
 import { Button } from '../Button/Button';
 import styles from './AuthForm.module.css';
+import { AuthFormProps } from './AuthForm.props';
+import { FC } from 'react';
 
-export const AuthForm = (): JSX.Element => {
-  const router = useRouter();
-  const [typeAuth, setTypeAuth] = useState<'registration' | 'signup'>('registration');
-
-  useEffect(() => {
-    router.push({
-      pathname: '/auth',
-      query: { name: typeAuth }
-    });
-  }, [typeAuth, router.asPath]);
-
+export const AuthForm: FC<AuthFormProps> = ({ typeAuth, setTypeAuth }) => {
   return (
     <div className={styles.form}>
       <div className={styles.swapTab}>

@@ -22,6 +22,15 @@ const accountSlice = createSlice({
       ...state,
       ...action.payload,
       isAuth: true
+    }),
+    resetState: () => ({
+      balance: 0,
+      uid: '',
+      username: '',
+      email: '',
+      password: '',
+      luckyChance: 0,
+      isAuth: false
     })
   }
 });

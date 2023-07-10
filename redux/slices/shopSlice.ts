@@ -4,7 +4,7 @@ import { csgoItem, shopData } from '../../interfaces/items.interface';
 import { TypeSidebarCategoryItem } from '../../layouts/MainLayout/Sidebar/Sidebar.props';
 import axios from 'axios';
 import { flattenArrayOfObject } from '../../helpers/helpers';
-import { apiUrls } from '../../api/apiUrls';
+import { apiUrls } from '../../constants/apiUrls';
 
 export type sortedType = 'none' | 'saved';
 

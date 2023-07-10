@@ -31,7 +31,6 @@ const Home = (): JSX.Element => {
     });
     return <Loader />;
   }
-  console.log('index')
 
   return (
     <>

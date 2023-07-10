@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { ICaseInfo } from '../../interfaces/cases.interface';
-import { apiUrls } from '../../api/apiUrls';
+import { apiUrls } from '../../constants/apiUrls';
 
 interface CasesState {
   caseInfo: ICaseInfo | null;

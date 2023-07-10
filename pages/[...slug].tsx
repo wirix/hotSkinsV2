@@ -1,12 +1,12 @@
 import { useLayoutEffect } from 'react';
 import { withLayout } from '../layouts/MainLayout/Layout';
-import { CasesListComponent, ShopComponent, InventoryComponent, CaseComponent } from '../page-components';
+import { CasesListComponent, ShopComponent, InventoryComponent, CaseComponent, AuthComponent } from '../page-components';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
 import { firstLevelRoute } from '../helpers/helpers';
 import { ParsedUrlQuery } from 'querystring';
 import Error404 from './404';
 import GetAuth from '../helpers/GetAuth';
-import { AuthForm, Loader } from '../components';
+import { Loader } from '../components';
 import { INotificationContext } from '../context/notification.context';
 import { getUserData } from '../firebase/manager';
 import { useRouter } from 'next/router';
@@ -28,7 +28,7 @@ const SlugType = ({ pageType }: ShopProps): JSX.Element => {
   if (error && error instanceof Error) {
     return <div>ошибка {error.message}</div>;
   }
-
+// !!!!! pageType[0] !== 'auth'
   if (!user && pageType[0] !== 'auth') {
     router.push({
       pathname: '/auth',
@@ -47,7 +47,7 @@ const SlugType = ({ pageType }: ShopProps): JSX.Element => {
     case 'case':
       return <CaseComponent idCase={+pageType[1]} />;
     case 'auth':
-      return <AuthForm />;
+      return <AuthComponent />;
     default:
       return <Error404 />;
   }
