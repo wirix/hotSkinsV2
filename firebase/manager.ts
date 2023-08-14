@@ -83,7 +83,7 @@ export const funSignInWithEmailAndPassword = async (email: string, password: str
   }
 };
 
-export const getUserData = (dispatch): IAccountFull | undefined => {
+export const getUserData = (dispatch) => {
   try {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -102,7 +102,6 @@ export const getUserData = (dispatch): IAccountFull | undefined => {
   } catch (error) {
     if (error instanceof Error) {
       console.log(error);
-      return;
     }
   }
 };
