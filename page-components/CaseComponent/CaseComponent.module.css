@@ -25,11 +25,11 @@
 }
 
 .skinList {
-  width: 100%;
   display: grid;
-  align-items: center;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 20px 10px;
+  align-items: center;
+  width: 100%;
   margin-top: 30px;
 }
 

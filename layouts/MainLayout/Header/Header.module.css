@@ -104,7 +104,8 @@
   background-color: var(--gray-border);
 }
 
-.iconProfile, .iconSettings {
+.iconProfile,
+.iconSettings {
   width: 40px;
   height: 40px;
   margin-right: 20px;
@@ -128,7 +129,8 @@
     display: none;
   }
 
-  .iconSettings, .iconProfile {
+  .iconSettings,
+  .iconProfile {
     margin: 0;
   }
 }
@@ -159,7 +161,7 @@
     grid-template-columns: [start] 50px [middle] 1fr [profilestart] auto [end];
     padding: 13px 0;
   }
-    
+
   .burger {
     display: block;
   }

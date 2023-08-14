@@ -6,6 +6,8 @@
   ],
   "rules": {
     "semi": "off",
+    "no-console": "error",
+    "no-unused-vars": "warn",
     "@typescript-eslint/semi": [
       "warn"
     ],
