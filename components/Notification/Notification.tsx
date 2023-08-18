@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { NotificationProps } from './Notification.props';
 import styles from './Notification.module.css';
 import cn from 'classnames';
@@ -7,22 +7,25 @@ import { NotificationContext } from '../../context/notification.context';
 import { Portal } from '../../portal/Portal';
 
 export const Notification: FC<NotificationProps> = ({ className, ...props }): JSX.Element | null => {
-  const { notificationParams, isOpened, setIsOpened } = useContext(NotificationContext);
+  const { notificationParams } = useContext(NotificationContext);
+  const [isOpened, setIsOpened] = useState(false);
   const [position, setPosition] = useState({
     right: 20,
     bottom: 20,
   });
 
-  const closeNotification = () => {
-    setIsOpened && setIsOpened(false);
-  };
+  const closeNotification = useCallback(() => {
+    setIsOpened(false);
+  }, []);
 
   useEffect(() => {
-    if (isOpened) {
-      const timerId = setTimeout(closeNotification, 4000);
-      return () => clearTimeout(timerId);
+    if (!notificationParams.text) {
+      return;
     }
-  }, [isOpened]);
+    setIsOpened(true);
+    const timerId = setTimeout(closeNotification, 4000);
+    return () => clearTimeout(timerId);
+  }, [notificationParams]);
 
   if (!setIsOpened) {
     return null;
