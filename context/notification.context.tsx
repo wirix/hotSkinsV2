@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useCallback, useState } from "react";
 
 export type TypeMessage = 'success' | 'error';
 
@@ -17,8 +17,6 @@ interface INotificationParams {
 export interface INotificationContext {
   notificationParams: INotificationParams;
   setNotificationParams?: (newNotificationParams: INotificationParams) => void;
-  isOpened: boolean;
-  setIsOpened?: (newIsOpened: boolean) => void;
 }
 
 export const NotificationContext = createContext<INotificationContext>({
@@ -26,8 +24,7 @@ export const NotificationContext = createContext<INotificationContext>({
     typeMessage: 'success',
     text: '',
     headText: EnumHeadText.NOTIFICATION,
-  },
-  isOpened: false
+  }
 });
 
 export const NotificationProvider = ({ children }: { children: ReactNode }): JSX.Element => {
@@ -36,24 +33,16 @@ export const NotificationProvider = ({ children }: { children: ReactNode }): JSX
     text: '',
     headText: EnumHeadText.NOTIFICATION
   });
-  const [isOpenedState, setIsOpenedState] = useState<boolean>(false);
-
-  const setIsOpened = (isOpened: boolean) => {
-    setIsOpenedState(isOpened);
-  };
-
-  const setNotificationParams = (newNotificationParams: INotificationParams) => {
+  
+  const setNotificationParams = useCallback((newNotificationParams: INotificationParams) => {
     setNotificationParamsState(newNotificationParams);
-    setIsOpenedState(true);
-  };
+  }, []);
 
   return (
     <NotificationContext.Provider
       value={{
         notificationParams: notificationParamsState,
-        setNotificationParams,
-        isOpened: isOpenedState,
-        setIsOpened,
+        setNotificationParams
       }}
     >
       {children}
